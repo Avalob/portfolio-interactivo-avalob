@@ -4,7 +4,7 @@
 
 ### ✨ Explora mi portfolio como un videojuego retro RPG ✨
 
-[![🚀 Ver Demo en Vivo](https://img.shields.io/badge/🚀_VER_DEMO-GitHub_Pages-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://avalob.github.io/portfolio/)
+[![🚀 Ver Demo en Vivo](https://img.shields.io/badge/🚀_VER_DEMO-GitHub_Pages-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://avalob.github.io/portfolio-interactivo-avalob/)
 
 [![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
