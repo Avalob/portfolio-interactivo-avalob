@@ -1,13 +1,17 @@
-// =============================
-// ENTRADA PRINCIPAL DE LA APP
-// =============================
-// Este archivo monta el componente principal App en el DOM raíz.
+
+// ============================================================
+// 1. IMPORTACIONES PRINCIPALES
+// ============================================================
 
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-// Monta la aplicación en el elemento con id 'root'.
+// ============================================================
+// 2. MONTAJE DE LA APLICACIÓN EN EL DOM
+// ============================================================
+
+// Este bloque monta el componente principal <App /> en el elemento raíz del HTML.
 ReactDOM.createRoot(document.getElementById("root")).render(
   <App />
 );
