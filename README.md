@@ -178,6 +178,7 @@ npm run preview
 
 1. **`package.json`** ya tiene:
 ```json
+🚀 Demo online: [https://andre.github.io/portfolio-interactivo-avalob/](https://andre.github.io/portfolio-interactivo-avalob/)
 {
   "homepage": ".",
   "scripts": {
