@@ -1,14 +1,17 @@
-// === Car.jsx ===
-// Renderiza el NPC de coche con luces, bocina y animaciones según la dirección actual.
-
+// ============================================================
+// 1. IMPORTACIÓN DE DEPENDENCIAS
+// ============================================================
 import PropTypes from 'prop-types';
 
+// ============================================================
+// 2. COMPONENTE Car: RENDERIZA EL COCHE NPC CON ANIMACIONES Y EFECTOS
+// ============================================================
 const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage = '🚗 ¡PI PIIII!', isNightMode = false }) => {
-  // --- Cálculos previos ---
+  // Determina si el coche está en orientación horizontal
   const isHorizontal = direction === 'left' || direction === 'right';
   const width = isHorizontal ? tileSize * 2 : tileSize;
 
-  // --- Render principal ---
+  // Renderiza el coche, sus sprites, luces y bocina según el estado
   return (
     <div
       className="car-npc"
@@ -24,6 +27,7 @@ const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage 
         transform: 'translateZ(0)',
       }}
     >
+      {/* Renderiza los sprites del coche según la dirección y frame actual */}
       {currentSprites.map((sprite, index) => (
         <img
           key={index}
@@ -43,6 +47,7 @@ const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage 
         />
       ))}
 
+      {/* Luces delanteras según modo noche y dirección */}
       {isNightMode && direction === 'right' && (
         <div
           className="car-headlight"
@@ -108,6 +113,7 @@ const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage 
         />
       )}
 
+      {/* Bocina animada sobre el coche cuando showHorn es true */}
       {showHorn && (
         <div
           className="car-horn-bubble"
@@ -164,7 +170,9 @@ const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage 
   );
 };
 
-// --- PropTypes ---
+// ============================================================
+// 3. PROPTYPES DEL COMPONENTE
+// ============================================================
 Car.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
@@ -176,4 +184,7 @@ Car.propTypes = {
   isNightMode: PropTypes.bool,
 };
 
+// ============================================================
+// 4. EXPORTACIÓN PRINCIPAL
+// ============================================================
 export default Car;

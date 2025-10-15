@@ -1,13 +1,34 @@
+/* ============================================================
+   BUILDINGMODAL.CSS - ESTILOS PARA MODALES DE EDIFICIOS
+   Sistema de modales reutilizable con glassmorphism y animaciones
+   ============================================================ */
+
 @import '../styles/design-system.css';
-/* Reset global para enlaces */
+
+/* ============================================================
+   1. RESET Y UTILIDADES GLOBALES
+   ============================================================ */
 a, a:link, a:visited, a:hover, a:active, a:focus {
   text-decoration: none;
   outline: none;
   background: none;
 }
 
+a.btn-prim,
+a.btn-prim:link,
+a.btn-prim:visited,
+a.btn-prim:hover,
+a.btn-prim:active,
+a.btn-prim:focus {
+  text-decoration: none !important;
+  outline: none !important;
+}
 
-/* Hobbies/Experiencia responsive grid */
+/* ============================================================
+   2. GRIDS Y LAYOUTS PRINCIPALES
+   ============================================================ */
+
+/* Grid responsive para sección de hobbies y experiencia */
 .hobbies-experience-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -15,6 +36,7 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   max-width: 1400px;
   margin: 0 auto;
 }
+
 @media (max-width: 700px) {
   .hobbies-experience-grid {
     grid-template-columns: 1fr;
@@ -23,7 +45,7 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   }
 }
 
-/* PROJECTS GRID - Estilo cajitas 2x2 */
+/* Grid de proyectos con diseño de tarjetas 2x2 */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -39,6 +61,50 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   }
 }
 
+/* Grid para la sección de skills */
+.skills-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+@media (min-width: 900px) {
+  .skills-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Grid para otros cursos */
+.otros-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .otros-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
+/* Grid para columnas de experiencia */
+.experiencia-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .experiencia-columns {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
+/* ============================================================
+   3. TARJETAS DE PROYECTOS
+   ============================================================ */
 .project-card {
   background: rgba(30, 41, 59, 0.6);
   border: 2px solid rgba(148, 163, 184, 0.2);
@@ -99,7 +165,7 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   width: 100%;
   height: 100%;
   object-fit: cover;
-   object-position: top;
+  object-position: top;
   transition: transform 0.3s ease;
 }
 
@@ -119,6 +185,7 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   flex-wrap: wrap;
 }
 
+/* Botones de tarjetas de proyecto */
 .project-card-btn {
   margin-top: 0;
   background: transparent;
@@ -171,103 +238,119 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
   text-decoration: none !important;
 }
-.skills-grid {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-}
 
-@media (min-width: 900px) {
-  .skills-grid {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
-  }
-}
-
-/**
- * ============================================
- * Educacion
- * ============================================
- */
-
+/* ============================================================
+   4. TIMELINE DE EDUCACIÓN
+   ============================================================ */
 .timeline-edu-container {
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	align-items: flex-start;
-	width: 100%;
-	min-height: 100%;
-	padding-left: 80px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 100%;
+  padding-left: 80px;
 }
 
 .timeline-edu-line {
-	position: absolute;
-	left: 28px;
-	top: 0;
-	bottom: 0;
-	width: 4px;
-	background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-success) 100%);
-	border-radius: 2px;
-	box-shadow: 0 0 8px 2px var(--color-border-glow);
-	z-index: 0;
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-success) 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 8px 2px var(--color-border-glow);
+  z-index: 0;
 }
 
 .timeline-edu-items {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .timeline-edu-dot {
-	position: relative;
-	width: 20px;
-	height: 20px;
-	background: var(--color-bg-secondary);
-	border: 3px solid var(--color-primary);
-	border-radius: 50%;
-	box-shadow: 0 0 0 3px var(--color-primary-bg), 0 0 12px var(--color-border-glow);
-	z-index: 4;
-	margin-left: -60px;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: var(--color-bg-secondary);
+  border: 3px solid var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--color-primary-bg), 0 0 12px var(--color-border-glow);
+  z-index: 4;
+  margin-left: -60px;
 }
 
 @media (max-width: 700px) {
-	.timeline-edu-container {
-		flex-direction: column;
-		padding-left: 18px;
-	}
-	
-	.timeline-edu-line {
-		left: 8px;
-		width: 3px;
-	}
-	
-	.timeline-edu-dot {
-		width: 14px;
-		height: 14px;
-		border-width: 2px;
-		margin-left: -15px !important;
-		box-shadow: 0 0 0 2px var(--color-primary-bg), 0 0 8px var(--color-border-glow);
-	}
-}
-
-
-.experiencia-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-@media (max-width: 900px) {
-  .experiencia-columns {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
+  .timeline-edu-container {
+    flex-direction: column;
+    padding-left: 18px;
+  }
+  
+  .timeline-edu-line {
+    left: 8px;
+    width: 3px;
+  }
+  
+  .timeline-edu-dot {
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+    margin-left: -15px !important;
+    box-shadow: 0 0 0 2px var(--color-primary-bg), 0 0 8px var(--color-border-glow);
   }
 }
 
-/**
- * ============================================
- * Experiencia
- * ============================================
- */
+/* ============================================================
+   5. SECCIONES Y LISTAS DE CONTENIDO
+   ============================================================ */
+.building-section {
+  background: rgba(26, 26, 46, 0.35);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.building-section:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 600px) {
+  .building-section {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .building-section {
+    padding: 1rem 0.7rem;
+    border-radius: 8px;
+  }
+  .building-section h2 {
+    font-size: 1rem;
+  }
+}
+
+.building-section h2 {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.building-section p {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
 
 .building-section ul {
   list-style: none;
@@ -294,43 +377,12 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   box-shadow: 0 0 6px var(--color-border-glow);
 }
-/**
- * ============================================
- * Otros cursos
- * ============================================
- */
 
+/* ============================================================
+   6. DROPDOWNS Y BOTONES INTERACTIVOS
+   ============================================================ */
 
-
-.otros-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-@media (max-width: 900px) {
-  .otros-grid {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-  }
-}
-
-.building-section h2 {
-  color: var(--color-primary);
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.5px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.building-section p {
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-}
-
+/* Dropdown de experiencia */
 .exp-dropdown-item {
   margin-bottom: 0.8rem;
 }
@@ -390,23 +442,112 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   animation: slideDown 0.3s ease;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Botón principal con flecha (patrón reutilizable) */
+.btn-prim {
+  margin-top: 12px;
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none !important;
 }
-/**
- * ============================================
- * Sobre mi
- * ============================================
- */
 
- .sobremi-foto-img {
+.btn-prim:hover {
+  background: var(--color-primary);
+  color: var(--color-text-inverse) !important;
+  text-decoration: none !important;
+  transform: scale(1.05);
+}
+
+.btn-arrow {
+  font-size: 1.6rem;
+  transition: transform 0.3s ease;
+  color: var(--color-primary);
+  font-weight: 300;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+}
+
+.btn-prim:hover .btn-arrow {
+  color: var(--color-text-inverse);
+}
+
+.btn-arrow.open {
+  transform: rotate(90deg);
+}
+
+/* Botón dropdown genérico (patrón reutilizable) */
+.dropdown-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-border-glow);
+}
+
+.dropdown-arrow {
+  font-size: 1.6rem;
+  transition: transform 0.3s ease;
+  color: var(--color-primary);
+  font-weight: 300;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+}
+
+.dropdown-btn:hover .dropdown-arrow {
+  color: var(--color-primary);
+  filter: brightness(1.3);
+}
+
+.dropdown-arrow.open {
+  transform: rotate(90deg);
+}
+
+.dropdown-content {
+  padding: 1rem;
+  margin-top: 0.5rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 6px;
+  border-left: 3px solid var(--color-primary);
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  animation: slideDown 0.3s ease;
+}
+
+/* ============================================================
+   7. SECCIÓN SOBRE MÍ
+   ============================================================ */
+.sobremi-foto-img {
   width: 100%;
   height: auto;
   border-radius: 12px;
@@ -414,6 +555,7 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   display: block;
   box-shadow: 0 2px 0 var(--emerald-dark);
 }
+
 .sobremi-columns-container {
   column-count: 2;
   column-gap: 28px;
@@ -440,12 +582,11 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
     margin-bottom: 20px;
   }
 }
-/**
- * ============================================
- * Contacto
- * ============================================
- */
-  .contacto-modal-flex {
+
+/* ============================================================
+   8. FORMULARIO DE CONTACTO
+   ============================================================ */
+.contacto-modal-flex {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -478,9 +619,6 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
     min-width: 0;
   }
 }
-/* ===================================== */
-/* CONTACTO MODAL - ESTILOS ESPECÍFICOS */
-/* ===================================== */
 
 .contact-info-grid {
   display: grid;
@@ -535,10 +673,6 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   color: #93c5fd;
   text-decoration: underline;
 }
-
-/* ===================================== */
-/* FORMULARIO */
-/* ===================================== */
 
 .contact-form {
   display: flex;
@@ -630,10 +764,6 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   font-size: 20px;
 }
 
-/* ===================================== */
-/* MENSAJE DE ÉXITO */
-/* ===================================== */
-
 .contact-success {
   text-align: center;
   padding: 40px 20px;
@@ -660,163 +790,9 @@ a, a:link, a:visited, a:hover, a:active, a:focus {
   color: #cbd5e1;
 }
 
-@media (max-width: 700px) {
-  .building-section {
-    padding: 1rem 0.7rem;
-    border-radius: 8px;
-  }
-  .building-section h2 {
-    font-size: 1rem;
-  }
-}
-
-a.btn-prim,
-a.btn-prim:link,
-a.btn-prim:visited,
-a.btn-prim:hover,
-a.btn-prim:active,
-a.btn-prim:focus {
-  text-decoration: none !important;
-  outline: none !important;
-}
-
-
-/* ============================================
-   BOTÓN PRINCIPAL CON FLECHA - PATRÓN REUTILIZABLE
-   Usar clases: .btn-prim y .btn-arrow
-   ============================================ */
-
-.btn-prim {
-	margin-top: 12px;
-	background: transparent;
-	color: var(--color-primary);
-	border: 1.5px solid var(--color-primary);
-	border-radius: 4px;
-	padding: 6px 16px;
-	font-size: 0.9rem;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	display: inline-flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 1rem;
-  text-decoration: none !important;
-}
-
-.btn-prim:hover {
-	background: var(--color-primary);
-	color: var(--color-text-inverse) !important;
-  text-decoration: none !important;
-	
-  transform: scale(1.05);
-}
-
-/* Flecha del botón desplegable */
-.btn-arrow {
-	font-size: 1.6rem;
-	transition: transform 0.3s ease;
-	color: var(--color-primary);
-	font-weight: 300;
-	line-height: 1;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 20px;
-}
-
-.btn-prim:hover .btn-arrow {
-	color: var(--color-text-inverse);
-}
-
-/* Estado abierto - rotar flecha 90 grados */
-.btn-arrow.open {
-	transform: rotate(90deg);
-}
-
-/* ============================================
-   BOTÓN DROPDOWN - PATRÓN REUTILIZABLE
-   ============================================ */
-
-.dropdown-btn {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	background: transparent;
-	border: 1px solid var(--color-border);
-	border-radius: 6px;
-	padding: 0.6rem 1rem;
-	color: var(--color-text-secondary);
-	font-size: 0.95rem;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	text-align: left;
-	margin-bottom: 0.5rem;
-}
-
-.dropdown-btn:hover {
-	border-color: var(--color-primary);
-	color: var(--color-primary);
-	box-shadow: 0 0 8px var(--color-border-glow);
-}
-
-/* Flecha del dropdown */
-.dropdown-arrow {
-	font-size: 1.6rem;
-	transition: transform 0.3s ease;
-	color: var(--color-primary);
-	font-weight: 300;
-	line-height: 1;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	min-width: 20px;
-}
-
-.dropdown-btn:hover .dropdown-arrow {
-	color: var(--color-primary);
-	filter: brightness(1.3);
-}
-
-.dropdown-arrow.open {
-	transform: rotate(90deg);
-}
-
-/* Contenido desplegable */
-.dropdown-content {
-	padding: 1rem;
-	margin-top: 0.5rem;
-	background: var(--color-bg-tertiary);
-	border-radius: 6px;
-	border-left: 3px solid var(--color-primary);
-	color: var(--color-text-primary);
-	font-size: 0.95rem;
-	line-height: 1.6;
-	animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-	from {
-		opacity: 0;
-		transform: translateY(-10px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-
-/* Typography - Responsive */
-.building-modal-body h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #60a5fa;
-  margin: 1.5rem 0 1rem 0;
-  text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
-  letter-spacing: 0.02em;
-}
-
+/* ============================================================
+   9. ESTRUCTURA DEL MODAL
+   ============================================================ */
 .building-modal-overlay {
   position: fixed;
   top: 0;
@@ -836,40 +812,11 @@ a.btn-prim:focus {
   will-change: opacity;
 }
 
-/* ✅ Clase para deshabilitar animaciones */
 .building-modal-overlay.no-animation {
   animation: none;
 }
 
-.building-modal-content.no-animation {
-  animation: none;
-}
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    backdrop-filter: blur(0);
-  }
-  to {
-    opacity: 1;
-    backdrop-filter: blur(12px) saturate(180%);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 .building-modal-content {
-  /* Glassmorphism base */
   background: linear-gradient(135deg, 
     rgba(26, 26, 46, 0.75) 0%, 
     rgba(10, 10, 15, 0.85) 100%
@@ -882,13 +829,10 @@ a.btn-prim:focus {
     0 20px 60px rgba(0, 0, 0, 0.6),
     0 0 40px rgba(0, 245, 255, 0.08),
     inset 0 1px 2px rgba(255, 255, 255, 0.08);
-  
-  /* Responsive width - mobile first */
   width: 100%;
   max-width: 95vw;
   max-height: 85vh;
   z-index: var(--z-modal-content, 101);
-  
   display: flex;
   flex-direction: column;
   animation: slideUp 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -897,7 +841,10 @@ a.btn-prim:focus {
   overflow: hidden;
 }
 
-/* Shimmer effect en modal */
+.building-modal-content.no-animation {
+  animation: none;
+}
+
 .building-modal-content::before {
   content: '';
   position: absolute;
@@ -915,16 +862,6 @@ a.btn-prim:focus {
   pointer-events: none;
 }
 
-@keyframes shimmer {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-/* Tablet (600px+) */
 @media (min-width: 600px) {
   .building-modal-content {
     max-width: 80vw;
@@ -932,7 +869,6 @@ a.btn-prim:focus {
   }
 }
 
-/* Desktop (900px+) */
 @media (min-width: 900px) {
   .building-modal-content {
     max-width: 700px;
@@ -940,19 +876,15 @@ a.btn-prim:focus {
   }
 }
 
-/* Desktop Large (1200px+) */
 @media (min-width: 1200px) {
   .building-modal-content {
     max-width: 800px;
   }
 }
 
-/**
- * ============================================
- * HEADER
- * ============================================
- */
-
+/* ============================================================
+   10. HEADER DEL MODAL
+   ============================================================ */
 .building-modal-header {
   display: flex;
   justify-content: space-between;
@@ -1048,7 +980,6 @@ a.btn-prim:focus {
   transform: scale(0.95) rotate(90deg);
 }
 
-/* Tablet+ adjustments */
 @media (min-width: 600px) {
   .building-modal-header {
     padding: 1.5rem 2rem;
@@ -1071,7 +1002,6 @@ a.btn-prim:focus {
   }
 }
 
-/* Desktop */
 @media (min-width: 900px) {
   .building-modal-header {
     padding: 1.75rem 2.25rem;
@@ -1082,12 +1012,9 @@ a.btn-prim:focus {
   }
 }
 
-/**
- * ============================================
- * BODY
- * ============================================
- */
-
+/* ============================================================
+   11. BODY DEL MODAL
+   ============================================================ */
 .building-modal-body {
   padding: 1.5rem;
   color: #cbd5e1;
@@ -1096,8 +1023,6 @@ a.btn-prim:focus {
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1;
-  
-  /* Scrollbar personalizado */
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 245, 255, 0.4) rgba(26, 26, 46, 0.4);
 }
@@ -1122,7 +1047,14 @@ a.btn-prim:focus {
   box-shadow: 0 0 8px rgba(0, 245, 255, 0.4);
 }
 
-
+.building-modal-body h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #60a5fa;
+  margin: 1.5rem 0 1rem 0;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+  letter-spacing: 0.02em;
+}
 
 .building-modal-body h3 {
   font-size: 1.125rem;
@@ -1205,62 +1137,26 @@ a.btn-prim:focus {
   padding: 0;
 }
 
-/* Tablet*/
 @media (min-width: 600px) {
   .building-modal-body {
     padding: 2rem;
     font-size: 1.0625rem;
   }
   
-
-  
   .building-modal-body h3 {
     font-size: 1.25rem;
   }
 }
 
-/* Desktop */
 @media (min-width: 900px) {
   .building-modal-body {
     padding: 2.25rem;
   }
 }
 
-/**
- * ============================================
- * SECTIONS
- * ============================================
- */
-
-.building-section {
-  background: rgba(26, 26, 46, 0.35);
-  border: 1px solid rgba(0, 245, 255, 0.15);
-  border-radius: 0.75rem;
-  padding: 1.25rem;
-  margin-bottom: 1.25rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-
-.building-section:last-child {
-  margin-bottom: 0;
-}
-
-/* Tablet+ adjustments */
-@media (min-width: 600px) {
-  .building-section {
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-}
-
-/**
- * ============================================
- * EXIT 
- * ============================================
- */
-
+/* ============================================================
+   12. ANIMACIONES DE SALIDA Y TRANSICIONES
+   ============================================================ */
 .building-modal-overlay.exit {
   animation: fadeOut 250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
@@ -1269,12 +1165,34 @@ a.btn-prim:focus {
   animation: slideDown 250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(12px) saturate(180%);
+  }
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;
   }
   to {
     opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1289,24 +1207,38 @@ a.btn-prim:focus {
   }
 }
 
-/**
- * ============================================
- * ACCESSIBILITY
- * ============================================
- */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   13. ACCESIBILIDAD
+   ============================================================ */
 .building-modal-back:focus-visible,
 .building-modal-close:focus-visible {
   outline: 2px solid rgba(0, 245, 255, 0.6);
   outline-offset: 2px;
 }
 
-/**
- * ============================================
- * PERFORMANCE 
- * ============================================
- */
-
+/* ============================================================
+   14. OPTIMIZACIÓN DE RENDIMIENTO
+   ============================================================ */
 .building-modal-overlay,
 .building-modal-content,
 .building-modal-close,
@@ -1325,10 +1257,9 @@ a.btn-prim:focus {
   }
 }
 
-/* ============================================
-   REDES SOCIALES 
-   ============================================ */
-
+/* ============================================================
+   15. REDES SOCIALES
+   ============================================================ */
 .rrss-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1360,6 +1291,10 @@ a.btn-prim:focus {
 .rrss-card-icon {
   font-size: 32px;
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
 }
 
 .rrss-card-name {
@@ -1371,18 +1306,12 @@ a.btn-prim:focus {
   letter-spacing: 0.5px;
 }
 
-.rrss-card-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 3.5rem;
-}
 .rrss-card-description {
   font-size: 11px;
   color: var(--color-text-secondary);
 }
 
-/* Border colors específicos para cada red social */
+/* Colores específicos para cada red social */
 .rrss-card.linkedin {
   border-color: #0a66c2;
   box-shadow: 0 2px 0 #0a66c2;
@@ -1436,6 +1365,7 @@ a.btn-prim:focus {
 .rrss-card.github:hover {
   box-shadow: 0 4px 0 #ff00bf;
 }
+
 .rrss-card.behance {
   border-color: #ffffff;
   box-shadow: 0 2px 0 #ffffff;
@@ -1444,6 +1374,7 @@ a.btn-prim:focus {
 .rrss-card.behance:hover {
   box-shadow: 0 4px 0 #ffffff;
 }
+
 .rrss-info-box {
   background: rgba(59, 130, 246, 0.1);
   border: 2px solid var(--color-primary);

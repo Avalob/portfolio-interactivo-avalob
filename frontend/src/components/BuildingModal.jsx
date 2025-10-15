@@ -1,9 +1,12 @@
-// === BuildingModal.jsx ===
-// Contenedor modal reutilizable para los edificios, pensado para mantener coherencia visual y navegación cómoda.
-
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS PRINCIPALES
+// ============================================================
 import React, { useEffect } from 'react';
 import './BuildingModal.css';
 
+// ============================================================
+// 2. COMPONENTE BuildingModal: MODAL REUTILIZABLE PARA EDIFICIOS
+// ============================================================
 function BuildingModal({
   isOpen,
   onClose,
@@ -15,7 +18,7 @@ function BuildingModal({
   showBackButton = false,
   noAnimation = false
 }) {
-  // --- Hooks ---
+  // Hook para cerrar el modal con la tecla Escape
   useEffect(() => {
     if (!isOpen) return;
     const handleEscape = (e) => {
@@ -29,7 +32,7 @@ function BuildingModal({
 
   if (!isOpen) return null;
 
-  // --- Render principal ---
+  // Renderiza el modal con cabecera, botón de volver/cerrar y contenido
   return (
     <div 
       className={`building-modal-overlay ${noAnimation ? 'no-animation' : ''}`} 
@@ -72,4 +75,7 @@ function BuildingModal({
   );
 }
 
+// ============================================================
+// 3. EXPORTACIÓN PRINCIPAL
+// ============================================================
 export default BuildingModal;

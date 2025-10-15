@@ -30,27 +30,32 @@ function ContactoModal({ isOpen, onClose }) {
     });
   };
 
-  // Envía el formulario usando EmailJS
+  // ============================================================
+  // FUNCIÓN: ENVÍO DEL FORMULARIO DE CONTACTO
+  // Esta función gestiona el envío del formulario usando EmailJS.
+  // Controla el estado de envío, éxito y error, y limpia el formulario tras enviar.
+  // ============================================================
   const handleSubmit = (e) => {
     e.preventDefault();
     setSending(true);
     setError(null);
     emailjs
       .send(
-        'service_4ggfl6r', // ID del servicio EmailJS
-        'template_uvsjcl5',  // ID de la plantilla EmailJS
+        'service_4ggfl6r', // ID del servicio (EmailJS)
+        'template_uvsjcl5',  // ID de la plantilla (EmailJS)
         {
           name: formData.name,
           email: formData.email,
           message: formData.message,
         },
-        'FxUWVTdKBWSYfkWEz' // Clave pública de EmailJS
+        'FxUWVTdKBWSYfkWEz' // Clave pública (EmailJS)
       )
       .then(
         () => {
           setSubmitted(true);
           setSending(false);
           setFormData({ name: '', email: '', message: '' });
+          // Oculta el mensaje de éxito tras 3 segundos
           setTimeout(() => setSubmitted(false), 3000);
         },
         () => {

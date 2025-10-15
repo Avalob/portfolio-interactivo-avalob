@@ -1,15 +1,30 @@
+// ============================================================
+// EXPERIENCIA MODAL - HISTORIAL PROFESIONAL INTERACTIVO
+// Componente que muestra la experiencia laboral con secciones expandibles
+// ============================================================
+
 import React, { useState } from 'react';
 import BuildingModal from './BuildingModal';
 import './BuildingModal.css';
 
-// =============================
-// UI: Modal de Experiencia Profesional
-// =============================
+// ============================================================
+// COMPONENTE PRINCIPAL
+// ============================================================
 function ExperienciaModal({ isOpen, onClose }) {
-  // Estado para controlar qué secciones están expandidas
+  // ============================================================
+  // 1. ESTADO - GESTIÓN DE SECCIONES EXPANDIBLES
+  // ============================================================
+  
+  // Objeto que controla qué secciones están expandidas o colapsadas
+  // Cada key representa una sección específica (ej: 'emco-desc', 'free-logros')
   const [expandedSections, setExpandedSections] = useState({});
 
-  // Alterna la expansión de una sección
+  // ============================================================
+  // 2. FUNCIONES - INTERACTIVIDAD DE DROPDOWNS
+  // ============================================================
+  
+  // Alterna el estado de expansión de una sección específica
+  // Si está abierta, la cierra. Si está cerrada, la abre.
   const toggleSection = (key) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -17,6 +32,9 @@ function ExperienciaModal({ isOpen, onClose }) {
     }));
   };
 
+  // ============================================================
+  // 3. RENDER - ESTRUCTURA DEL MODAL
+  // ============================================================
   return (
     <BuildingModal
       isOpen={isOpen}
@@ -26,12 +44,18 @@ function ExperienciaModal({ isOpen, onClose }) {
       maxWidth="90%"
       maxHeight="90%"
     >
+      {/* Grid de 2 columnas con todas las experiencias laborales */}
       <div className="experiencia-columns">
-        {/* === EMCO AGENCY === */}
+        
+        {/* ============================================================
+            SECCIÓN 1: EMCO AGENCY - DESARROLLADORA WEB
+            Enero 2025 - Mayo 2025
+            ============================================================ */}
         <div className="building-section">
           <h2>🌐 EMCO AGENCY | Desarrolladora Web</h2>
           <p><strong>Enero 2025 - Mayo 2025</strong></p>
-          {/* Sección: Descripción general */}
+          
+          {/* Dropdown: Descripción general */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -46,7 +70,8 @@ function ExperienciaModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          {/* Sección: Logros y responsabilidades */}
+          
+          {/* Dropdown: Logros y responsabilidades */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -66,7 +91,8 @@ function ExperienciaModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          {/* Sección: Resultados destacados */}
+          
+          {/* Dropdown: Resultados destacados */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -86,11 +112,15 @@ function ExperienciaModal({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* === FREELANCE === */}
+        {/* ============================================================
+            SECCIÓN 2: FREELANCE - DESARROLLO WEB
+            2022 - 2024
+            ============================================================ */}
         <div className="building-section">
           <h2>💻 FREELANCE | Desarrollo Web</h2>
           <p><strong>2022 - 2024</strong></p>
-          {/* Sección: Descripción general */}
+          
+          {/* Dropdown: Descripción general */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -105,7 +135,8 @@ function ExperienciaModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          {/* Sección: Logros y responsabilidades */}
+          
+          {/* Dropdown: Logros y responsabilidades */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -123,7 +154,8 @@ function ExperienciaModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          {/* Sección: Proyectos destacados */}
+          
+          {/* Dropdown: Proyectos destacados */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -143,7 +175,8 @@ function ExperienciaModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          {/* Sección: Resultados destacados */}
+          
+          {/* Dropdown: Resultados destacados */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -163,11 +196,15 @@ function ExperienciaModal({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* === MEDIASET === */}
+        {/* ============================================================
+            SECCIÓN 3: MEDIASET - SASTRA DE TELEVISIÓN
+            2021 - 2024
+            ============================================================ */}
         <div className="building-section">
           <h2>📺 MEDIASET | Sastra de Televisión</h2>
           <p><strong>2021 - 2024</strong></p>
-          {/* Sección: Descripción general */}
+          
+          {/* Dropdown: Descripción general */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -182,7 +219,8 @@ function ExperienciaModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          {/* Sección: Logros y responsabilidades */}
+          
+          {/* Dropdown: Logros y responsabilidades */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -201,7 +239,8 @@ function ExperienciaModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          {/* Sección: Resultados destacados */}
+          
+          {/* Dropdown: Resultados destacados */}
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -221,7 +260,10 @@ function ExperienciaModal({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* === HABILIDADES PROFESIONALES CLAVE === */}
+        {/* ============================================================
+            SECCIÓN 4: HABILIDADES PROFESIONALES TRANSVERSALES
+            Competencias clave desarrolladas a lo largo de mi carrera
+            ============================================================ */}
         <div className="building-section">
           <h2>🎯 Habilidades Profesionales Clave</h2>
           <ul>
