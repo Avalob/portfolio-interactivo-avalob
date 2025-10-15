@@ -38,7 +38,9 @@ function TopBar({
   // Calcular progreso
   const totalBuildings = Object.keys(visitedBuildings).length;
   const visitedCount = Object.values(visitedBuildings).filter(Boolean).length;
-  const progressPercent = Math.round((visitedCount / totalBuildings) * 100);
+  const progressPercent = totalBuildings > 0
+    ? (visitedCount / totalBuildings) * 100
+    : 0;
 
   // Estado para animación gradual del progreso
   const [animatedProgress, setAnimatedProgress] = useState(0);
@@ -65,7 +67,10 @@ function TopBar({
     const increment = (targetProgress - animatedProgress) / steps;
     const stepDuration = duration / steps;
 
-    if (Math.abs(targetProgress - animatedProgress) < 1) return;
+    if (Math.abs(targetProgress - animatedProgress) < 0.5) {
+      setAnimatedProgress(targetProgress);
+      return;
+    }
 
     let currentStep = 0;
     const timer = setInterval(() => {

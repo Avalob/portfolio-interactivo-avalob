@@ -101,7 +101,7 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
         <div className="recruiter-panel-header">
           <h2 className="recruiter-panel-title">
             <span className="recruiter-icon">P</span>
-            Modo Profesional
+            Modo Reclutador
           </h2>
           <button className="recruiter-close-btn" onClick={handleToggle}>✕</button>
         </div>

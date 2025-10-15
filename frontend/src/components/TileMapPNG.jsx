@@ -130,6 +130,21 @@ const renderFarolaVerde = (coords) => coords.flatMap(([x, y]) => FAROLA_VERDE(x,
 const renderTiles = (tile, coords) => coords.map(([x, y]) => ({ x, y, tile }));
 const WELCOME_NPC_PHRASE = "¡Bienvenido a mi ciudad! 🌟 Explora los edificios y descubre mi mundo.";
 
+const VISITED_BUILDINGS_DEFAULT = Object.freeze({
+  EDUCACION: false,
+  EXPERIENCIA: false,
+  SKILLS: false,
+  SOBRE_MI: false,
+  OTROS: false,
+  CONTACTO: false,
+  PROYECTOS: false,
+  RRSS: false,
+  HOBBIES: false
+});
+
+const MAP_PIXEL_WIDTH = WIDTH * TILE_SIZE;
+const MAP_PIXEL_HEIGHT = HEIGHT * TILE_SIZE;
+
 // ══════════════════════════════════════════════════════════════════════════════
 // ══════════════════════════════════════════════════════════════════════════════
 // ██                                                                          ██
@@ -249,16 +264,18 @@ function TileMapPNG() {
   // Estado para edificios visitados (se guarda en localStorage)
   const [visitedBuildings, setVisitedBuildings] = useState(() => {
     const saved = localStorage.getItem('portfolio-visited-buildings');
-    return saved ? JSON.parse(saved) : {
-      EDUCACION: false,
-      EXPERIENCIA: false,
-      SKILLS: false,
-      OTROS: false,
-      CONTACTO: false,
-      PROYECTOS: false,
-      RRSS: false,
-      HOBBIES: false
-    };
+
+    if (!saved) {
+      return { ...VISITED_BUILDINGS_DEFAULT };
+    }
+
+    try {
+      const parsed = JSON.parse(saved);
+      return { ...VISITED_BUILDINGS_DEFAULT, ...parsed };
+    } catch (error) {
+      console.warn('No se pudo parsear el progreso guardado, se restablece el estado por defecto.', error);
+      return { ...VISITED_BUILDINGS_DEFAULT };
+    }
   });
   
   // Estado para modo día/noche (por defecto día)
@@ -399,6 +416,13 @@ function TileMapPNG() {
   // === PANTALLA DE BIENVENIDA ===
   // SIEMPRE se muestra al cargar/recargar la página
   const [showWelcome, setShowWelcome] = useState(true);
+
+  const totalBuildingsCount = Object.keys(visitedBuildings).length;
+  const visitedBuildingsCount = Object.values(visitedBuildings).filter(Boolean).length;
+  const progressPercent = totalBuildingsCount > 0
+    ? (visitedBuildingsCount / totalBuildingsCount) * 100
+    : 0;
+  const autoPathIntervalMs = useMemo(() => (isMobileDevice ? 190 : 190), [isMobileDevice]);
 
   // ══════════════════════════════════════════════════════════════════════════════
   // SECCIÓN 4.2: HOOKS Y EFECTOS
@@ -914,25 +938,41 @@ function TileMapPNG() {
   // Movimiento de Pedro (con zona restringida)
   useEffect(() => createNPCMovement(setPedro, 400, 5000, pedro.zone), [createNPCMovement, pedro.zone]);
 
+  const [viewportSize, setViewportSize] = useState(() => {
+    if (typeof window === 'undefined') {
+      return { width: MAP_PIXEL_WIDTH, height: MAP_PIXEL_HEIGHT };
+    }
+    return {
+      width: window.visualViewport?.width ?? window.innerWidth,
+      height: window.visualViewport?.height ?? window.innerHeight
+    };
+  });
+
   // Ajustar la unidad vh personalizada para dispositivos móviles (iOS safari, etc.)
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const setAppViewportHeight = () => {
-      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
-      document.documentElement.style.setProperty('--app-vh', `${viewportHeight * 0.01}px`);
+    const syncViewportMetrics = () => {
+      const currentWidth = window.visualViewport?.width ?? window.innerWidth;
+      const currentHeight = window.visualViewport?.height ?? window.innerHeight;
+      document.documentElement.style.setProperty('--app-vh', `${currentHeight * 0.01}px`);
+      setViewportSize(prev => (
+        prev.width === currentWidth && prev.height === currentHeight
+          ? prev
+          : { width: currentWidth, height: currentHeight }
+      ));
     };
 
-    setAppViewportHeight();
+    syncViewportMetrics();
 
-    window.addEventListener('resize', setAppViewportHeight);
-    window.addEventListener('orientationchange', setAppViewportHeight);
-    window.visualViewport?.addEventListener?.('resize', setAppViewportHeight);
+    window.addEventListener('resize', syncViewportMetrics);
+    window.addEventListener('orientationchange', syncViewportMetrics);
+    window.visualViewport?.addEventListener?.('resize', syncViewportMetrics);
 
     return () => {
-      window.removeEventListener('resize', setAppViewportHeight);
-      window.removeEventListener('orientationchange', setAppViewportHeight);
-      window.visualViewport?.removeEventListener?.('resize', setAppViewportHeight);
+      window.removeEventListener('resize', syncViewportMetrics);
+      window.removeEventListener('orientationchange', syncViewportMetrics);
+      window.visualViewport?.removeEventListener?.('resize', syncViewportMetrics);
     };
   }, []);
 
@@ -940,16 +980,12 @@ function TileMapPNG() {
   // === CÁLCULO DE CÁMARA ===
   // ============================================
   // Dimensiones totales del mapa en píxeles
-  const MAP_PIXEL_WIDTH = WIDTH * TILE_SIZE;
-  const MAP_PIXEL_HEIGHT = HEIGHT * TILE_SIZE;
-  const viewportWidth = typeof window !== 'undefined'
-    ? (window.visualViewport?.width ?? window.innerWidth)
-    : MAP_PIXEL_WIDTH;
-  const viewportHeight = typeof window !== 'undefined'
-    ? (window.visualViewport?.height ?? window.innerHeight)
-    : MAP_PIXEL_HEIGHT;
+  const viewportWidth = viewportSize.width;
+  const viewportHeight = viewportSize.height;
   const VIEWPORT_PIXEL_WIDTH = Math.min(viewportWidth, MAP_PIXEL_WIDTH);
   const VIEWPORT_PIXEL_HEIGHT = Math.min(viewportHeight, MAP_PIXEL_HEIGHT);
+  const containerWidth = Math.min(viewportWidth, MAP_PIXEL_WIDTH);
+  const containerHeight = Math.min(viewportHeight, MAP_PIXEL_HEIGHT);
 
   // === CÁMARA SIEMPRE CENTRADA EN EL AVATAR ===
   // Centro del avatar en píxeles para mantener la cámara estable
@@ -1151,7 +1187,7 @@ function TileMapPNG() {
     if (!targetPosition || pathToTarget.length === 0) return;
     if (enEdificio) return; // No mover si está dentro de un edificio
     
-    const interval = setInterval(() => {
+  const interval = setInterval(() => {
       setPathToTarget(prevPath => {
         if (prevPath.length === 0) {
           setTargetPosition(null);
@@ -1179,10 +1215,10 @@ function TileMapPNG() {
         
         return remainingPath;
       });
-  }, 110); // Ajuste para un desplazamiento más pausado en rutas automáticas
+  }, autoPathIntervalMs); // Ajuste para un desplazamiento más pausado en rutas automáticas, más lento en móvil
     
     return () => clearInterval(interval);
-  }, [targetPosition, pathToTarget, enEdificio, avatar.dir, avatar.x, avatar.y]);
+  }, [targetPosition, pathToTarget, enEdificio, avatar.dir, avatar.x, avatar.y, autoPathIntervalMs]);
 
   // ============================================
   // === MOVIMIENTO AUTOMÁTICO DE NPCs CON RUTAS PREDEFINIDAS ===
@@ -1545,16 +1581,7 @@ function TileMapPNG() {
 
   // Handler para resetear progreso
   const handleResetProgress = useCallback(() => {
-    const resetVisited = {
-      EDUCACION: false,
-      EXPERIENCIA: false,
-      SKILLS: false,
-      OTROS: false,
-      CONTACTO: false,
-      PROYECTOS: false,
-      RRSS: false,
-      HOBBIES: false
-    };
+    const resetVisited = { ...VISITED_BUILDINGS_DEFAULT };
     setVisitedBuildings(resetVisited);
     localStorage.setItem('portfolio-visited-buildings', JSON.stringify(resetVisited));
   addNotification('info', '🔄 Progreso Reseteado', 'Todo vuelve a cero, como tu café esta mañana. Listo para la siguiente ronda.', '✨');
@@ -1826,9 +1853,10 @@ function TileMapPNG() {
       className={`tilemap-root${enEdificio ? ' edificio' : ''}${isDarkMode ? ' night-mode' : ' day-mode'}`}
       onClick={handleMapClick}
       style={{
-        width: `100%`,
-        height: `calc(var(--app-vh, 1vh) * 100)`,
-        minHeight: `100vh`,
+        width: `${containerWidth}px`,
+        minWidth: `${containerWidth}px`,
+        height: `${containerHeight}px`,
+        minHeight: `${containerHeight}px`,
         maxWidth: `${MAP_PIXEL_WIDTH}px`,
         maxHeight: `${MAP_PIXEL_HEIGHT}px`,
         overflow: 'hidden',
@@ -2235,8 +2263,8 @@ function TileMapPNG() {
           onDirectionRelease={handleMobileDirectionRelease}
           onMenuButton={handleMobileMenuButton}
           visitedBuildings={visitedBuildings}
-          animatedProgress={Math.round((Object.values(visitedBuildings).filter(Boolean).length / Object.keys(visitedBuildings).length) * 100)}
-          totalBuildings={Object.keys(visitedBuildings).length}
+          animatedProgress={progressPercent}
+          totalBuildings={totalBuildingsCount}
           movementLocked={enEdificio}
         />
       )}

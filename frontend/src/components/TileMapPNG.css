@@ -485,7 +485,7 @@
   font-size: 13px;
   font-family: var(--font-pokemon);
   font-weight: 500;
-  z-index: 40; 
+  z-index: 60; 
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   text-align: center;
   pointer-events: none;
@@ -520,20 +520,7 @@
   animation: bubbleFadeOut 0.2s ease-out forwards;
 }
 
-.npc-bubble-triangle {
-  position: absolute;
-  left: 50%;
-  bottom: -10px;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 12px solid var(--pokemon-white);
-  border-bottom: 0 solid transparent;
-  z-index: 101;
-  filter: drop-shadow(0 2px 0 var(--pokemon-border));
-}
+
 
 /* Animaciones globales */
 @keyframes fadeIn {
@@ -1108,7 +1095,7 @@
   animation: hornBounce 0.2s ease-out;
   will-change: transform;
   backface-visibility: hidden;
-  z-index: 2;
+  z-index: 60;
 }
 
 @keyframes hornBounce {

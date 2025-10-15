@@ -21,7 +21,7 @@ function MobileJoystick({
   onMenuButton = () => {},
   visitedBuildings = {},
   animatedProgress = 0,
-  totalBuildings = 8,
+  totalBuildings = 9,
   movementLocked = false
 }) {
   const joystickZoneRef = useRef(null);
@@ -29,6 +29,16 @@ function MobileJoystick({
   const currentDirectionRef = useRef(null);
   const movementLockedRef = useRef(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const buildingsTotal = totalBuildings || Object.keys(visitedBuildings).length || 9;
+  const visitedCount = Object.values(visitedBuildings).filter(Boolean).length;
+  const rawProgress = buildingsTotal > 0
+    ? (typeof animatedProgress === 'number'
+        ? animatedProgress
+        : (visitedCount / buildingsTotal) * 100)
+    : 0;
+  const progressPercent = Math.max(0, Math.min(100, rawProgress));
+  const strokeDashArray = progressPercent >= 100 ? '100, 0' : `${progressPercent}, 100`;
 
   // Función para obtener el color según el progreso
   const getProgressColor = (progress) => {
@@ -158,9 +168,9 @@ function MobileJoystick({
           <svg viewBox="0 0 54 54" className="progress-ring">
             <defs>
               <linearGradient id="mobileProgressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor={getProgressColor(animatedProgress)} />
-                <stop offset="50%" stopColor={getProgressColor(Math.max(0, animatedProgress - 10))} />
-                <stop offset="100%" stopColor={getProgressColor(Math.max(0, animatedProgress - 20))} />
+                <stop offset="0%" stopColor={getProgressColor(progressPercent)} />
+                <stop offset="50%" stopColor={getProgressColor(Math.max(0, progressPercent - 10))} />
+                <stop offset="100%" stopColor={getProgressColor(Math.max(0, progressPercent - 20))} />
               </linearGradient>
             </defs>
             <path
@@ -172,13 +182,13 @@ function MobileJoystick({
             <path
               className="progress-ring-fill"
               stroke="url(#mobileProgressGradient)"
-              strokeDasharray={`${animatedProgress}, 100`}
+              strokeDasharray={strokeDashArray}
               d="M27 5.0845
                 a 21.9155 21.9155 0 0 1 0 43.831
                 a 21.9155 21.9155 0 0 1 0 -43.831"
             />
           </svg>
-          <span className="progress-text">{Object.values(visitedBuildings).filter(Boolean).length}/{totalBuildings}</span>
+          <span className="progress-text">{visitedCount}/{buildingsTotal}</span>
         </div>
 
         <button
