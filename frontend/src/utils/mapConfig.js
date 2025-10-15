@@ -30,7 +30,7 @@ export const NPC_SPRITES = {
 
 // NPC casco obra - chaleco naranja
 export const OBRERO_SPRITES = {
-  right: [323, 296, 223],
+  right: [269, 296, 323],
   left:  [266, 320, 293],
   down:  [267, 321, 294],
   up:    [268, 322, 295],

@@ -910,7 +910,7 @@ function TileMapPNG() {
         
         if (canMove) {
           stepsRemaining--;
-          return { ...prev, x: nx, y: ny, step: prev.step === 1 ? 2 : 1 };
+          return { ...prev, x: nx, y: ny, step: (prev.step + 1) % 3 };
         } else {
           // Chocó con algo, pararse inmediatamente
           stepsRemaining = 0;
@@ -1210,7 +1210,7 @@ function TileMapPNG() {
           x: nextPos.x,
           y: nextPos.y,
           dir: newDir,
-          step: prev.step === 0 ? 1 : 0
+          step: (prev.step + 1) % 3 // Ciclo completo: 0 → 1 → 2 → 0
         }));
         
         return remainingPath;
