@@ -1,0 +1,954 @@
+/* ================================================
+   BOTÓN FLOTANTE - MINIMALISTA Y MODERNO
+   ================================================ */
+
+.recruiter-toggle-btn {
+  position: fixed;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  padding: var(--btn-padding-sm);
+  height: var(--btn-height-md);
+  border-radius: var(--radius-full);
+  font-size: var(--btn-font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family-base);
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  box-shadow: var(--shadow-lg);
+  z-index: 999;
+  transition: all var(--transition-base);
+}
+
+.recruiter-toggle-btn:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
+}
+
+.recruiter-toggle-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}
+
+.recruiter-toggle-btn.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-20px);
+}
+
+.recruiter-toggle-icon {
+  font-size: var(--font-size-lg);
+}
+
+.recruiter-toggle-text {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+}
+
+/* ================================================
+   PANEL LATERAL
+   ================================================ */
+
+.recruiter-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 780px;
+  max-width: 95vw;
+  height: 100vh;
+  
+  /* ✅ Glassmorphism unificado con BuildingModal */
+  background: linear-gradient(135deg, 
+    rgba(26, 26, 46, 0.75) 0%, 
+    rgba(10, 10, 15, 0.85) 100%
+  );
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-left: 1.5px solid rgba(0, 245, 255, 0.25);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(0, 245, 255, 0.08),
+    inset 0 1px 2px rgba(255, 255, 255, 0.08);
+  
+  z-index: 1001;
+  transition: right 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.recruiter-panel.open {
+  right: 0;
+}
+
+/* Header del panel */
+.recruiter-panel-header {
+  background: rgba(26, 26, 46, 0.5); /* ✅ Mismo tono semitransparente */
+  padding: var(--space-xl) var(--space-lg);
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid rgba(0, 245, 255, 0.25); /* ✅ Borde unificado */
+}
+
+.recruiter-panel-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-base);
+  letter-spacing: -0.25px;
+  color: var(--color-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.recruiter-icon {
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  color: rgba(0, 245, 255, 1);
+  background: rgba(0, 245, 255, 0.1);
+  border: 2px solid rgba(0, 245, 255, 0.3);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 245, 255, 0.2);
+}
+
+.recruiter-close-btn {
+  background: transparent;
+  border: var(--btn-border-width) solid white;
+  color: white;
+  width: var(--btn-height-sm);
+  height: var(--btn-height-sm);
+  border-radius: var(--btn-border-radius);
+  font-size: var(--font-lg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recruiter-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.recruiter-close-btn:active {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(1px);
+}
+
+/* Contenido con scroll */
+.recruiter-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  background: transparent;
+}
+
+.recruiter-panel-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.recruiter-panel-content::-webkit-scrollbar-track {
+  background: rgba(26, 26, 46, 0.3);
+  border-radius: 4px;
+}
+
+.recruiter-panel-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.3);
+  border-radius: 4px;
+}
+
+.recruiter-panel-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 255, 0.5);
+}
+
+/* Secciones - Estilo moderno unificado */
+.building-section {
+  background: rgba(26, 26, 46, 0.35);
+  border: 1px solid rgba(0, 245, 255, 0.15);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.building-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Variaciones sutiles de color por sección */
+.about-section {
+  border-color: rgba(0, 220, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 220, 255, 0.12);
+}
+
+.info-section {
+  border-color: rgba(0, 255, 200, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 255, 200, 0.12);
+}
+
+.cv-section {
+  border-color: rgba(0, 200, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 200, 255, 0.12);
+}
+
+.links-section {
+  border-color: rgba(0, 255, 230, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 255, 230, 0.12);
+}
+
+.experience-section {
+  border-color: rgba(0, 180, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 180, 255, 0.12);
+}
+
+.education-section {
+  border-color: rgba(0, 255, 180, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 255, 180, 0.12);
+}
+
+.courses-section {
+  border-color: rgba(0, 210, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.12);
+}
+
+.skills-section {
+  border-color: rgba(0, 255, 210, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 255, 210, 0.12);
+}
+
+/* Contact section - Extra spacing from button above */
+.contact-section {
+  margin-top: 2rem;
+  border-color: rgba(0, 245, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.12);
+}
+
+/* Tablet+ adjustments */
+@media (min-width: 600px) {
+  .building-section {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.recruiter-section-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(0, 245, 255, 1);
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(0, 245, 255, 0.25);
+}
+
+/* Variaciones sutiles de color para títulos de sección */
+.about-section .recruiter-section-title {
+  color: rgba(0, 220, 255, 1);
+  border-bottom-color: rgba(0, 220, 255, 0.35);
+}
+
+.info-section .recruiter-section-title {
+  color: rgba(0, 255, 200, 1);
+  border-bottom-color: rgba(0, 255, 200, 0.35);
+}
+
+.cv-section .recruiter-section-title {
+  color: rgba(0, 200, 255, 1);
+  border-bottom-color: rgba(0, 200, 255, 0.35);
+}
+
+.links-section .recruiter-section-title {
+  color: rgba(0, 255, 230, 1);
+  border-bottom-color: rgba(0, 255, 230, 0.35);
+}
+
+.experience-section .recruiter-section-title {
+  color: rgba(0, 180, 255, 1);
+  border-bottom-color: rgba(0, 180, 255, 0.35);
+}
+
+.education-section .recruiter-section-title {
+  color: rgba(0, 255, 180, 1);
+  border-bottom-color: rgba(0, 255, 180, 0.35);
+}
+
+.courses-section .recruiter-section-title {
+  color: rgba(0, 210, 255, 1);
+  border-bottom-color: rgba(0, 210, 255, 0.35);
+}
+
+.skills-section .recruiter-section-title {
+  color: rgba(0, 255, 210, 1);
+  border-bottom-color: rgba(0, 255, 210, 0.35);
+}
+
+.contact-section .recruiter-section-title {
+  color: rgba(0, 245, 255, 1);
+  border-bottom-color: rgba(0, 245, 255, 0.35);
+}
+
+/* ================================================
+   SECCIÓN SOBRE MÍ
+   ================================================ */
+
+.about-description {
+  color: rgba(226, 232, 240, 0.9);
+  line-height: 1.7;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  margin: 0 0 1rem 0;
+  text-align: justify;
+}
+
+.about-description:last-child {
+  margin-bottom: 0;
+}
+
+/* ================================================
+   INFORMACIÓN RÁPIDA
+   ================================================ */
+
+.recruiter-quick-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quick-info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.15);
+  background: rgba(26, 26, 46, 0.3);
+  border-radius: 0.5rem;
+}
+
+.quick-info-item:last-child {
+  border-bottom: 1px solid rgba(0, 245, 255, 0.15);
+}
+
+.email-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.email-link:hover {
+  background: rgba(0, 245, 255, 0.1);
+  border-color: rgba(0, 245, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 245, 255, 0.15);
+}
+
+.email-link:active {
+  transform: translateY(0);
+}
+
+.phone-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.phone-link:hover {
+  background: rgba(0, 245, 255, 0.1);
+  border-color: rgba(0, 245, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 245, 255, 0.15);
+}
+
+.phone-link:active {
+  transform: translateY(0);
+}
+
+.info-label {
+  color: rgba(0, 245, 255, 0.9);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  color: rgba(226, 232, 240, 0.95);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.availability-badge {
+  background: rgba(34, 197, 94, 0.15);
+  color: rgba(34, 197, 94, 1);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  padding: 0.375rem 0.75rem;
+  height: auto;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+}
+
+@keyframes availabilityGlow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+/* DOWNLOAD CV BUTTON - Estilo elegante */
+.download-cv-btn {
+  width: 100%;
+  background: rgba(0, 245, 255, 0.1);
+  color: rgba(0, 245, 255, 1);
+  border: 1px solid rgba(0, 245, 255, 0.4);
+  padding: 0.875rem 1.25rem;
+  min-height: 3rem;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  transition: all 250ms ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.download-cv-btn:hover {
+  background: rgba(0, 245, 255, 0.15);
+  border-color: rgba(0, 245, 255, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.2);
+}
+
+.download-cv-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.download-icon {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* SOCIAL LINKS - Estilo moderno */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  min-height: 3rem;
+  background: rgba(26, 26, 46, 0.4);
+  border: 1.5px solid rgba(0, 245, 255, 0.2);
+  border-radius: 0.75rem;
+  color: rgba(226, 232, 240, 0.95);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-transform: none;
+  letter-spacing: 0.3px;
+}
+
+.social-link:hover {
+  background: rgba(0, 245, 255, 0.15);
+  color: rgba(0, 245, 255, 1);
+  border-color: rgba(0, 245, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 245, 255, 0.25);
+}
+
+.social-link:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.social-link.linkedin:hover,
+.social-link.github:hover,
+.social-link.portfolio:hover,
+.social-link.email:hover {
+  border-color: rgba(0, 245, 255, 0.5);
+}
+
+.social-icon {
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: rgba(0, 245, 255, 0.8);
+  background: rgba(0, 245, 255, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  min-width: 2rem;
+  text-align: center;
+  border: 1px solid rgba(0, 245, 255, 0.3);
+}
+
+.linkedin-icon {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  min-width: auto !important;
+  font-size: 2.5rem !important;
+  color: rgba(0, 245, 255, 1) !important;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-icon {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  min-width: auto !important;
+  font-size: 2.5rem !important;
+  color: rgba(0, 245, 255, 1) !important;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.behance-icon {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  min-width: auto !important;
+  font-size: 2.5rem !important;
+  color: rgba(0, 245, 255, 1) !important;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-text {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.social-arrow {
+  font-size: 1.125rem;
+  font-weight: 700;
+  transition: transform 0.3s ease;
+  color: rgba(0, 245, 255, 0.7);
+}
+
+.social-link:hover .social-arrow {
+  transform: translateX(4px);
+  color: rgba(0, 245, 255, 1);
+}
+
+/* SKILLS GRID - Estilo moderno */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.625rem;
+}
+
+.skill-chip {
+  background: rgba(0, 245, 255, 0.08);
+  border: 1px solid rgba(0, 245, 255, 0.25);
+  color: rgba(0, 245, 255, 0.9);
+  padding: 0.5rem 0.75rem;
+  min-height: 2.25rem;
+  border-radius: 0.375rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: 0.25px;
+  transition: all 200ms ease;
+  cursor: default;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-chip:hover {
+  background: rgba(0, 245, 255, 0.12);
+  border-color: rgba(0, 245, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 245, 255, 0.15);
+}
+
+/* SKILLS CATEGORIES */
+.skills-category {
+  margin-bottom: 1.5rem;
+}
+
+.skills-category:last-child {
+  margin-bottom: 0;
+}
+
+.skills-category-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(0, 245, 255, 0.8);
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+/* EXPERIENCE TIMELINE - Estilo moderno */
+.experience-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid rgba(0, 245, 255, 0.3);
+}
+
+.experience-item {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+}
+
+.experience-dot {
+  position: absolute;
+  left: -1.875rem;
+  top: 0.375rem;
+  width: 10px;
+  height: 10px;
+  background: rgba(0, 245, 255, 0.7);
+  border: 2px solid rgba(26, 26, 46, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+}
+
+.experience-dot.current {
+  background: rgba(0, 245, 255, 1);
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.8);
+  animation: pulseExperience 2s ease-in-out infinite;
+}
+
+@keyframes pulseExperience {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 245, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 245, 255, 1);
+  }
+}
+
+/* Variaciones de color para puntos de timeline por sección */
+.experience-section .experience-dot {
+  background: rgba(0, 180, 255, 0.7);
+  box-shadow: 0 0 10px rgba(0, 180, 255, 0.5);
+}
+
+.experience-section .experience-dot.current {
+  background: rgba(0, 180, 255, 1);
+  box-shadow: 0 0 15px rgba(0, 180, 255, 0.8);
+  animation: pulseExperienceSection 2s ease-in-out infinite;
+}
+
+@keyframes pulseExperienceSection {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 180, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 180, 255, 1);
+  }
+}
+
+.experience-section .experience-timeline {
+  border-left-color: rgba(0, 180, 255, 0.3);
+}
+
+.education-section .experience-dot {
+  background: rgba(0, 255, 180, 0.7);
+  box-shadow: 0 0 10px rgba(0, 255, 180, 0.5);
+}
+
+.education-section .experience-dot.current {
+  background: rgba(0, 255, 180, 1);
+  box-shadow: 0 0 15px rgba(0, 255, 180, 0.8);
+  animation: pulseEducationSection 2s ease-in-out infinite;
+}
+
+@keyframes pulseEducationSection {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 255, 180, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 180, 1);
+  }
+}
+
+.education-section .experience-timeline {
+  border-left-color: rgba(0, 255, 180, 0.3);
+}
+
+.courses-section .experience-dot {
+  background: rgba(0, 210, 255, 0.7);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+}
+
+.courses-section .experience-dot.current {
+  background: rgba(0, 210, 255, 1);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.8);
+  animation: pulseCoursesSection 2s ease-in-out infinite;
+}
+
+@keyframes pulseCoursesSection {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 210, 255, 1);
+  }
+}
+
+.courses-section .experience-timeline {
+  border-left-color: rgba(0, 210, 255, 0.3);
+}
+
+.experience-content h4 {
+  color: rgba(226, 232, 240, 0.95);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 0.375rem 0;
+}
+
+.experience-company {
+  color: rgba(0, 245, 255, 0.9);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  margin: 0 0 0.25rem 0;
+}
+
+.experience-period {
+  color: rgba(148, 163, 184, 0.8);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* CONTACT FORM - Estilo moderno */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.form-group label {
+  color: rgba(0, 245, 255, 0.9);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group textarea {
+  background: rgba(26, 26, 46, 0.5);
+  border: 1.5px solid rgba(0, 245, 255, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  color: rgba(226, 232, 240, 0.95);
+  font-size: 0.9375rem;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 300ms ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: rgba(0, 245, 255, 0.6);
+  background: rgba(26, 26, 46, 0.7);
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+.submit-btn {
+  background: rgba(0, 245, 255, 0.15);
+  color: rgba(0, 245, 255, 1);
+  border: 1.5px solid rgba(0, 245, 255, 0.5);
+  padding: 0.75rem 1rem;
+  height: auto;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.2);
+}
+
+.submit-btn:hover {
+  background: rgba(0, 245, 255, 0.25);
+  border-color: rgba(0, 245, 255, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 245, 255, 0.3);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 245, 255, 0.2);
+}
+
+.submit-icon {
+  font-size: 1.125rem;
+}
+
+/* Form Success Message */
+.form-success {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+.success-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.75rem;
+  animation: successPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes successPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.form-success p {
+  color: rgba(0, 245, 255, 1);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0.375rem 0;
+}
+
+.success-subtext {
+  color: rgba(226, 232, 240, 0.9);
+  font-size: 0.9375rem;
+}
+
+/* BACKDROP */
+.recruiter-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  animation: fadeIn 300ms ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+
+@media (max-width: 768px) {
+  .recruiter-panel {
+    width: 100%;
+    right: -100%;
+    z-index: 10001; /* Aumentar z-index para estar por encima de otros elementos */
+  }
+
+  .recruiter-panel.open {
+    right: 0;
+    z-index: 10001; /* Mantener z-index alto cuando está abierto */
+  }
+
+  .recruiter-backdrop {
+    z-index: 10000; /* Backdrop por debajo del panel */
+  }
+
+  .recruiter-toggle-btn {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+
+  .recruiter-toggle-text {
+    display: none;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

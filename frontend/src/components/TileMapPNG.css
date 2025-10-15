@@ -1,0 +1,1145 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* Día/noche y tema neón */
+
+.tilemap-root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: -36px; 
+  bottom: -36px; 
+  background: rgba(6, 8, 15, 0.45); 
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.8s ease;
+}
+
+.tilemap-root.day-mode::before {
+  opacity: 0;
+}
+
+/* Filtro neón en modo noche */
+.tilemap-root.night-mode .tilemap-objeto,
+.tilemap-root.night-mode .tilemap-tile {
+  filter: brightness(0.9) contrast(1.1) saturate(1.2);
+  transition: filter 0.8s ease;
+}
+
+/* Oscurecer objetos, farolas y semáforos en modo noche */
+
+.tilemap-root.night-mode .tilemap-farola,
+.tilemap-root.night-mode .tilemap-semaforo {
+  filter: brightness(0.6) contrast(1.1) saturate(1.2) !important;
+  transition: filter 0.8s ease;
+}
+
+.tilemap-root.day-mode .tilemap-tile {
+  filter: brightness(1) contrast(1) saturate(1);
+  transition: filter 0.8s ease;
+}
+
+/* Oscurecer avatares y NPCs en modo noche */
+.tilemap-root.night-mode .tilemap-avatar,
+.tilemap-root.night-mode .tilemap-npc {
+  filter: brightness(0.6) saturate(0.8); 
+  transition: filter 0.8s ease;
+}
+.tilemap-root.day-mode .tilemap-avatar,
+.tilemap-root.day-mode .tilemap-npc {
+  filter: brightness(1);
+  transition: filter 0.8s ease;
+}
+
+/* Faroles con luz amarilla en la noche */
+.tilemap-farolillo {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 120, 0.35) 4%, rgba(204, 190, 96, 0.18) 80%, transparent 70%);
+  pointer-events: none;
+  z-index: 6; 
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.tilemap-root.night-mode .tilemap-farolillo {
+  opacity: 3;
+  box-shadow: 
+    0 0 12px 6px rgba(255, 220, 100, 0.4),
+    0 0 24px 12px rgba(255, 240, 150, 0.25),
+    0 0 36px 18px rgba(255, 255, 200, 0.15);
+  transition: all 0.8s ease;
+}
+
+
+/* Ventanas iluminadas en modo noche */
+.tilemap-window {
+  position: absolute;
+  background: transparent;
+  box-shadow: none;
+  pointer-events: none;
+  z-index: 3;
+  transition: all 0.8s ease;
+  border-radius: 2px;
+  filter: blur(0);
+}
+
+.tilemap-root.night-mode .tilemap-window {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 230, 120, 0.6) 0%,
+    rgba(255, 240, 150, 0.45) 30%,
+    rgba(255, 245, 180, 0.3) 60%,
+    rgba(255, 250, 200, 0.15) 90%,
+    rgba(255, 255, 220, 0) 100%
+  );
+  box-shadow: 
+    0 0 15px 8px rgba(255, 230, 120, 0.3),
+    0 0 25px 12px rgba(255, 240, 150, 0.2);
+  filter: blur(3px);
+}
+
+
+/* Edificios con tinte neón en la noche */
+.tilemap-root.night-mode .tilemap-edificio {
+  filter: brightness(0.7) saturate(1.3);
+}
+
+.tilemap-root.day-mode .tilemap-edificio {
+  filter: brightness(1);
+}
+
+/* ========================
+   Carteles Pixel-Art + Neón
+   ======================== */
+.tilemap-cartel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  pointer-events: none;
+  z-index: 40;
+
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  white-space: pre-line;
+  word-wrap: break-word;
+  padding: 3px 4px;
+
+  /* Centrado y tamaño de 1 tile */
+  transform: translate(-50%, -30%);
+  overflow: hidden;
+
+  /* Estilo neón suave */
+  color: #e8e8e8;
+  background: rgba(15, 20, 30, 0.9);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+
+  /* Sombra neón sutil con animación lenta */
+  text-shadow: 
+    0 0 3px currentColor,
+    0 0 6px currentColor;
+  
+  box-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.2),
+    inset 0 0 6px rgba(255, 255, 255, 0.05),
+    0 3px 0 rgba(0, 0, 0, 0.6);
+  
+  animation: neonGlow 5.5s ease-in-out infinite, neonSpark 2.6s linear infinite;
+  animation-delay: var(--neon-delay, 0s), var(--neon-delay, 0s);
+  image-rendering: pixelated;
+}
+
+/* Responsive para móvil */
+@media (max-width: 600px) {
+  .tilemap-cartel {
+    font-size: 10px;
+    padding: 2px 3px;
+    border-width: 1px;
+  }
+}
+
+/* Responsive para tablet */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .tilemap-cartel {
+    font-size: 8px;
+  }
+}
+
+/* Responsive para desktop grande */
+@media (min-width: 1400px) {
+  .tilemap-cartel {
+    font-size: 11px;
+  }
+}
+
+@keyframes neonGlow {
+  0% {
+    text-shadow:
+      0 0 2px currentColor,
+      0 0 4px currentColor,
+      0 0 12px rgba(255, 255, 255, 0.25);
+    filter: brightness(0.92);
+  }
+  17% {
+    text-shadow:
+      0 0 3px currentColor,
+      0 0 6px currentColor,
+      0 0 16px rgba(255, 255, 255, 0.28);
+    filter: brightness(0.98);
+  }
+  29% {
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 12px currentColor,
+      0 0 22px rgba(255, 255, 255, 0.35);
+    filter: brightness(1.08);
+  }
+  52% {
+    text-shadow:
+      0 0 4px currentColor,
+      0 0 10px currentColor,
+      0 0 18px rgba(255, 255, 255, 0.32);
+    filter: brightness(1);
+  }
+  76% {
+    text-shadow:
+      0 0 6px currentColor,
+      0 0 14px currentColor,
+      0 0 26px rgba(255, 255, 255, 0.4);
+    filter: brightness(1.12);
+  }
+  100% {
+    text-shadow:
+      0 0 3px currentColor,
+      0 0 8px currentColor,
+      0 0 18px rgba(255, 255, 255, 0.3);
+    filter: brightness(1.02);
+  }
+}
+
+@keyframes neonSpark {
+  0%, 18%, 22%, 100% {
+    opacity: 1;
+  }
+  12% {
+    opacity: 0.92;
+  }
+  20% {
+    opacity: 0.86;
+  }
+  34% {
+    opacity: 0.98;
+  }
+  47% {
+    opacity: 0.91;
+  }
+  63% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 0.87;
+  }
+  88% {
+    opacity: 0.95;
+  }
+}
+
+/* ---------- Neon Colors por categoría ---------- */
+
+/* VERDE - Educación */
+.tilemap-cartel.neon-sign.neon-green {
+  color: #a5e0c5 !important;
+}
+
+/* AZUL - Experiencia */
+.tilemap-root .tilemap-cartel.neon-sign.neon-blue,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-blue,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-blue {
+  color: #a5d0e8 !important;
+}
+
+/* AMARILLO - Otros */
+.tilemap-root .tilemap-cartel.neon-sign.neon-yellow,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-yellow,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-yellow {
+  color: #f0e8a0 !important;
+}
+
+/* NARANJA - Sobre Mí */
+.tilemap-root .tilemap-cartel.neon-sign.neon-orange,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-orange,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-orange {
+  color: #f0c8a0 !important;
+}
+
+/* ROJO - Contacto */
+.tilemap-root .tilemap-cartel.neon-sign.neon-red,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-red,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-red {
+  color: #f0a8b8 !important;
+}
+
+/* PÚRPURA - Proyectos */
+.tilemap-root .tilemap-cartel.neon-sign.neon-purple,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-purple,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-purple {
+  color: #d0b8e8 !important;
+}
+
+/* CYAN - Skills */
+.tilemap-root .tilemap-cartel.neon-sign.neon-cyan,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-cyan,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-cyan {
+  color: #a0e0e8 !important;
+}
+
+/* ROSA - RRSS */
+.tilemap-root .tilemap-cartel.neon-sign.neon-pink,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-pink,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-pink {
+  color: #e8b8d8 !important;
+}
+
+/* TEAL - Hobbies */
+.tilemap-root .tilemap-cartel.neon-sign.neon-teal,
+.tilemap-root.night-mode .tilemap-cartel.neon-sign.neon-teal,
+.tilemap-root.day-mode .tilemap-cartel.neon-sign.neon-teal {
+  color: #a8e0d0 !important;
+}
+
+/* Compacto (carteles pequeños) */
+.tilemap-root .tilemap-cartel.neon-sign:nth-of-type(2n) {
+  --neon-delay: 0.45s;
+}
+
+.tilemap-root .tilemap-cartel.neon-sign:nth-of-type(3n) {
+  --neon-delay: 0.9s;
+}
+
+.tilemap-root .tilemap-cartel.neon-sign:nth-of-type(5n) {
+  --neon-delay: 1.3s;
+}
+
+.tilemap-root .tilemap-cartel.neon-sign:nth-of-type(7n) {
+  --neon-delay: 1.75s;
+}
+.tilemap-cartel.compact {
+  font-size: clamp(10px, 1vw, 12px);
+  padding: 1px 3px;
+}
+
+@keyframes neonFlicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    filter: brightness(1.3) saturate(1.4);
+  }
+  20%, 24%, 55% {
+    opacity: 0.75;
+    filter: brightness(0.9) saturate(1.1);
+  }
+  22% {
+    opacity: 0.5;
+    filter: brightness(0.7) saturate(1);
+  }
+  82% {
+    opacity: 0.85;
+    filter: brightness(1.1) saturate(1.2);
+  }
+  84% {
+    opacity: 0.6;
+    filter: brightness(0.8) saturate(1.05);
+  }
+}
+
+.tilemap-row {
+  display: flex;
+}
+
+.tilemap-tile {
+  pointer-events: none;
+
+  z-index: 1;
+  display: block;
+}
+.tilemap-tile {
+  font-size: 0;
+}
+
+.tilemap-edificio {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+.tilemap-edificio.flip-x {
+  transform: scaleX(-1);
+}
+
+.tilemap-objeto {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+  filter: none;
+  transition: filter 0.8s ease;
+}
+.tilemap-objeto.flip-x {
+  transform: scaleX(-1);
+}
+.tilemap-objeto.rotate90 {
+  transform: rotate(90deg);
+}
+.tilemap-objeto.rotate180 {
+  transform: rotate(180deg);
+}
+.tilemap-objeto.rotate270 {
+  transform: rotate(270deg);
+}
+
+.tilemap-farola,
+.tilemap-semaforo {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  filter: none;
+  transition: filter 0.8s ease;
+}
+.tilemap-farola.flip-x,
+.tilemap-semaforo.flip-x {
+  transform: scaleX(-1);
+}
+
+.tilemap-toldo {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+
+
+
+.tilemap-avatar {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  transition: 
+    left 0.05s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    top 0.05s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.2s ease-out;
+}
+
+/* ============================================ */
+/* EFECTO DE TELETRANSPORTE*/
+/* ============================================ */
+.tilemap-avatar.teleporting {
+  opacity: 0;
+  filter: blur(6px) brightness(1.8);
+  transform: scale(0.7);
+  transition: 
+    opacity 0.25s ease-out, 
+    filter 0.25s ease-out, 
+    transform 0.25s ease-out;
+}
+
+/* ============================================ */
+/* EFECTO DE SUPERPOSICIÓN CON NPCs */
+/* ============================================ */
+/* Cuando el avatar está sobre otro jugador, se vuelve semi-transparente */
+.tilemap-avatar.overlapping-npc {
+  opacity: 0.85;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+  z-index: 15; /* Aumentar z-index para estar visible sobre el NPC */
+}
+
+.tilemap-npc {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  transition: left 1.2s linear, top 1.2s linear;
+}
+
+.npc-bubble {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 16px));
+  background: rgba(255, 255, 255, 0.98);
+  color: black;
+  border-radius: 10px;
+  border: 2px solid var(--emerald-green);
+  padding: 12px 18px;
+  font-size: 13px;
+  font-family: var(--font-pokemon);
+  font-weight: 500;
+  z-index: 40; 
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  pointer-events: none;
+  line-height: 1.6;
+  white-space: pre-line;
+  min-width: 60px;
+  max-width: 260px;
+  display: inline-block;
+  overflow: visible;
+  word-break: break-word;
+  
+
+  animation: pokemonBubbleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pokemonBubbleIn {
+  0% {
+    transform: translate(-50%, calc(-100% - 30px)) scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-50%, calc(-100% - 14px)) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, calc(-100% - 16px)) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Clase para animación de salida */
+.npc-bubble.fade-out {
+  animation: bubbleFadeOut 0.2s ease-out forwards;
+}
+
+.npc-bubble-triangle {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid var(--pokemon-white);
+  border-bottom: 0 solid transparent;
+  z-index: 101;
+  filter: drop-shadow(0 2px 0 var(--pokemon-border));
+}
+
+/* Animaciones globales */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translate(-50%, -50%) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes bubbleSlideIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 8px)) translateY(10px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 8px)) translateY(-2px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 8px)) translateY(0) scale(1);
+  }
+}
+
+@keyframes bubbleFadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - 8px)) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-100% - 8px)) scale(0.9);
+  }
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 99;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Contenedores de modal estilo GBA */
+.modal-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--emerald-dark);
+  border-radius: 4px;
+  padding: 0;
+  z-index: 100;
+  max-width: 600px;
+  max-height: 85vh;
+  animation: none;
+  box-shadow: none;
+  overflow: hidden;
+  background: white;
+}
+
+.modal-container.educacion,
+.modal-container.experiencia,
+.modal-container.skills,
+.modal-container.rrss,
+.modal-container.hobbies,
+.modal-container.sobremi,
+.modal-container.otros {
+  border-left: 2px solid var(--emerald-dark);
+}
+
+/* Contenido interno del modal */
+.modal-inner {
+  background: var(--pokemon-cream);
+  border-radius: 4px;
+  padding: 20px 24px;
+  color: var(--pokemon-dark);
+  overflow-y: auto;
+  max-height: calc(85vh - 8px);
+  
+  /* Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--emerald-dark) var(--pokemon-white);
+}
+
+.modal-inner::-webkit-scrollbar {
+  width: 10px;
+}
+
+.modal-inner::-webkit-scrollbar-track {
+  background: var(--pokemon-white);
+  border-radius: 4px;
+  border: 2px solid var(--pokemon-border-light);
+}
+
+.modal-inner::-webkit-scrollbar-thumb {
+  background: var(--emerald-dark);
+  border-radius: 4px;
+  border: 2px solid var(--pokemon-white);
+}
+
+.modal-inner::-webkit-scrollbar-thumb:hover {
+  background: var(--pokemon-dark);
+}
+/* Cabecera del modal estilo GBA */
+.modal-header {
+  text-align: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--pokemon-border-light);
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--emerald-dark);
+  color: white;
+  border: 2px solid var(--pokemon-dark);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 0 var(--pokemon-dark);
+  font-family: 'Arial', sans-serif;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  background: var(--pokemon-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.modal-close-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 0 var(--pokemon-dark);
+}
+
+.modal-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--emerald-dark);
+  font-family: var(--font-pokemon);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-title.educacion,
+.modal-title.experiencia,
+.modal-title.skills,
+.modal-title.rrss,
+.modal-title.hobbies,
+.modal-title.sobremi,
+.modal-title.otros {
+  color: var(--emerald-dark);
+}
+
+.modal-separator {
+  width: 60px;
+  height: 3px;
+  margin: 12px auto;
+  border-radius: 2px;
+  background: var(--emerald-dark);
+}
+
+.modal-separator.educacion,
+.modal-separator.experiencia,
+.modal-separator.skills,
+.modal-separator.rrss,
+.modal-separator.hobbies,
+.modal-separator.sobremi,
+.modal-separator.otros {
+  background: var(--emerald-dark);
+}
+
+/* Contenido del modal */
+.modal-content {
+  white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0;
+  font-family: var(--font-base);
+  background: rgba(255, 255, 255, 0.8);
+  padding: 22px;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  color: var(--pokemon-dark);
+}
+
+/* Footer del modal */
+.modal-footer {
+  text-align: center;
+  margin-top: 28px;
+}
+
+/* Botón de modal estilo GBA */
+.modal-button {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-pokemon);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid var(--emerald-dark);
+  background: white;
+  color: var(--emerald-dark);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  box-shadow: 0 2px 0 var(--emerald-dark);
+}
+
+.modal-button:hover {
+  background: var(--pokemon-cream);
+}
+
+.modal-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 var(--emerald-dark);
+}
+
+.modal-button.educacion,
+.modal-button.experiencia,
+.modal-button.skills,
+.modal-button.rrss,
+.modal-button.hobbies,
+.modal-button.sobremi,
+.modal-button.otros {
+  background: white;
+  color: var(--emerald-dark);
+  border: 2px solid var(--emerald-dark);
+}
+
+.modal-key {
+  background: var(--emerald-light);
+  color: var(--pokemon-dark);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin: 0 6px;
+  font-weight: 700;
+  border: 2px solid var(--pokemon-dark);
+  box-shadow: 0 2px 0 var(--pokemon-dark);
+  font-family: var(--font-pokemon);
+  font-size: 12px;
+}
+
+/* Botones de navegación rápida */
+
+/* Botón hamburguesa */
+.nav-menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  background: white;
+  border: 3px solid var(--emerald-dark);
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  box-shadow: 0 3px 0 var(--emerald-dark);
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+/* Tooltip para tecla M */
+.nav-menu-toggle::after {
+  content: 'M';
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--emerald-dark);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: var(--font-pokemon);
+  padding: 2px 6px;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-menu-toggle:hover::after {
+  opacity: 1;
+}
+
+.nav-menu-toggle:hover {
+  background: var(--pokemon-cream);
+}
+
+.nav-menu-toggle:active {
+  transform: translateY(3px);
+  box-shadow: 0 0 0 var(--emerald-dark);
+}
+
+/* Líneas del icono hamburguesa */
+.nav-menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  background: var(--emerald-dark);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animación de icono hamburguesa abierto (X) */
+.nav-menu-toggle.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-menu-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-menu-toggle.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Menú de navegación */
+.quick-nav-buttons {
+  position: fixed;
+  top: 78px; /* Justo debajo del botón hamburguesa */
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1001;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-20px);
+  transition: all 0.3s ease;
+}
+
+.quick-nav-buttons.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+
+
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .nav-menu-toggle {
+    top: 10px;
+    left: 10px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .quick-nav-buttons {
+    top: 64px; /* Ajustado para móvil */
+    left: 10px;
+    gap: 8px;
+  }
+  
+  .nav-button {
+    padding: 10px 16px;
+    font-size: 11px;
+    min-width: 150px;
+  }
+}
+
+/* Sistema de progreso */
+
+/* Contador de progreso (esquina superior derecha) */
+.progress-counter {
+  position: fixed;
+  top: 80px; /* Debajo del botón recruiter que está en top: 20px */
+  right: 20px;
+  background: white;
+  border: 3px solid var(--emerald-dark);
+  padding: 12px 16px;
+  border-radius: 4px;
+  box-shadow: 0 3px 0 var(--emerald-dark);
+  z-index: 100;
+  font-family: 'Press Start 2P', monospace;
+  text-align: center;
+}
+
+.progress-counter-label {
+  font-size: 10px;
+  color: var(--emerald-dark);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.progress-counter-value {
+  font-size: 18px;
+  color: var(--emerald-dark);
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.progress-counter-checkmarks {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.progress-check {
+  font-size: 14px;
+  color: #d1d5db;
+  transition: all 0.3s ease;
+}
+
+.progress-check.visited {
+  color: #10b981;
+  animation: checkPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Botón para resetear progreso */
+.progress-reset-button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: white;
+  border: 2px solid var(--emerald-dark);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.1s ease;
+  box-shadow: 0 2px 0 var(--emerald-dark);
+}
+
+.progress-reset-button:hover {
+  background: var(--pokemon-cream);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--emerald-dark);
+}
+
+.progress-reset-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 var(--emerald-dark);
+}
+
+/* Responsive para móvil (progreso) */
+@media (max-width: 768px) {
+  .progress-counter {
+    top: 70px; /* Debajo del botón recruiter en móvil */
+    right: 10px;
+    padding: 8px 12px;
+  }
+  
+  .progress-counter-label {
+    font-size: 8px;
+  }
+  
+  .progress-counter-value {
+    font-size: 14px;
+  }
+  
+  .progress-check {
+    font-size: 12px;
+  }
+}
+
+/* Animación del agua */
+
+/* Tiles de lago con brillo */
+.water-tile {
+  position: relative;
+  animation: waterShimmer 4s ease-in-out infinite;
+}
+
+/* Reflejos en el agua */
+.water-tile::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  animation: waterReflection 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Oscilación de brillo en el agua */
+@keyframes waterShimmer {
+  0%, 100% {
+    filter: brightness(1) contrast(1);
+  }
+  50% {
+    filter: brightness(1.1) contrast(1.05);
+  }
+}
+
+
+
+
+
+/* Coches NPC */
+/* Estilos para coches NPC */
+.car-npc {
+  position: absolute;
+  transition: left 0.2s linear, top 0.2s linear;
+  z-index: 1;
+}
+
+.car-sprite {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Bocadillo de bocina */
+.car-horn-bubble {
+  animation: hornBounce 0.2s ease-out;
+  will-change: transform;
+  backface-visibility: hidden;
+  z-index: 2;
+}
+
+@keyframes hornBounce {
+  0% {
+    transform: translateX(-50%) translateY(10px) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-5px) scale(1.1);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Animación de vibración bocina */
+@keyframes hornShake {
+  0%, 100% { transform: translateX(-50%) rotate(-1deg); }
+  50% { transform: translateX(-50%) rotate(1deg); }
+}
+
+/* Animación de pulso bocina */
+@keyframes hornPulse {
+  0%, 100% { 
+    transform: translateX(-50%) scale(1);
+  }
+  50% { 
+    transform: translateX(-50%) scale(1.03);
+  }
+}
+
+/* Luces de semáforos pequeñas y sutiles */
+.tilemap-semaforo-light {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  z-index: 6; /* Por encima del overlay de noche (z-index: 5) */
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(255, 220, 100, 0.7) 0%, rgba(255, 240, 150, 0.4) 40%, transparent 70%);
+  transform: translate(-50%, -50%);
+}
+
