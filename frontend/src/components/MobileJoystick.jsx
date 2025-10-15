@@ -1,10 +1,10 @@
 /**
  * MobileJoystick.jsx
  * 
- * Controles táctiles con nipplejs para dispositivos móviles
+ * Controles táctiles tipo Game Boy D-Pad para dispositivos móviles
  * 
  * CARACTERÍSTICAS:
- * - Joystick circular con nipplejs
+ * - Cruceta direccional (D-Pad) estilo Game Boy
  * - Botón de menú desplegable con opciones
  * - Solo visible en dispositivos móviles
  * - Semi-transparente para no tapar el juego
@@ -12,7 +12,6 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import nipplejs from 'nipplejs';
 import './MobileJoystick.css';
 
 function MobileJoystick({
@@ -24,11 +23,13 @@ function MobileJoystick({
   totalBuildings = 9,
   movementLocked = false
 }) {
-  const joystickZoneRef = useRef(null);
-  const managerRef = useRef(null);
   const currentDirectionRef = useRef(null);
   const movementLockedRef = useRef(false);
+  const activePointerRef = useRef(null);
+  const pressStartRef = useRef(null);
+  const releaseTimeoutRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeButton, setActiveButton] = useState(null);
 
   const buildingsTotal = totalBuildings || Object.keys(visitedBuildings).length || 9;
   const visitedCount = Object.values(visitedBuildings).filter(Boolean).length;
@@ -51,10 +52,17 @@ function MobileJoystick({
   };
 
   const releaseDirection = useCallback(() => {
+    if (releaseTimeoutRef.current) {
+      clearTimeout(releaseTimeoutRef.current);
+      releaseTimeoutRef.current = null;
+    }
     if (currentDirectionRef.current) {
       onDirectionRelease(currentDirectionRef.current);
       currentDirectionRef.current = null;
+      setActiveButton(null);
     }
+    pressStartRef.current = null;
+    activePointerRef.current = null;
   }, [onDirectionRelease]);
 
   useEffect(() => {
@@ -64,84 +72,91 @@ function MobileJoystick({
     }
   }, [movementLocked, releaseDirection]);
 
+  // Manejar presión de botón direccional
+  const handleDirectionStart = useCallback((direction) => (event) => {
+    if (event?.stopPropagation) {
+      event.stopPropagation();
+    }
+    if (event?.cancelable) {
+      event.preventDefault();
+    }
+
+    if (event?.pointerId != null && event.currentTarget?.setPointerCapture) {
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+        activePointerRef.current = event.pointerId;
+      } catch (err) {
+        // Ignorar capturas fallidas
+      }
+    }
+
+    pressStartRef.current = Date.now();
+    
+    if (movementLockedRef.current) return;
+    
+    if (currentDirectionRef.current !== direction) {
+      if (currentDirectionRef.current) {
+        onDirectionRelease(currentDirectionRef.current);
+      }
+      currentDirectionRef.current = direction;
+      setActiveButton(direction);
+      onDirectionPress(direction);
+    }
+  }, [onDirectionPress, onDirectionRelease]);
+
+  // Manejar liberación de botón direccional
+  const handleDirectionEnd = useCallback((event) => {
+    if (event?.pointerId != null && event.currentTarget?.releasePointerCapture) {
+      try {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      } catch (err) {
+        // Ignorar liberaciones fallidas
+      }
+    }
+
+    if (
+      activePointerRef.current != null &&
+      event?.pointerId != null &&
+      event.pointerId !== activePointerRef.current
+    ) {
+      return;
+    }
+
+    const now = Date.now();
+    const startedAt = pressStartRef.current;
+    const elapsed = startedAt ? now - startedAt : 0;
+    const MIN_PRESS_DURATION = 140;
+
+    if (elapsed < MIN_PRESS_DURATION) {
+      const remaining = MIN_PRESS_DURATION - elapsed;
+      if (releaseTimeoutRef.current) {
+        clearTimeout(releaseTimeoutRef.current);
+      }
+      releaseTimeoutRef.current = setTimeout(() => {
+        releaseTimeoutRef.current = null;
+        releaseDirection();
+      }, remaining);
+    } else {
+      releaseDirection();
+    }
+  }, [releaseDirection]);
+
+  // Cleanup global listeners
   useEffect(() => {
-    if (!joystickZoneRef.current || managerRef.current) return;
-
-    // Crear el joystick
-    const manager = nipplejs.create({
-      zone: joystickZoneRef.current,
-      mode: 'static',
-      position: { left: '50%', top: '50%' },
-      color: 'rgba(255, 255, 255, 0.5)',
-      size: 120,
-      threshold: 0.1,
-      fadeTime: 250,
-      restOpacity: 0.5
-    });
-
-    managerRef.current = manager;
-
-    const updateDirection = (angle) => {
-      let dir = null;
-      if (angle === 'up') dir = 'up';
-      else if (angle === 'down') dir = 'down';
-      else if (angle === 'left') dir = 'left';
-      else if (angle === 'right') dir = 'right';
-
-      if (dir && dir !== currentDirectionRef.current) {
-        if (currentDirectionRef.current) {
-          onDirectionRelease(currentDirectionRef.current);
-        }
-        currentDirectionRef.current = dir;
-        onDirectionPress(dir);
-      }
-    };
-
-    // Evento cuando el joystick se mueve
-    manager.on('move', (evt, data) => {
-      if (!data) return;
-
-      if (movementLockedRef.current) {
-        releaseDirection();
-        return;
-      }
-
-      // Si la fuerza es muy baja, consideramos que se soltó
-      if (!data.direction || data.distance < 10) {
-        releaseDirection();
-        return;
-      }
-
-      updateDirection(data.direction.angle);
-    });
-
-    // Evento cuando se suelta el joystick
-    manager.on('end', releaseDirection);
-
-    // Fallback global listeners: algunos navegadores o gestos fuera del
-    // área del joystick no siempre disparan 'end'. Añadimos listeners
-    // globales para asegurarnos de liberar la dirección cuando el usuario
-    // suelte el dedo fuera de la zona.
     const globalRelease = () => {
       releaseDirection();
     };
 
-    window.addEventListener('touchend', globalRelease, { passive: true });
     window.addEventListener('pointerup', globalRelease);
+    window.addEventListener('pointercancel', globalRelease);
     window.addEventListener('mouseup', globalRelease);
-    window.addEventListener('touchcancel', globalRelease);
 
     return () => {
-      if (managerRef.current) {
-        managerRef.current.destroy();
-        managerRef.current = null;
-      }
-      window.removeEventListener('touchend', globalRelease);
       window.removeEventListener('pointerup', globalRelease);
+      window.removeEventListener('pointercancel', globalRelease);
       window.removeEventListener('mouseup', globalRelease);
-      window.removeEventListener('touchcancel', globalRelease);
     };
-  }, [onDirectionPress, releaseDirection]);
+  }, [releaseDirection]);
 
   const handleMenuClick = (e) => {
     e.stopPropagation();
@@ -158,8 +173,42 @@ function MobileJoystick({
 
   return (
     <div className="mobile-joystick">
-      {/* Joystick Zone */}
-      <div className="joystick-zone" ref={joystickZoneRef}></div>
+      {/* D-Pad (Cruceta Direccional) */}
+      <div className="dpad-container">
+        <button
+          className={`dpad-button dpad-up ${activeButton === 'up' ? 'active' : ''}`}
+          onPointerDown={handleDirectionStart('up')}
+          onPointerUp={handleDirectionEnd}
+          aria-label="Arriba"
+        >
+          ▲
+        </button>
+        <button
+          className={`dpad-button dpad-left ${activeButton === 'left' ? 'active' : ''}`}
+          onPointerDown={handleDirectionStart('left')}
+          onPointerUp={handleDirectionEnd}
+          aria-label="Izquierda"
+        >
+          ◀
+        </button>
+        <div className="dpad-center"></div>
+        <button
+          className={`dpad-button dpad-right ${activeButton === 'right' ? 'active' : ''}`}
+          onPointerDown={handleDirectionStart('right')}
+          onPointerUp={handleDirectionEnd}
+          aria-label="Derecha"
+        >
+          ▶
+        </button>
+        <button
+          className={`dpad-button dpad-down ${activeButton === 'down' ? 'active' : ''}`}
+          onPointerDown={handleDirectionStart('down')}
+          onPointerUp={handleDirectionEnd}
+          aria-label="Abajo"
+        >
+          ▼
+        </button>
+      </div>
 
       {/* Botón de Menú Desplegable */}
       <div className="joystick-menu-container">

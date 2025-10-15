@@ -1622,42 +1622,57 @@ function TileMapPNG() {
   const mobileMoveInterval = useRef(null);
   const MOBILE_MOVE_INTERVAL_MS = 190;
 
+  const performMobileStep = useCallback((preferredDirection = null) => {
+    let direction = preferredDirection;
+
+    if (!direction) {
+      if (mobileKeysPressed.current.has("up")) direction = "up";
+      else if (mobileKeysPressed.current.has("down")) direction = "down";
+      else if (mobileKeysPressed.current.has("left")) direction = "left";
+      else if (mobileKeysPressed.current.has("right")) direction = "right";
+    }
+
+    if (!direction) return;
+
+    let dx = 0, dy = 0;
+    if (direction === "up") dy = -1;
+    else if (direction === "down") dy = 1;
+    else if (direction === "left") dx = -1;
+    else if (direction === "right") dx = 1;
+
+    setAvatar(prev => {
+      const nextX = Math.max(0, Math.min(WIDTH - 1, prev.x + dx));
+      const nextY = Math.max(0, Math.min(HEIGHT - 1, prev.y + dy));
+
+      if (canWalk(nextX, nextY, true)) {
+        setLastMoveTime(Date.now());
+        return {
+          ...prev,
+          x: nextX,
+          y: nextY,
+          dir: direction,
+          step: (prev.step + 1) % 3
+        };
+      }
+
+      return { ...prev, dir: direction };
+    });
+  }, [canWalk, setAvatar, setLastMoveTime]);
+
   const handleMobileDirectionPress = useCallback((direction) => {
     if (enEdificio) return;
     
     mobileKeysPressed.current.add(direction);
+
+    performMobileStep(direction);
     
     if (!mobileMoveInterval.current) {
       mobileMoveInterval.current = setInterval(() => {
         if (mobileKeysPressed.current.size === 0) return;
-        
-        let dx = 0, dy = 0, dir = "down";
-        
-        if (mobileKeysPressed.current.has("up")) { dy = -1; dir = "up"; }
-        else if (mobileKeysPressed.current.has("down")) { dy = 1; dir = "down"; }
-        else if (mobileKeysPressed.current.has("left")) { dx = -1; dir = "left"; }
-        else if (mobileKeysPressed.current.has("right")) { dx = 1; dir = "right"; }
-        
-        setAvatar(prev => {
-          const nextX = Math.max(0, Math.min(WIDTH - 1, prev.x + dx));
-          const nextY = Math.max(0, Math.min(HEIGHT - 1, prev.y + dy));
-          
-          if (canWalk(nextX, nextY, true)) {
-            setLastMoveTime(Date.now());
-            return { 
-              ...prev, 
-              x: nextX, 
-              y: nextY, 
-              dir, 
-              step: (prev.step + 1) % 3 
-            };
-          } else {
-            return { ...prev, dir };
-          }
-        });
+        performMobileStep();
       }, MOBILE_MOVE_INTERVAL_MS);
     }
-  }, [enEdificio, canWalk]);
+  }, [enEdificio, performMobileStep]);
 
   const handleMobileDirectionRelease = useCallback((direction) => {
     if (direction) {
