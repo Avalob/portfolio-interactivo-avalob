@@ -10,7 +10,8 @@ export default defineConfig({
   plugins: [react()],
   
   // Base path para GitHub Pages (ajustar según tu repo)
-  base: process.env.NODE_ENV === 'production' ? './' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/portfolio-interactivo-avalob/' : '/',
+
   
   server: {
     port: 5173,

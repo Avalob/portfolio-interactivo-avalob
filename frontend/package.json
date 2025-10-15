@@ -2,7 +2,7 @@
   "name": "portfolio-frontend",
   "version": "1.0.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://avalob.github.io/portfolio-interactivo-avalob/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
