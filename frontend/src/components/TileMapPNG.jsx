@@ -1565,6 +1565,7 @@ function TileMapPNG() {
   // === HANDLERS PARA MOBILE JOYSTICK ===
   const mobileKeysPressed = useRef(new Set());
   const mobileMoveInterval = useRef(null);
+  const MOBILE_MOVE_INTERVAL_MS = 140;
 
   const handleMobileDirectionPress = useCallback((direction) => {
     if (enEdificio) return;
@@ -1599,12 +1600,16 @@ function TileMapPNG() {
             return { ...prev, dir };
           }
         });
-      }, 80);
+      }, MOBILE_MOVE_INTERVAL_MS);
     }
   }, [enEdificio, canWalk]);
 
   const handleMobileDirectionRelease = useCallback((direction) => {
-    mobileKeysPressed.current.delete(direction);
+    if (direction) {
+      mobileKeysPressed.current.delete(direction);
+    } else {
+      mobileKeysPressed.current.clear();
+    }
     
     if (mobileKeysPressed.current.size === 0 && mobileMoveInterval.current) {
       clearInterval(mobileMoveInterval.current);

@@ -55,35 +55,44 @@ function MobileJoystick({
 
     managerRef.current = manager;
 
-    // Evento cuando el joystick se mueve
-    manager.on('dir', (evt, data) => {
-      if (data && data.direction) {
-        const direction = data.direction.angle; // 'up', 'down', 'left', 'right'
-        
-        // Convertir la dirección al formato esperado
-        let dir = null;
-        if (direction === 'up') dir = 'up';
-        else if (direction === 'down') dir = 'down';
-        else if (direction === 'left') dir = 'left';
-        else if (direction === 'right') dir = 'right';
-
-        if (dir && dir !== currentDirectionRef.current) {
-          if (currentDirectionRef.current) {
-            onDirectionRelease(currentDirectionRef.current);
-          }
-          currentDirectionRef.current = dir;
-          onDirectionPress(dir);
-        }
-      }
-    });
-
-    // Evento cuando se suelta el joystick
-    manager.on('end', () => {
+    const releaseDirection = () => {
       if (currentDirectionRef.current) {
         onDirectionRelease(currentDirectionRef.current);
         currentDirectionRef.current = null;
       }
+    };
+
+    const updateDirection = (angle) => {
+      let dir = null;
+      if (angle === 'up') dir = 'up';
+      else if (angle === 'down') dir = 'down';
+      else if (angle === 'left') dir = 'left';
+      else if (angle === 'right') dir = 'right';
+
+      if (dir && dir !== currentDirectionRef.current) {
+        if (currentDirectionRef.current) {
+          onDirectionRelease(currentDirectionRef.current);
+        }
+        currentDirectionRef.current = dir;
+        onDirectionPress(dir);
+      }
+    };
+
+    // Evento cuando el joystick se mueve
+    manager.on('move', (evt, data) => {
+      if (!data) return;
+
+      // Si la fuerza es muy baja, consideramos que se soltó
+      if (!data.direction || data.distance < 10) {
+        releaseDirection();
+        return;
+      }
+
+      updateDirection(data.direction.angle);
     });
+
+    // Evento cuando se suelta el joystick
+    manager.on('end', releaseDirection);
 
     return () => {
       if (managerRef.current) {
