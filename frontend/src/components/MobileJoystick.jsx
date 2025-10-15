@@ -10,7 +10,7 @@
  * - Semi-transparente para no tapar el juego
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import nipplejs from 'nipplejs';
 import './MobileJoystick.css';
@@ -21,11 +21,13 @@ function MobileJoystick({
   onMenuButton = () => {},
   visitedBuildings = {},
   animatedProgress = 0,
-  totalBuildings = 8
+  totalBuildings = 8,
+  movementLocked = false
 }) {
   const joystickZoneRef = useRef(null);
   const managerRef = useRef(null);
   const currentDirectionRef = useRef(null);
+  const movementLockedRef = useRef(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Función para obtener el color según el progreso
@@ -37,6 +39,20 @@ function MobileJoystick({
     if (progress < 100) return '#22c55e'; // Verde para 75-100%
     return '#10b981'; // Verde oscuro para 100%
   };
+
+  const releaseDirection = useCallback(() => {
+    if (currentDirectionRef.current) {
+      onDirectionRelease(currentDirectionRef.current);
+      currentDirectionRef.current = null;
+    }
+  }, [onDirectionRelease]);
+
+  useEffect(() => {
+    movementLockedRef.current = movementLocked;
+    if (movementLocked) {
+      releaseDirection();
+    }
+  }, [movementLocked, releaseDirection]);
 
   useEffect(() => {
     if (!joystickZoneRef.current || managerRef.current) return;
@@ -54,13 +70,6 @@ function MobileJoystick({
     });
 
     managerRef.current = manager;
-
-    const releaseDirection = () => {
-      if (currentDirectionRef.current) {
-        onDirectionRelease(currentDirectionRef.current);
-        currentDirectionRef.current = null;
-      }
-    };
 
     const updateDirection = (angle) => {
       let dir = null;
@@ -82,6 +91,11 @@ function MobileJoystick({
     manager.on('move', (evt, data) => {
       if (!data) return;
 
+      if (movementLockedRef.current) {
+        releaseDirection();
+        return;
+      }
+
       // Si la fuerza es muy baja, consideramos que se soltó
       if (!data.direction || data.distance < 10) {
         releaseDirection();
@@ -94,13 +108,30 @@ function MobileJoystick({
     // Evento cuando se suelta el joystick
     manager.on('end', releaseDirection);
 
+    // Fallback global listeners: algunos navegadores o gestos fuera del
+    // área del joystick no siempre disparan 'end'. Añadimos listeners
+    // globales para asegurarnos de liberar la dirección cuando el usuario
+    // suelte el dedo fuera de la zona.
+    const globalRelease = () => {
+      releaseDirection();
+    };
+
+    window.addEventListener('touchend', globalRelease, { passive: true });
+    window.addEventListener('pointerup', globalRelease);
+    window.addEventListener('mouseup', globalRelease);
+    window.addEventListener('touchcancel', globalRelease);
+
     return () => {
       if (managerRef.current) {
         managerRef.current.destroy();
         managerRef.current = null;
       }
+      window.removeEventListener('touchend', globalRelease);
+      window.removeEventListener('pointerup', globalRelease);
+      window.removeEventListener('mouseup', globalRelease);
+      window.removeEventListener('touchcancel', globalRelease);
     };
-  }, [onDirectionPress, onDirectionRelease]);
+  }, [onDirectionPress, releaseDirection]);
 
   const handleMenuClick = (e) => {
     e.stopPropagation();
@@ -203,7 +234,8 @@ MobileJoystick.propTypes = {
   onMenuButton: PropTypes.func,
   visitedBuildings: PropTypes.object,
   animatedProgress: PropTypes.number,
-  totalBuildings: PropTypes.number
+  totalBuildings: PropTypes.number,
+  movementLocked: PropTypes.bool
 };
 
 export default React.memo(MobileJoystick);

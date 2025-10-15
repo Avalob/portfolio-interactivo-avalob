@@ -2,6 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 /* Día/noche y tema neón */
 
+/* Contenedor principal: asegura altura completa en móviles usando custom vh */
+.tilemap-root {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: calc(var(--app-vh, 1vh) * 100);
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 .tilemap-root::before {
   content: '';
   position: absolute;
