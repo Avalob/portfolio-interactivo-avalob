@@ -1816,7 +1816,7 @@ function TileMapPNG() {
               return (
                 <img
                   key={x}
-                  src={`/Tiles/tile_${tile.toString().padStart(4, "0")}.png`}
+                  src={`${import.meta.env.BASE_URL}Tiles/tile_${tile.toString().padStart(4, "0")}.png`}
                   width={TILE_SIZE}
                   height={TILE_SIZE}
                   alt={`tile ${tile}`}
@@ -1832,7 +1832,7 @@ function TileMapPNG() {
           typeof obj.tile !== "undefined" && (
             <img
               key={`edificio-${obj.x}-${obj.y}-${i}`}
-              src={`/Tiles/tile_${obj.tile.toString().padStart(4, "0")}.png`}
+              src={`${import.meta.env.BASE_URL}Tiles/tile_${obj.tile.toString().padStart(4, "0")}.png`}
               width={TILE_SIZE}
               height={TILE_SIZE}
               className={`tilemap-edificio${obj.flip ? ' flip-x' : ''}`}
@@ -1856,7 +1856,7 @@ function TileMapPNG() {
             <React.Fragment key={`objeto-${obj.x}-${obj.y}-${i}`}>
               {typeof obj.tile !== "undefined" && (
                 <img
-                  src={`/Tiles/tile_${obj.tile.toString().padStart(4, "0")}.png`}
+                  src={`${import.meta.env.BASE_URL}Tiles/tile_${obj.tile.toString().padStart(4, "0")}.png`}
                   width={TILE_SIZE}
                   height={TILE_SIZE}
                   className={`${cssClass}${obj.flip && !obj.rotate ? ' flip-x' : ''}${obj.rotate ? ' rotate' + obj.rotate : ''}`}
@@ -1924,7 +1924,7 @@ function TileMapPNG() {
         {/* Capa 5: Avatar */}
         {!enEdificio && (
           <img
-            src={`/Tiles/tile_${AVATAR_SPRITES[avatar.dir][avatar.step].toString().padStart(4, "0")}.png`}
+            src={`${import.meta.env.BASE_URL}Tiles/tile_${AVATAR_SPRITES[avatar.dir][avatar.step].toString().padStart(4, "0")}.png`}
             width={TILE_SIZE}
             height={TILE_SIZE}
             className={`tilemap-avatar ${avatar.teleporting ? 'teleporting' : ''} ${isOverlappingNPC ? 'overlapping-npc' : ''}`}
@@ -2001,7 +2001,7 @@ function TileMapPNG() {
 
         {/* Capa 8: Fernando NPC */}
         <img
-          src={`/Tiles/tile_${FERNANDO_SPRITES[fernando.dir][fernando.moving ? fernando.step : 0].toString().padStart(4, "0")}.png`}
+          src={`${import.meta.env.BASE_URL}Tiles/tile_${FERNANDO_SPRITES[fernando.dir][fernando.moving ? fernando.step : 0].toString().padStart(4, "0")}.png`}
           width={TILE_SIZE}
           height={TILE_SIZE}
           className="tilemap-npc"
