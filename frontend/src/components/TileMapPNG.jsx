@@ -1935,7 +1935,7 @@ function TileMapPNG() {
 
         {/* Capa 6: NPC */}
         <img
-          src={`/Tiles/tile_${NPC_SPRITES[npc.dir][npc.moving ? npc.step : 0].toString().padStart(4, "0")}.png`}
+          src={`${import.meta.env.BASE_URL}Tiles/tile_${NPC_SPRITES[npc.dir][npc.moving ? npc.step : 0].toString().padStart(4, "0")}.png`}
           width={TILE_SIZE}
           height={TILE_SIZE}
           className="tilemap-npc"
@@ -1956,7 +1956,7 @@ function TileMapPNG() {
         )}
         {/* Capa 7:Pedro NPC */}
         <img
-          src={`/Tiles/tile_${PEDRO_SPRITES[pedro.dir][pedro.moving ? pedro.step : 0].toString().padStart(4, "0")}.png`}
+          src={`${import.meta.env.BASE_URL}Tiles/tile_${PEDRO_SPRITES[pedro.dir][pedro.moving ? pedro.step : 0].toString().padStart(4, "0")}.png`}
           width={TILE_SIZE}
           height={TILE_SIZE}
           className="tilemap-npc"
@@ -1979,7 +1979,7 @@ function TileMapPNG() {
 
         {/* Capa 7:Obrero NPC */}
         <img
-          src={`/Tiles/tile_${OBRERO_SPRITES[obrero.dir][obrero.moving ? obrero.step : 0].toString().padStart(4, "0")}.png`}
+          src={`${import.meta.env.BASE_URL}Tiles/tile_${OBRERO_SPRITES[obrero.dir][obrero.moving ? obrero.step : 0].toString().padStart(4, "0")}.png`}
           width={TILE_SIZE}
           height={TILE_SIZE}
           className="tilemap-npc"

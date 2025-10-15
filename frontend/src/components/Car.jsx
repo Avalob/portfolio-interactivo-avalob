@@ -27,7 +27,7 @@ const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage 
       {currentSprites.map((sprite, index) => (
         <img
           key={index}
-          src={`/Tiles/tile_${sprite.toString().padStart(4, '0')}.png`}
+          src={`${import.meta.env.BASE_URL}Tiles/tile_${sprite.toString().padStart(4, '0')}.png`}
           alt={`car-${direction}`}
           className={`car-sprite car-${direction}`}
           style={{

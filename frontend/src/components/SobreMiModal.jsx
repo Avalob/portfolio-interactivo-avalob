@@ -17,7 +17,7 @@ function SobreMiModal({ isOpen, onClose }) {
         <div className="sobremi-columns-container">
                   <div className="building-section sobremi-foto-section">
           <img 
-            src="/Mi_foto.jpg" 
+            src={`${import.meta.env.BASE_URL}Mi_foto.jpg`} 
             alt="Foto personal" 
             className="sobremi-foto-img"
           />

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import BuildingModal from './BuildingModal';
 import './BuildingModal.css';
 
+const ASSET_BASE_URL = import.meta.env.BASE_URL;
+
 /**
  * CONFIGURACIÓN DE PROYECTOS
  * Array que contiene toda la información de los proyectos del portfolio
@@ -18,7 +20,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2024",
       descripcion: "Página web para una escuela de corte y confección y atelier de moda. Estilo elegante y amigable, con diseño responsivo y optimizado, transmitiendo cercanía y profesionalidad en el mundo de la moda.",
       tecnologias: ["WordPress", "Elementor"],
-      imagen: "/Tresele-home.jpg",
+  imagen: `${ASSET_BASE_URL}Tresele-home.jpg`,
       vimeo: "https://vimeo.com/1119062509?share=copy#t=0",
       enlaces: {
         web: "https://www.tresele.com"
@@ -32,7 +34,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2023-2024",
       descripcion: "ERP web en uso real que centraliza la gestión de clientes, alumnos, matrículas, citas, prendas y pagos, digitalizando los procesos del atelier y la escuela de patronaje para una gestión eficiente y segura.",
       tecnologias: ["HTML", "PHP", "MySQL"],
-      imagen: "/Tresele-app-home.png",
+  imagen: `${ASSET_BASE_URL}Tresele-app-home.png`,
       vimeo: "https://vimeo.com/1119061339?share=copy#t=0",
       enlaces: {
         web: "https://treseleapp.es/",
@@ -47,7 +49,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2024",
       descripcion: "Página web para un restaurante de alta gama en el centro histórico de Alcalá de Henares. Estilo sofisticado y elegante, con un diseño visual que resalta la exclusividad del lugar. Incluye menús, reservas online y optimización para dispositivos móviles.",
       tecnologias: ["WordPress", "Divi"],
-      imagen: "/Santissimo-home.png",
+  imagen: `${ASSET_BASE_URL}Santissimo-home.png`,
       vimeo: "https://vimeo.com/1120758496?share=copy",
       enlaces: {
         web: "https://santissimo.es/"
@@ -61,7 +63,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2023",
       descripcion: "Página web para una empresa de equipamientos para vehículos. Estilo moderno y actual, con una identidad visual de inspiración racing. Además del desarrollo web, realicé el diseño del logotipo, reforzando la marca y su imagen dinámica.",
       tecnologias: ["WordPress", "Elementor"],
-      imagen: "/Prevan-home.png",
+  imagen: `${ASSET_BASE_URL}Prevan-home.png`,
       vimeo: "https://vimeo.com/1119053327?share=copy#t=0",
       enlaces: {
         web: "https://prevanequipamientos.es/"
@@ -75,7 +77,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2023",
       descripcion: "Página web para una empresa de campamentos juveniles. Estilo infantil y divertido, con un diseño colorido y accesible. Incluye sistema de inscripción online a los campamentos, facilitando el registro de participantes y mejorando la comunicación con las familias.",
       tecnologias: ["WordPress", "Divi"],
-      imagen: "/Demovi-home.jpg",
+  imagen: `${ASSET_BASE_URL}Demovi-home.jpg`,
       vimeo: "https://vimeo.com/1119057808?share=copy#t=0",
       enlaces: {
         web: "https://demovi.es/"
@@ -89,7 +91,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2023",
       descripcion: "Página web para una empresa que vende y alquila planetarios móviles, con un estilo inspirado en el espacio y la astronomía. Diseño visual y responsivo, que transmite emoción y profesionalidad. Incluye secciones de catálogo de planetarios, reservas y contacto.",
       tecnologias: ["WordPress", "Divi"],
-      imagen: "/Planetario-home.png",
+  imagen: `${ASSET_BASE_URL}Planetario-home.png`,
       vimeo: "https://vimeo.com/1119053800?share=copy#t=0",
       enlaces: {
         web: "https://planetariomovil.es/"
@@ -103,7 +105,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2023",
       descripcion: "Aplicación web ERP para la gestión integral de Telecom, centralizando clientes, pedidos, incidencias, facturación y procesos internos en un entorno seguro y eficiente.",
       tecnologias: ["HTML", "CSS", "PHP"],
-      imagen: "/telecom.png",
+  imagen: `${ASSET_BASE_URL}telecom.png`,
       vimeo: "https://vimeo.com/1119058567?share=copy#t=0",
       enlaces: {
         codigo: "https://github.com/Avalob/Telecom-ERP"
@@ -117,7 +119,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2024",
       descripcion: "Portfolio personal creado con React, con un diseño moderno y profesional que presenta mis proyectos y habilidades de forma visual y atractiva.",
       tecnologias: ["React"],
-      imagen: "/Portfolio.png",
+  imagen: `${ASSET_BASE_URL}Portfolio.png`,
       vimeo: "https://vimeo.com/1119059685?share=copy#t=20",
       enlaces: {
         web: "https://avalob.github.io/portfolio-andrea-valbuena/",
@@ -132,7 +134,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2024",
       descripcion: "Primer proyecto desarrollado durante el curso Meta Front-End Developer, una calculadora funcional que aplica los conceptos fundamentales de React.",
       tecnologias: ["React"],
-      imagen: "/calculadora.png",
+  imagen: `${ASSET_BASE_URL}calculadora.png`,
       vimeo: "https://vimeo.com/1119046183?share=copy#t=0",
       enlaces: {
         demo: "https://avalob.github.io/react-calculadora-meta/",
@@ -147,7 +149,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2024",
       descripcion: "Proyecto desarrollado durante el curso avanzado de React ofrecido por Meta, una aplicación interactiva que rastrea la posición del mouse y la muestra en tiempo real en diferentes formatos. El diseño es visual y dinámico.",
       tecnologias: ["React"],
-      imagen: "/mouse.png",
+  imagen: `${ASSET_BASE_URL}mouse.png`,
       vimeo: "https://vimeo.com/1119060764?share=copy#t=0",
       enlaces: {
         demo: "https://avalob.github.io/react-mouse-tracker/",
@@ -162,7 +164,7 @@ function ProyectosModal({ isOpen, onClose }) {
       periodo: "2024",
       descripcion: 'Proyecto final del curso "HTML and CSS in depth" de Meta/Coursera, desarrollado para una empresa ficticia de jardinería y paisajismo. La web es completamente responsive y moderna, con un diseño profesional, visual y accesible.',
       tecnologias: ["HTML", "CSS"],
-      imagen: "/Lucky-Shrub.png",
+  imagen: `${ASSET_BASE_URL}Lucky-Shrub.png`,
       vimeo: "https://vimeo.com/1119059151?share=copy#t=0",
       enlaces: {
         demo: "https://avalob.github.io/lucky-shrub-website/",
