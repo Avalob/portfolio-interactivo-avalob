@@ -449,7 +449,19 @@ function TileMapPNG() {
     const isNear = isNearby(avatar, npc);
     if (isNear && !npc.showPhrase) {
       const phrase = getContextualNPCPhrase(visitedBuildings, isDarkMode, lastBuildingVisited);
-      setNpc(prev => ({ ...prev, phrase, showPhrase: true }));
+      
+      // Calcular dirección hacia el avatar
+      const dx = avatar.x - npc.x;
+      const dy = avatar.y - npc.y;
+      let direction = npc.dir;
+      
+      if (Math.abs(dx) > Math.abs(dy)) {
+        direction = dx > 0 ? 'right' : 'left';
+      } else {
+        direction = dy > 0 ? 'down' : 'up';
+      }
+      
+      setNpc(prev => ({ ...prev, phrase, showPhrase: true, dir: direction }));
       phraseTimeout.current = setTimeout(() => {
         setNpc(prev => ({ ...prev, showPhrase: false }));
       }, 4000);
@@ -473,7 +485,19 @@ function TileMapPNG() {
 
     if (isNear && !obrero.showPhrase) {
       const phrase = getObreroPhrase();
-      setObrero(prev => ({ ...prev, phrase, showPhrase: true }));
+      
+      // Calcular dirección hacia el avatar
+      const dx = avatar.x - obrero.x;
+      const dy = avatar.y - obrero.y;
+      let direction = obrero.dir;
+      
+      if (Math.abs(dx) > Math.abs(dy)) {
+        direction = dx > 0 ? 'right' : 'left';
+      } else {
+        direction = dy > 0 ? 'down' : 'up';
+      }
+      
+      setObrero(prev => ({ ...prev, phrase, showPhrase: true, dir: direction }));
       obreroTimeout.current = setTimeout(() => {
         setObrero(prev => ({ ...prev, showPhrase: false }));
       }, 4000);
@@ -493,7 +517,19 @@ function TileMapPNG() {
 
     if (isNear && !pedro.showPhrase) {
       const phrase = getPedroPhrase();
-      setPedro(prev => ({ ...prev, phrase, showPhrase: true }));
+      
+      // Calcular dirección hacia el avatar
+      const dx = avatar.x - pedro.x;
+      const dy = avatar.y - pedro.y;
+      let direction = pedro.dir;
+      
+      if (Math.abs(dx) > Math.abs(dy)) {
+        direction = dx > 0 ? 'right' : 'left';
+      } else {
+        direction = dy > 0 ? 'down' : 'up';
+      }
+      
+      setPedro(prev => ({ ...prev, phrase, showPhrase: true, dir: direction }));
       pedroTimeout.current = setTimeout(() => {
         setPedro(prev => ({ ...prev, showPhrase: false }));
       }, 4000);
@@ -513,7 +549,19 @@ function TileMapPNG() {
 
     if (isNear && !fernando.showPhrase) {
       const phrase = getFernandoPhrase();
-      setFernando(prev => ({ ...prev, phrase, showPhrase: true }));
+      
+      // Calcular dirección hacia el avatar
+      const dx = avatar.x - fernando.x;
+      const dy = avatar.y - fernando.y;
+      let direction = fernando.dir;
+      
+      if (Math.abs(dx) > Math.abs(dy)) {
+        direction = dx > 0 ? 'right' : 'left';
+      } else {
+        direction = dy > 0 ? 'down' : 'up';
+      }
+      
+      setFernando(prev => ({ ...prev, phrase, showPhrase: true, dir: direction }));
       fernandoTimeout.current = setTimeout(() => {
         setFernando(prev => ({ ...prev, showPhrase: false }));
       }, 4000);

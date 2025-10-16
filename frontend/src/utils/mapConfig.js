@@ -38,7 +38,7 @@ export const OBRERO_SPRITES = {
 
 // NPC Fernando
 export const FERNANDO_SPRITES = {
-  right: [404, 377, 350],
+  right: [350, 377, 404],
   left:  [347, 374, 401],
   down:  [348, 375, 402],
   up:    [349, 376, 403],

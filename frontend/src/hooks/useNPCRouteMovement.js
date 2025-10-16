@@ -46,6 +46,8 @@ export function useNPCRouteMovement(npc, setNpc, route, avatar, config = {}) {
   const timeoutRef = useRef(null);
   const intervalRef = useRef(null);
   const npcStateRef = useRef(npc);
+  const avatarRef = useRef(avatar);
+  const isPausedRef = useRef(false);
   // Guardar la posición inicial del NPC
   const initialPositionRef = useRef({ x: npc.x, y: npc.y });
 
@@ -56,6 +58,11 @@ export function useNPCRouteMovement(npc, setNpc, route, avatar, config = {}) {
   useEffect(() => {
     npcStateRef.current = npc;
   }, [npc]);
+
+  // Mantener actualizada la referencia del avatar sin reiniciar el movimiento
+  useEffect(() => {
+    avatarRef.current = avatar;
+  }, [avatar.x, avatar.y]);
 
   useEffect(() => {
     if (!route || route.length === 0) return;
@@ -122,14 +129,24 @@ export function useNPCRouteMovement(npc, setNpc, route, avatar, config = {}) {
         
         // Verificar si la siguiente posición es válida
         const isNextWalkable = isWalkable(nextPos.x, nextPos.y);
-        const isAvatarBlocking = (nextPos.x === avatar.x && nextPos.y === avatar.y);
+        const isAvatarBlocking = (nextPos.x === avatarRef.current.x && nextPos.y === avatarRef.current.y);
         const isInZone = nextPos.x >= currentNpc.zone.minX && nextPos.x <= currentNpc.zone.maxX &&
                          nextPos.y >= currentNpc.zone.minY && nextPos.y <= currentNpc.zone.maxY;
         
         console.log(`[NPC Walk] Walkable: ${isNextWalkable}, Avatar blocking: ${isAvatarBlocking}, In zone: ${isInZone}`);
         
-        if (!isNextWalkable || isAvatarBlocking || !isInZone) {
-          console.log('[NPC Walk] Cannot walk, finishing action');
+        // Si el avatar está bloqueando, esperar y reintentar
+        if (isAvatarBlocking) {
+          console.log('[NPC Walk] Avatar blocking, waiting...');
+          setNpc(prev => ({ ...prev, moving: false, step: 0 }));
+          // Reintentar después de un tiempo
+          timeoutRef.current = setTimeout(doStep, 500);
+          return;
+        }
+        
+        // Si no es walkable o no está en zona, terminar acción
+        if (!isNextWalkable || !isInZone) {
+          console.log('[NPC Walk] Cannot walk (not walkable or out of zone), finishing action');
           setNpc(prev => ({ ...prev, moving: false, step: 0 }));
           finishAction();
           return;
@@ -206,7 +223,7 @@ export function useNPCRouteMovement(npc, setNpc, route, avatar, config = {}) {
       }
       isExecutingRef.current = false;
     };
-  }, [route, avatar.x, avatar.y, stepDuration, animationInterval, setNpc]);
+  }, [route, stepDuration, animationInterval, setNpc]);
 }
 
 /**
@@ -219,7 +236,20 @@ export function useProximityPhrases(avatar, npc, setNpc, phrases) {
     if (distance <= 2 && !npc.moving) {
       if (!npc.showPhrase) {
         const phrase = phrases[Math.floor(Math.random() * phrases.length)];
-        setNpc(prev => ({ ...prev, showPhrase: true, phrase }));
+        
+        // Calcular dirección hacia el avatar
+        const dx = avatar.x - npc.x;
+        const dy = avatar.y - npc.y;
+        let direction = npc.dir;
+        
+        // Determinar dirección basada en la distancia mayor
+        if (Math.abs(dx) > Math.abs(dy)) {
+          direction = dx > 0 ? 'right' : 'left';
+        } else {
+          direction = dy > 0 ? 'down' : 'up';
+        }
+        
+        setNpc(prev => ({ ...prev, showPhrase: true, phrase, dir: direction }));
       }
     } else {
       if (npc.showPhrase) {
