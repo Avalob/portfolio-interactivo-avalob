@@ -121,14 +121,9 @@ export const SEMAFOROS = [
 // ============================================
 // === Tiles caminables para NPC ===
 // ============================================
-export const NPC_WALKABLE_TILES = [
- 432, 434, 435, 436, 459,
- 8, 9, 10, 11, 12, 13, 14, 15,
- 35, 36, 37, 38, 39, 40, 41, 42,
- 62, 63, 64, 65, 66, 67, 68, 69,
- 405
-];
-// Solo los tiles estrictamente permitidos: 0432, 0434, 0435, 0436, 0459, 0008, 0009, 0010, 0011, 0012, 0013, 0014, 0015, 0035, 0036, 0037, 0038, 0039, 0040, 0041, 0042, 0062, 0063, 0064, 0065, 0066, 0067, 0068, 0069, 0405
+// Todos los tiles son caminables para los NPCs
+import { MAP } from "./tiledMapData";
+export const NPC_WALKABLE_TILES = Array.from(new Set(MAP.flat()));
 
 // ============================================
 // === Tiles de agua ===

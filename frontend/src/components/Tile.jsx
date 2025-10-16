@@ -46,7 +46,8 @@ function Tile({
     imageRendering: 'pixelated',
     display: 'inline-block',
     verticalAlign: 'top',
-    transform: flip ? 'scaleX(-1)' : 'none',
+    // Forzar flip booleano
+    transform: !!flip ? 'scaleX(-1)' : 'none',
     pointerEvents: 'none',
     fontSize: 0,
     lineHeight: 0,

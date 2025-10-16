@@ -184,8 +184,8 @@ function TileMapPNG() {
 
   // Obrero
   const [obrero, setObrero] = useState({
-    x: 7,
-    y: 17,
+    x: 10, // 7 + 3
+    y: 19, // 17 + 3
     dir: "down",
     step: 0,
     showPhrase: false,
@@ -196,7 +196,7 @@ function TileMapPNG() {
 
   // Fernando
   const [fernando, setFernando] = useState({
-    x: 34,
+    x: 31,
     y: 14,
     dir: "left",
     step: 0,
@@ -206,8 +206,8 @@ function TileMapPNG() {
     zone: { minX: 29, maxX: 40, minY: 10, maxY: 21 }
   });
   const [pedro, setPedro] = useState({
-    x: 24,
-    y: 28,
+    x: 23,
+    y: 30,
     dir: "left",
     step: 0,
     showPhrase: false,
@@ -826,13 +826,10 @@ function TileMapPNG() {
     return () => clearTimeout(startTimeout);
   }, [enEdificio, COLLISION_OBJECTS]);
   
-  // Movimiento de Obrero (sin zona, se mueve por todo el mapa)
-  useEffect(() => createNPCMovement(setObrero, 400, 5000), [createNPCMovement]);
-
-  // Movimiento de Fernando (con zona restringida)
-  useEffect(() => createNPCMovement(setFernando, 400, 5000, fernando.zone), [createNPCMovement, fernando.zone]);
-  // Movimiento de Pedro (con zona restringida)
-  useEffect(() => createNPCMovement(setPedro, 400, 5000, pedro.zone), [createNPCMovement, pedro.zone]);
+  // SISTEMA ANTIGUO DESACTIVADO - Ahora se usa useNPCRouteMovement
+  // useEffect(() => createNPCMovement(setObrero, 400, 5000), [createNPCMovement]);
+  // useEffect(() => createNPCMovement(setFernando, 400, 5000, fernando.zone), [createNPCMovement, fernando.zone]);
+  // useEffect(() => createNPCMovement(setPedro, 400, 5000, pedro.zone), [createNPCMovement, pedro.zone]);
 
   const [viewportSize, setViewportSize] = useState(() => {
     if (typeof window === 'undefined') {
@@ -1828,7 +1825,7 @@ function TileMapPNG() {
             <React.Fragment key={`objeto-${obj.x}-${obj.y}-${i}`}>
               {typeof obj.tile !== "undefined" && (
                 <div
-                  className={`${cssClass}${obj.flip && !obj.rotate ? ' flip-x' : ''}${obj.rotate ? ' rotate' + obj.rotate : ''}`}
+                  className={`${cssClass}${obj.rotate ? ' rotate' + obj.rotate : ''}`}
                   style={{ left: obj.x * TILE_SIZE, top: obj.y * TILE_SIZE, position: 'absolute' }}
                 >
                   {obj.image ? (
