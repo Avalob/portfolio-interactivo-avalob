@@ -2,6 +2,7 @@
 // 1. IMPORTACIONES Y CARGA DIFERIDA
 // ============================================================
 import React, { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from "react";
+import Tile from './Tile';
 
 // ------------------------------------------------------------
 // 1.1 Modales con carga diferida
@@ -552,12 +553,15 @@ function TileMapPNG() {
   // ------------------------------------------------------------
   // 3.12 Catálogo de decoraciones urbanas
   // ------------------------------------------------------------
+  const ESCULTURAS = [
+    { x: 24, y: 25, tile: 500, image: 'tile_0500.png' },
+    { x: 24, y: 26, tile: 501, image: 'tile_0501.png' },
+    { x: 28, y: 25, tile: 500, image: 'tile_0500.png' },
+    { x: 28, y: 26, tile: 501, image: 'tile_0501.png' },
+  ];
+
   const OBJECTS = useMemo(() => [
-    // -- Esculturas y detalles de plaza
-    { x: 24, y: 25, tile: 500 },
-    { x: 24, y: 26, tile: 501 },
-    { x: 28, y: 25, tile: 500 },
-    { x: 28, y: 26, tile: 501 },
+    ...ESCULTURAS,
     ...renderTiles(245, [[44, 23]]),
     ...renderTiles(248, [[3, 1], [5, 2]]),
     
@@ -623,10 +627,10 @@ function TileMapPNG() {
     ...TOLDO_GRANDE(7, 16),
     BUZON(7, 5),
     BUZON(13, 23),
-    { x: 17, y: 26, tile: 550 }, // Carrito parte superior
-    { x: 17, y: 25, tile: 553 }, // Carrito parte inferior
-    { x: 10, y: 17, tile: 676 }, // Caja de manzanas
-    { x: 11, y: 17, tile: 679 }, // Caja de peras verdes
+    { x: 17, y: 26, tile: 587 , spritesheet: 'secondary' }, // Carrito parte superior
+    { x: 17, y: 25, tile: 553, spritesheet: 'secondary' }, // Carrito parte inferior
+    { x: 10, y: 17, tile: 676 , spritesheet: 'secondary'}, // Caja de manzanas
+    { x: 11, y: 17, tile: 679 , spritesheet: 'secondary'}, // Caja de peras verdes
     ESCALERITA(22, 2),
     ...STOP(18, 9),
     ...CARTELITOS(26, 9),
@@ -647,10 +651,10 @@ function TileMapPNG() {
     ...renderSimpleFunc(BANCO_DER, [[31, 18], [31, 13]]),
     ...renderSimpleFunc(PARK, [[28, 12], [28, 13], [28, 14], [28, 15], [28, 16], [28, 17]]),
     PARKIMETRO(28, 11),
-    { x: 0, y: 0, tile: 499 },
-    { x: 36, y: 5, tile: 499 },
-    { x: 30, y: 17, tile: 499 },
-    { x: 7, y: 30, tile: 499 },
+   { x: 0, y: 0, tile: 499, spritesheet: 'secondary' },
+{ x: 36, y: 5, tile: 499, spritesheet: 'secondary' },
+{ x: 30, y: 17, tile: 499, spritesheet: 'secondary' },
+{ x: 7, y: 30, tile: 499, spritesheet: 'secondary' },
 
     // -- Fuentes y detalles acuáticos
     ...renderFuentesAlargadas([[21, 28], [30, 28], [21, 31], [30, 31]]),
@@ -1494,7 +1498,7 @@ function TileMapPNG() {
       setShowOtros(false);
       setShowContacto(false);
       setShowRRSS(false);
-      setShowHobbies(false);
+           setShowHobbies(false);
       setShowProyectos(false);
     }
   }, []);
@@ -1769,38 +1773,44 @@ function TileMapPNG() {
           }}
         >
         {/* Capa 1: Mapa base */}
-        {MAP.map((row, y) => (
-          <div key={y} className="tilemap-row">
-            {row.map((tile, x) => {
-              // Borde de depuración desactivado
-              return (
-                <img
-                  key={x}
-                  src={`${import.meta.env.BASE_URL}Tiles/tile_${tile.toString().padStart(4, "0")}.png`}
-                  width={TILE_SIZE}
-                  height={TILE_SIZE}
-                  alt={`tile ${tile}`}
-                  className={`tilemap-tile${WATER_TILES.includes(tile) ? ' water-tile' : ''}`}
-                  loading="lazy"
-                />
-              );
-            })}
-          </div>
-        ))}
+        {/* Tiles que deben renderizarse desde el spritesheet secundario */}
+        {/** Puedes modificar este set según los índices secundarios que necesites */}
+        {(() => {
+          const TILES_SECUNDARIOS = new Set([511, 743, 744, 745, 706, 707, 708, 748, 746, 821, 747, 710, 711,709 , 820, 822]);
+          return MAP.map((row, y) => (
+            <div key={y} className="tilemap-row">
+              {row.map((tile, x) => {
+                // Usar 'secondary' para los tiles secundarios, 'main' para el resto
+                const spritesheet = TILES_SECUNDARIOS.has(tile) ? 'secondary' : 'main';
+                return (
+                  <Tile 
+                    key={x}
+                    index={tile} 
+                    size={TILE_SIZE}
+                    className={`tilemap-tile${WATER_TILES.includes(tile) ? ' water-tile' : ''}`}
+                    spritesheet={spritesheet}
+                  />
+                );
+              })}
+            </div>
+          ));
+        })()}
 
         {/* Capa 2: Edificios */}
         {EDIFICIOS_RENDER.map((obj, i) => (
           typeof obj.tile !== "undefined" && (
-            <img
+            <div
               key={`edificio-${obj.x}-${obj.y}-${i}`}
-              src={`${import.meta.env.BASE_URL}Tiles/tile_${obj.tile.toString().padStart(4, "0")}.png`}
-              width={TILE_SIZE}
-              height={TILE_SIZE}
               className={`tilemap-edificio${obj.flip ? ' flip-x' : ''}`}
-              style={{ left: obj.x * TILE_SIZE, top: obj.y * TILE_SIZE }}
-              alt={`edificio ${obj.tile}`}
-              loading="lazy"
-            />
+              style={{ left: obj.x * TILE_SIZE, top: obj.y * TILE_SIZE, position: 'absolute' }}
+            >
+              <Tile 
+                index={obj.tile} 
+                size={TILE_SIZE} 
+                flip={obj.flip}
+                spritesheet={obj.spritesheet || 'main'}
+              />
+            </div>
           )
         ))}
 
@@ -1817,15 +1827,27 @@ function TileMapPNG() {
           return (
             <React.Fragment key={`objeto-${obj.x}-${obj.y}-${i}`}>
               {typeof obj.tile !== "undefined" && (
-                <img
-                  src={`${import.meta.env.BASE_URL}Tiles/tile_${obj.tile.toString().padStart(4, "0")}.png`}
-                  width={TILE_SIZE}
-                  height={TILE_SIZE}
+                <div
                   className={`${cssClass}${obj.flip && !obj.rotate ? ' flip-x' : ''}${obj.rotate ? ' rotate' + obj.rotate : ''}`}
-                  style={{ left: obj.x * TILE_SIZE, top: obj.y * TILE_SIZE }}
-                  alt={`objeto ${obj.tile}`}
-                  loading="lazy"
-                />
+                  style={{ left: obj.x * TILE_SIZE, top: obj.y * TILE_SIZE, position: 'absolute' }}
+                >
+                  {obj.image ? (
+                    <img
+                      src={`${import.meta.env.BASE_URL}Tiles/${obj.image}`}
+                      width={TILE_SIZE}
+                      height={TILE_SIZE}
+                      style={{ display: 'block', imageRendering: 'pixelated' }}
+                      alt=""
+                    />
+                  ) : (
+                    <Tile 
+                      index={obj.tile} 
+                      size={TILE_SIZE} 
+                      flip={obj.flip}
+                      spritesheet={obj.spritesheet || 'main'}
+                    />
+                  )}
+                </div>
               )}
               {obj.text && (
                 <span
@@ -1885,26 +1907,20 @@ function TileMapPNG() {
 
         {/* Capa 5: Avatar */}
         {!enEdificio && (
-          <img
-            src={`${import.meta.env.BASE_URL}Tiles/tile_${AVATAR_SPRITES[avatar.dir][avatar.step].toString().padStart(4, "0")}.png`}
-            width={TILE_SIZE}
-            height={TILE_SIZE}
+          <Tile
+            index={AVATAR_SPRITES[avatar.dir][avatar.step]}
+            size={TILE_SIZE}
             className={`tilemap-avatar ${avatar.teleporting ? 'teleporting' : ''} ${isOverlappingNPC ? 'overlapping-npc' : ''}`}
-            style={{ left: avatar.x * TILE_SIZE, top: avatar.y * TILE_SIZE }}
-            alt="avatar"
-            loading="lazy"
+            style={{ left: avatar.x * TILE_SIZE, top: avatar.y * TILE_SIZE, position: 'absolute' }}
           />
         )}
 
         {/* Capa 6: NPC */}
-        <img
-          src={`${import.meta.env.BASE_URL}Tiles/tile_${NPC_SPRITES[npc.dir][npc.moving ? npc.step : 0].toString().padStart(4, "0")}.png`}
-          width={TILE_SIZE}
-          height={TILE_SIZE}
+        <Tile
+          index={NPC_SPRITES[npc.dir][npc.moving ? npc.step : 0]}
+          size={TILE_SIZE}
           className="tilemap-npc"
-          style={{ left: npc.x * TILE_SIZE, top: npc.y * TILE_SIZE }}
-          alt="npc"
-          loading="lazy"
+          style={{ left: npc.x * TILE_SIZE, top: npc.y * TILE_SIZE, position: 'absolute' }}
         />
         {npc.showPhrase && (
           <div
@@ -1919,14 +1935,11 @@ function TileMapPNG() {
           </div>
         )}
         {/* Capa 7:Pedro NPC */}
-        <img
-          src={`${import.meta.env.BASE_URL}Tiles/tile_${PEDRO_SPRITES[pedro.dir][pedro.moving ? pedro.step : 0].toString().padStart(4, "0")}.png`}
-          width={TILE_SIZE}
-          height={TILE_SIZE}
+        <Tile
+          index={PEDRO_SPRITES[pedro.dir][pedro.moving ? pedro.step : 0]}
+          size={TILE_SIZE}
           className="tilemap-npc"
-          style={{ left: pedro.x * TILE_SIZE, top: pedro.y * TILE_SIZE }}
-          alt="pedro"
-          loading="lazy"
+          style={{ left: pedro.x * TILE_SIZE, top: pedro.y * TILE_SIZE, position: 'absolute' }}
         />
         {pedro.showPhrase && (
           <div
@@ -1941,16 +1954,12 @@ function TileMapPNG() {
           </div>
         )}
 
-
         {/* Capa 7:Obrero NPC */}
-        <img
-          src={`${import.meta.env.BASE_URL}Tiles/tile_${OBRERO_SPRITES[obrero.dir][obrero.moving ? obrero.step : 0].toString().padStart(4, "0")}.png`}
-          width={TILE_SIZE}
-          height={TILE_SIZE}
+        <Tile
+          index={OBRERO_SPRITES[obrero.dir][obrero.moving ? obrero.step : 0]}
+          size={TILE_SIZE}
           className="tilemap-npc"
-          style={{ left: obrero.x * TILE_SIZE, top: obrero.y * TILE_SIZE }}
-          alt="obrero"
-          loading="lazy"
+          style={{ left: obrero.x * TILE_SIZE, top: obrero.y * TILE_SIZE, position: 'absolute' }}
         />
         {obrero.showPhrase && (
           <div
@@ -1966,14 +1975,11 @@ function TileMapPNG() {
         )}
 
         {/* Capa 8: Fernando NPC */}
-        <img
-          src={`${import.meta.env.BASE_URL}Tiles/tile_${FERNANDO_SPRITES[fernando.dir][fernando.moving ? fernando.step : 0].toString().padStart(4, "0")}.png`}
-          width={TILE_SIZE}
-          height={TILE_SIZE}
+        <Tile
+          index={FERNANDO_SPRITES[fernando.dir][fernando.moving ? fernando.step : 0]}
+          size={TILE_SIZE}
           className="tilemap-npc"
-          style={{ left: fernando.x * TILE_SIZE, top: fernando.y * TILE_SIZE }}
-          alt="fernando"
-          loading="lazy"
+          style={{ left: fernando.x * TILE_SIZE, top: fernando.y * TILE_SIZE, position: 'absolute' }}
         />
         {fernando.showPhrase && (
           <div

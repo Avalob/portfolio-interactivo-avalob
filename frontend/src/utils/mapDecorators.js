@@ -271,12 +271,10 @@ export const ARBOL_TRIPLE = (x, y) => [
 export const ARBUSTO = (x, y) => ({ x, y, tile: 238 });
 
 export const FUENTE_ALARGADA = (x, y) => [
-  { x, y, tile: 170 },
-
-  { x: x + 1, y, tile: 172 },
-  { x, y: y + 1, tile: 224 },
-
-  { x: x + 1, y: y + 1, tile: 511 },
+  { x, y, tile: 174 , spritesheet: 'secondary' },
+  { x: x + 1, y, tile: 176, spritesheet: 'secondary' },
+  { x, y: y + 1, tile: 248 , spritesheet: 'secondary' },
+  { x: x + 1, y: y + 1, tile: 250, spritesheet: 'secondary' },
 ];
 
 // Mobiliario urbano
@@ -312,18 +310,18 @@ export const LAGO_REDONDO = (x, y) => ({ x, y, tile: 230 });
 
 // Fuente especial de 2 filas (3x2)
 export const FUENTE_ESPECIAL = (x, y) => [
-  { x, y, tile: 170 },
-  { x: x + 1, y, tile: 171 },
-  { x: x + 2, y, tile: 172 },
-  { x, y: y + 1, tile: 197 },
-  { x: x + 1, y: y + 1, tile: 198 },
-  { x: x + 2, y: y + 1, tile: 199 },
-   { x, y: y + 2, tile: 197 },
-  { x: x + 1, y: y + 2, tile: 198 },
-  { x: x + 2, y: y + 2, tile: 199 },
-     { x, y: y + 3, tile: 197 },
-  { x: x + 1, y: y + 3, tile: 198 },
-  { x: x + 2, y: y + 3, tile: 199 },
+  { x, y, tile: 174 , spritesheet: 'secondary'  },
+  { x: x + 1, y, tile: 175, spritesheet: 'secondary'  },
+  { x: x + 2, y, tile: 176 , spritesheet: 'secondary'  },
+  { x, y: y + 1, tile: 211 , spritesheet: 'secondary'  },
+  { x: x + 1, y: y + 1, tile: 212, spritesheet: 'secondary'  },
+  { x: x + 2, y: y + 1, tile: 213, spritesheet: 'secondary'  },
+   { x, y: y + 2, tile: 211, spritesheet: 'secondary'  },
+  { x: x + 1, y: y + 2, tile: 212, spritesheet: 'secondary'  },
+  { x: x + 2, y: y + 2, tile: 213, spritesheet: 'secondary'  },
+     { x, y: y + 3, tile: 211, spritesheet: 'secondary'  },
+  { x: x + 1, y: y + 3, tile: 212, spritesheet: 'secondary'  },
+  { x: x + 2, y: y + 3, tile: 213, spritesheet: 'secondary'  },
 
 
 

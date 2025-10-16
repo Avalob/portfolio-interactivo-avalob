@@ -2,47 +2,41 @@
 // 1. IMPORTACIÓN DE DEPENDENCIAS
 // ============================================================
 import PropTypes from 'prop-types';
+import Tile from './Tile';
 
 // ============================================================
-// 2. COMPONENTE Car: RENDERIZA EL COCHE NPC CON ANIMACIONES Y EFECTOS
+// 2. COMPONENTE PRINCIPAL
 // ============================================================
-const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage = '🚗 ¡PI PIIII!', isNightMode = false }) => {
-  // Determina si el coche está en orientación horizontal
-  const isHorizontal = direction === 'left' || direction === 'right';
-  const width = isHorizontal ? tileSize * 2 : tileSize;
+function Car({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage, isNightMode }) {
+  // Calcula el ancho del coche según la cantidad de sprites
+  const width = currentSprites.length * tileSize;
 
-  // Renderiza el coche, sus sprites, luces y bocina según el estado
+  // Estilo base del coche
+  const carStyle = {
+    position: 'absolute',
+    left: `${x * tileSize}px`,
+    top: `${y * tileSize}px`,
+    width: `${width}px`,
+    height: `${tileSize}px`,
+    zIndex: 3,
+    transition: 'left 0.15s linear, top 0.15s linear',
+    willChange: 'transform',
+    transform: 'translateZ(0)',
+  };
+
   return (
-    <div
-      className="car-npc"
-      style={{
-        position: 'absolute',
-        left: `${x * tileSize}px`,
-        top: `${y * tileSize}px`,
-        width: `${width}px`,
-        height: `${tileSize}px`,
-        zIndex: 3,
-        transition: 'left 0.15s linear, top 0.15s linear',
-        willChange: 'transform',
-        transform: 'translateZ(0)',
-      }}
-    >
+    <div style={carStyle}>
       {/* Renderiza los sprites del coche según la dirección y frame actual */}
       {currentSprites.map((sprite, index) => (
-        <img
+        <Tile
           key={index}
-          src={`${import.meta.env.BASE_URL}Tiles/tile_${sprite.toString().padStart(4, '0')}.png`}
-          alt={`car-${direction}`}
+          index={sprite}
+          size={tileSize}
           className={`car-sprite car-${direction}`}
           style={{
             position: 'absolute',
             left: `${index * tileSize}px`,
             top: 0,
-          }}
-          loading="lazy"
-            width: `${tileSize}px`,
-            height: `${tileSize}px`,
-            imageRendering: 'pixelated',
             willChange: 'transform',
             transform: 'translateZ(0)',
           }}
@@ -170,7 +164,7 @@ const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage 
       )}
     </div>
   );
-};
+}
 
 // ============================================================
 // 3. PROPTYPES DEL COMPONENTE
