@@ -1,13 +1,11 @@
+/* ============================================================
+   FIXEDMINIMAP.CSS - ESTILOS DEL MINIMAPA INTERACTIVO
+   Incluye estilos para escritorio y móvil, canvas, avatar, edificios y efectos visuales
+   ============================================================ */
 
-/* ============================= */
-/* FixedMinimap.css
-  Estilos para el minimapa interactivo (escritorio y móvil)
-  Secciones: UI, Canvas, Avatar, Edificios, Efectos, Móvil
-*/
-
-/* ============================= */
-/* UI: Minimapa fijo (escritorio) */
-/* ============================= */
+/* ============================================================
+   1. UI: MINIMAPA FIJO (ESCRITORIO)
+   ============================================================ */
 .fixed-minimap {
   /* Contenedor principal del minimapa fijo en escritorio */
   position: fixed;
@@ -33,7 +31,6 @@
   border-color: var(--color-primary);
 }
 
-/* Título del minimapa (escritorio) */
 .fixed-minimap-title {
   font-family: var(--font-family-base);
   font-size: var(--font-size-sm);
@@ -47,11 +44,10 @@
   pointer-events: none;
 }
 
-/* ============================= */
-/* CANVAS: Área interactiva y grid de fondo */
-/* ============================= */
+/* ============================================================
+   2. CANVAS: ÁREA INTERACTIVA Y GRID DE FONDO
+   ============================================================ */
 .fixed-minimap-canvas {
-  /* Área interactiva del minimapa */
   position: relative;
   background: linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(15, 15, 25, 0.9) 100%);
   border: 2px solid var(--color-border);
@@ -67,7 +63,6 @@
 }
 
 .fixed-minimap-grid {
-  /* Grid de fondo (líneas sutiles) */
   position: absolute;
   inset: 0;
   background-image: 
@@ -77,9 +72,9 @@
   pointer-events: none;
 }
 
-/* ============================= */
-/* AVATAR: Jugador en el minimapa */
-/* ============================= */
+/* ============================================================
+   3. AVATAR: JUGADOR EN EL MINIMAPA
+   ============================================================ */
 .fixed-minimap-avatar {
   position: absolute;
   width: 12px;
@@ -130,9 +125,9 @@
   }
 }
 
-/* ============================= */
-/* EDIFICIOS: Iconos de edificios en el mapa */
-/* ============================= */
+/* ============================================================
+   4. EDIFICIOS: ICONOS DE EDIFICIOS EN EL MAPA
+   ============================================================ */
 .fixed-minimap-building {
   position: absolute;
   width: 20px;
@@ -165,9 +160,9 @@
   box-shadow: 0 0 8px var(--building-color, var(--color-primary));
 }
 
-/* ============================= */
-/* EFECTOS: Ping visual al hacer click */
-/* ============================= */
+/* ============================================================
+   5. EFECTOS: PING VISUAL AL HACER CLICK
+   ============================================================ */
 .minimap-click-effect {
   position: absolute;
   width: 20px;
@@ -195,9 +190,9 @@
   }
 }
 
-/* ============================= */
-/* EFECTOS: Animación de error (shake) */
-/* ============================= */
+/* ============================================================
+   6. EFECTOS: ANIMACIÓN DE ERROR (SHAKE)
+   ============================================================ */
 .minimap-shake {
   animation: minimapShake 0.5s ease-in-out;
 }
@@ -218,9 +213,9 @@
   20%, 40%, 60%, 80% { transform: scale(0.98) translateX(5px); }
 }
 
-/* ============================= */
-/* UI: Hint inferior (texto de ayuda) */
-/* ============================= */
+/* ============================================================
+   7. UI: HINT INFERIOR (TEXTO DE AYUDA)
+   ============================================================ */
 .fixed-minimap-hint {
   font-size: var(--font-size-xs);
   color: var(--color-text-tertiary);
@@ -239,18 +234,13 @@
   opacity: 1;
 }
 
-/* ============================= */
-/* MÓVIL: Botón flotante y modal minimapa */
-/* ============================= */
-
-
-
+/* ============================================================
+   8. MÓVIL: BOTÓN FLOTANTE Y MODAL MINIMAPA
+   ============================================================ */
 @media (max-width: 899px) {
-  /* Oculta el minimapa fijo en móvil */
   .fixed-minimap {
     display: none;
   }
-  /* Botón flotante para abrir el minimapa (móvil) */
   .minimap-mobile-button {
     display: flex !important;
     align-items: center;
@@ -278,7 +268,6 @@
     animation: slideInButton 400ms ease-out 200ms both;
     overflow: hidden;
   }
-  
   .minimap-mobile-button::before {
     content: '';
     position: absolute;
@@ -290,11 +279,9 @@
     opacity: 0;
     transition: opacity 300ms ease;
   }
-  
   .minimap-mobile-button:hover::before {
     opacity: 1;
   }
-  
   .minimap-mobile-button:active::before {
     opacity: 1;
   }
@@ -316,7 +303,6 @@
       0 0 24px rgba(74, 144, 217, 0.35),
       inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
-  /* Overlay del modal minimapa (móvil) */
   .minimap-mobile-overlay {
     display: flex;
     align-items: center;
@@ -346,7 +332,6 @@
       backdrop-filter: blur(12px) saturate(180%);
     }
   }
-  /* Contenedor principal del modal minimapa (móvil) */
   .minimap-mobile-container {
     background: linear-gradient(135deg, 
       rgba(26, 26, 46, 0.75) 0%, 
@@ -377,7 +362,6 @@
       transform: translateY(0) scale(1);
     }
   }
-  /* Header del modal minimapa (móvil) */
   .minimap-mobile-header {
     display: flex;
     justify-content: space-between;
@@ -412,7 +396,6 @@
     transform: scale(0.9);
     background: rgba(239, 68, 68, 0.4);
   }
-  /* Canvas del minimapa (móvil, aspect-ratio y responsive) */
   .minimap-mobile-canvas {
     position: relative;
     background: linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(15, 15, 25, 0.9) 100%);
@@ -421,7 +404,6 @@
     overflow: hidden;
     cursor: crosshair;
     width: 100%;
-
     aspect-ratio: 45 / 30;
     height: auto;
     margin: 0 auto;
@@ -429,7 +411,6 @@
     box-sizing: border-box;
     display: block;
   }
-  /* Hint inferior (móvil) */
   .minimap-mobile-hint {
     font-size: var(--font-size-sm);
     color: var(--color-text-secondary);
@@ -440,7 +421,9 @@
   }
 }
 
-/* Animación de entrada minimapa (escritorio) */
+/* ============================================================
+   9. ANIMACIONES DE ENTRADA (ESCRITORIO)
+   ============================================================ */
 @keyframes slideInLeft {
   from {
     opacity: 0;

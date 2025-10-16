@@ -1,17 +1,24 @@
+// ============================================================
+// 1. IMPORTACIONES Y VARIABLES GLOBALES
+// ============================================================
 import { useState, useEffect } from 'react';
 import BuildingModal from './BuildingModal';
 import './BuildingModal.css';
 
 const ASSET_BASE_URL = import.meta.env.BASE_URL;
 
-/**
- * CONFIGURACIÓN DE PROYECTOS
- * Array que contiene toda la información de los proyectos del portfolio
- */
+// ============================================================
+// 2. COMPONENTE: ProyectosModal
+// Modal para mostrar y filtrar proyectos del portfolio
+// ============================================================
 function ProyectosModal({ isOpen, onClose }) {
+  // Estado para el filtro de categoría y reproducción de videos
   const [filterType, setFilterType] = useState('Todos');
   const [playing, setPlaying] = useState({});
 
+  // =============================
+  // 2.1 LISTADO DE PROYECTOS
+  // =============================
   const proyectos = [
     {
       id: 1,
@@ -174,35 +181,41 @@ function ProyectosModal({ isOpen, onClose }) {
     }
   ];
 
-  
-  // Filtros de categorías
+  // =============================
+  // 2.2 FILTROS DE CATEGORÍA
+  // =============================
   const FILTERS = ['Todos', 'React', 'WordPress', 'HTML/PHP', 'HTML/CSS'];
-  
-  // Filtrar proyectos según categoría seleccionada
   const proyectosFiltrados = filterType === 'Todos' 
     ? proyectos 
     : proyectos.filter(p => p.categoria === filterType);
 
-  // Manejo de reproducción de videos
+  // =============================
+  // 2.3 HANDLER DE REPRODUCCIÓN DE VIDEO
+  // =============================
+  // Esta función alterna la reproducción de video en la tarjeta de proyecto
   const handleMediaClick = (id) => {
     setPlaying((p) => ({ ...p, [id]: !p[id] }));
   };
 
+  // ============================================================
+  // 3. RENDER DEL MODAL Y GRID DE PROYECTOS
+  // ============================================================
   return (
     <BuildingModal
       isOpen={isOpen}
       onClose={onClose}
       title="Mis Proyectos"
       icon="🚀"
-            maxWidth="90%"
+      maxWidth="90%"
       maxHeight="90%"
     >
       <div className="building-section">
         <p style={{ textAlign: 'center', marginBottom: '20px', color: 'rgba(148,163,184,0.9)' }}>
           💡 Filtra por categoría y explora mis proyectos
         </p>
-        
-        {/* FILTROS DE CATEGORÍAS */}
+        {/* =============================
+            3.1 FILTROS DE CATEGORÍA
+            ============================= */}
         <div style={{ 
           display: 'flex', 
           gap: '0.75rem', 
@@ -250,8 +263,9 @@ function ProyectosModal({ isOpen, onClose }) {
           ))}
         </div>
       </div>
-
-      {/* GRID DE PROYECTOS */}
+      {/* =============================
+          3.2 GRID DE PROYECTOS
+          ============================= */}
       <div className="projects-grid">
         {proyectosFiltrados.map((proyecto) => (
           <div key={proyecto.id} className="project-card">
@@ -264,11 +278,9 @@ function ProyectosModal({ isOpen, onClose }) {
                 ))}
               </div>
             </div>
-
-            {/* Descripción */}
+            {/* Descripción del proyecto */}
             <p className="project-card-description">{proyecto.descripcion}</p>
-
-            {/* Multimedia (Imagen o Video) */}
+            {/* Multimedia: imagen o video */}
             <div 
               className="project-card-media"
               onClick={() => proyecto.vimeo && handleMediaClick(proyecto.id)}
@@ -284,7 +296,6 @@ function ProyectosModal({ isOpen, onClose }) {
                   }}
                 />
               )}
-              
               {proyecto.vimeo && playing[proyecto.id] && (
                 <iframe
                   src={`https://player.vimeo.com/video/${
@@ -297,8 +308,7 @@ function ProyectosModal({ isOpen, onClose }) {
                 />
               )}
             </div>
-
-            {/* Botones de acción */}
+            {/* Botones de acción: web, demo, código */}
             <div className="project-card-actions">
               {proyecto.enlaces.web && (
                 <a 
@@ -338,4 +348,7 @@ function ProyectosModal({ isOpen, onClose }) {
   );
 }
 
+// ============================================================
+// 4. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default ProyectosModal;

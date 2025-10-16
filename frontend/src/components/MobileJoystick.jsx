@@ -10,10 +10,17 @@
  * - Semi-transparente para no tapar el juego
  */
 
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS
+// ============================================================
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import './MobileJoystick.css';
 
+// ============================================================
+// 2. COMPONENTE: MobileJoystick
+// Cruceta direccional y menú para dispositivos móviles
+// ============================================================
 function MobileJoystick({
   onDirectionPress = () => {},
   onDirectionRelease = () => {},
@@ -23,6 +30,9 @@ function MobileJoystick({
   totalBuildings = 9,
   movementLocked = false
 }) {
+  // =============================
+  // 2.1 REFERENCIAS Y ESTADO LOCAL
+  // =============================
   const currentDirectionRef = useRef(null);
   const movementLockedRef = useRef(false);
   const activePointerRef = useRef(null);
@@ -31,6 +41,9 @@ function MobileJoystick({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeButton, setActiveButton] = useState(null);
 
+  // =============================
+  // 2.2 CÁLCULO DE PROGRESO Y COLORES
+  // =============================
   const buildingsTotal = totalBuildings || Object.keys(visitedBuildings).length || 9;
   const visitedCount = Object.values(visitedBuildings).filter(Boolean).length;
   const rawProgress = buildingsTotal > 0
@@ -41,7 +54,7 @@ function MobileJoystick({
   const progressPercent = Math.max(0, Math.min(100, rawProgress));
   const strokeDashArray = progressPercent >= 100 ? '100, 0' : `${progressPercent}, 100`;
 
-  // Función para obtener el color según el progreso
+  // Esta función devuelve el color del anillo de progreso según el porcentaje
   const getProgressColor = (progress) => {
     if (progress === 0) return '#64748b'; // Gris para 0%
     if (progress < 25) return '#ef4444'; // Rojo para 0-25%
@@ -51,6 +64,10 @@ function MobileJoystick({
     return '#10b981'; // Verde oscuro para 100%
   };
 
+  // =============================
+  // 2.3 HANDLERS DE DIRECCIÓN Y MENÚ
+  // =============================
+  // Esta función libera la dirección activa y resetea el estado
   const releaseDirection = useCallback(() => {
     if (releaseTimeoutRef.current) {
       clearTimeout(releaseTimeoutRef.current);
@@ -65,6 +82,7 @@ function MobileJoystick({
     activePointerRef.current = null;
   }, [onDirectionRelease]);
 
+  // Sincroniza el estado de bloqueo de movimiento
   useEffect(() => {
     movementLockedRef.current = movementLocked;
     if (movementLocked) {
@@ -72,7 +90,7 @@ function MobileJoystick({
     }
   }, [movementLocked, releaseDirection]);
 
-  // Manejar presión de botón direccional
+  // Esta función gestiona la presión de un botón direccional
   const handleDirectionStart = useCallback((direction) => (event) => {
     if (event?.stopPropagation) {
       event.stopPropagation();
@@ -80,20 +98,16 @@ function MobileJoystick({
     if (event?.cancelable) {
       event.preventDefault();
     }
-
     if (event?.pointerId != null && event.currentTarget?.setPointerCapture) {
       try {
         event.currentTarget.setPointerCapture(event.pointerId);
         activePointerRef.current = event.pointerId;
       } catch (err) {
-        // Ignorar capturas fallidas
+        // Si falla la captura, simplemente se ignora
       }
     }
-
     pressStartRef.current = Date.now();
-    
     if (movementLockedRef.current) return;
-    
     if (currentDirectionRef.current !== direction) {
       if (currentDirectionRef.current) {
         onDirectionRelease(currentDirectionRef.current);
@@ -104,16 +118,15 @@ function MobileJoystick({
     }
   }, [onDirectionPress, onDirectionRelease]);
 
-  // Manejar liberación de botón direccional
+  // Esta función gestiona la liberación de un botón direccional
   const handleDirectionEnd = useCallback((event) => {
     if (event?.pointerId != null && event.currentTarget?.releasePointerCapture) {
       try {
         event.currentTarget.releasePointerCapture(event.pointerId);
       } catch (err) {
-        // Ignorar liberaciones fallidas
+        // Si falla la liberación, simplemente se ignora
       }
     }
-
     if (
       activePointerRef.current != null &&
       event?.pointerId != null &&
@@ -121,12 +134,10 @@ function MobileJoystick({
     ) {
       return;
     }
-
     const now = Date.now();
     const startedAt = pressStartRef.current;
     const elapsed = startedAt ? now - startedAt : 0;
     const MIN_PRESS_DURATION = 140;
-
     if (elapsed < MIN_PRESS_DURATION) {
       const remaining = MIN_PRESS_DURATION - elapsed;
       if (releaseTimeoutRef.current) {
@@ -141,16 +152,17 @@ function MobileJoystick({
     }
   }, [releaseDirection]);
 
-  // Cleanup global listeners
+  // =============================
+  // 2.4 EFECTOS Y LIMPIEZA GLOBAL
+  // =============================
+  // Añade listeners globales para liberar la dirección al soltar el dedo
   useEffect(() => {
     const globalRelease = () => {
       releaseDirection();
     };
-
     window.addEventListener('pointerup', globalRelease);
     window.addEventListener('pointercancel', globalRelease);
     window.addEventListener('mouseup', globalRelease);
-
     return () => {
       window.removeEventListener('pointerup', globalRelease);
       window.removeEventListener('pointercancel', globalRelease);
@@ -158,22 +170,31 @@ function MobileJoystick({
     };
   }, [releaseDirection]);
 
+  // =============================
+  // 2.5 HANDLERS DE MENÚ Y OPCIONES
+  // =============================
+  // Abre/cierra el menú de opciones
   const handleMenuClick = (e) => {
     e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Ejecuta la acción del menú y cierra el menú
   const handleMenuOptionClick = (option) => (e) => {
     e.preventDefault();
     e.stopPropagation();
     onMenuButton(option);
-    // Cerrar menú tras ejecutar la acción
     requestAnimationFrame(() => setIsMenuOpen(false));
   };
 
+  // ============================================================
+  // 3. RENDER DEL JOYSTICK Y MENÚ
+  // ============================================================
   return (
     <div className="mobile-joystick">
-      {/* D-Pad (Cruceta Direccional) */}
+      {/* =============================
+          3.1 D-PAD (CRUCETA DIRECCIONAL)
+          ============================= */}
       <div className="dpad-container">
         <button
           className={`dpad-button dpad-up ${activeButton === 'up' ? 'active' : ''}`}
@@ -210,9 +231,11 @@ function MobileJoystick({
         </button>
       </div>
 
-      {/* Botón de Menú Desplegable */}
+      {/* =============================
+          3.2 MENÚ DESPLEGABLE Y PROGRESO
+          ============================= */}
       <div className="joystick-menu-container">
-        {/* Indicador de Progreso Móvil */}
+        {/* Indicador de progreso circular */}
         <div className="mobile-progress-indicator">
           <svg viewBox="0 0 54 54" className="progress-ring">
             <defs>
@@ -239,7 +262,7 @@ function MobileJoystick({
           </svg>
           <span className="progress-text">{visitedCount}/{buildingsTotal}</span>
         </div>
-
+        {/* Botón de menú principal */}
         <button
           className="menu-toggle-btn"
           onTouchStart={handleMenuClick}
@@ -247,8 +270,7 @@ function MobileJoystick({
         >
           <span className="menu-icon">☰</span>
         </button>
-
-        {/* Botón de Minimap */}
+        {/* Botón de minimapa */}
         <button
           className="minimap-toggle-btn"
           onTouchStart={() => onMenuButton('map')}
@@ -256,7 +278,7 @@ function MobileJoystick({
         >
           <span className="minimap-icon">🗺️</span>
         </button>
-
+        {/* Menú desplegable de opciones */}
         {isMenuOpen && (
           <div className="menu-dropdown">
             <button 
@@ -286,7 +308,9 @@ function MobileJoystick({
   );
 }
 
-// PropTypes para validación
+// ============================================================
+// 4. PROPTYPES Y EXPORTACIÓN
+// ============================================================
 MobileJoystick.propTypes = {
   onDirectionPress: PropTypes.func,
   onDirectionRelease: PropTypes.func,

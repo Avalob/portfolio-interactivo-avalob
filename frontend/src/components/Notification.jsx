@@ -1,10 +1,13 @@
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS
+// ============================================================
 import React, { useEffect, useState } from 'react';
 import './Notification.css';
 
-/**
- * Sistema de notificaciones estilo Game Boy Advance / Pokémon
- * Muestra notificaciones deslizantes desde arriba con animación
- */
+// ============================================================
+// 2. COMPONENTE: Notification
+// Muestra notificaciones deslizantes con animación y cierre manual
+// ============================================================
 const Notification = ({ notifications, onDismiss }) => {
   return (
     <div className="notification-container">
@@ -37,12 +40,14 @@ const Notification = ({ notifications, onDismiss }) => {
   );
 };
 
-/**
- * Hook personalizado para gestionar notificaciones
- */
+// ============================================================
+// 3. HOOK PERSONALIZADO: useNotifications
+// Gestiona la cola y animación de notificaciones
+// ============================================================
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState([]);
 
+  // Añade una nueva notificación a la cola
   const addNotification = (type, title, message, icon = '✨', duration = 4000) => {
     const id = Date.now() + Math.random();
     const newNotification = {
@@ -53,39 +58,30 @@ export const useNotifications = () => {
       icon,
       removing: false,
     };
-
     setNotifications((prev) => [...prev, newNotification]);
-
-    // Auto-remover después de la duración
+    // Auto-remover después de la duración indicada
     if (duration > 0) {
       setTimeout(() => {
         removeNotification(id);
       }, duration);
     }
-
-    // Reproducir sonido (opcional)
+    // Reproducir sonido asociado (próximamente)
     playNotificationSound(type);
-
     return id;
   };
 
+  // Marca una notificación como saliente y la elimina tras la animación
   const removeNotification = (id) => {
-    // Marcar como "removing" para animación de salida
     setNotifications((prev) =>
       prev.map((n) => (n.id === id ? { ...n, removing: true } : n))
     );
-
-    // Eliminar del DOM después de la animación
     setTimeout(() => {
       setNotifications((prev) => prev.filter((n) => n.id !== id));
     }, 300);
   };
 
+  // Placeholder para reproducir sonidos de notificación
   const playNotificationSound = (type) => {
-    // Placeholder para sonidos (implementar con Web Audio API o audio files)
-    // const audio = new Audio(`/sounds/notification-${type}.mp3`);
-    // audio.volume = 0.3;
-    // audio.play().catch(() => {});
   };
 
   return {
@@ -95,4 +91,7 @@ export const useNotifications = () => {
   };
 };
 
+// ============================================================
+// 4. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default Notification;

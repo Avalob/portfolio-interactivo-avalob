@@ -1,11 +1,19 @@
-
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS
+// ============================================================
 import React, { useState } from 'react';
 import BuildingModal from './BuildingModal';
 import './BuildingModal.css';
 
+// ============================================================
+// 2. COMPONENTE: OtrosModal
+// Modal para mostrar cursos y certificaciones adicionales
+// ============================================================
 function OtrosModal({ isOpen, onClose }) {
+  // Estado local para controlar qué secciones están expandidas
   const [expandedSections, setExpandedSections] = useState({});
 
+  // Esta función alterna la visibilidad de cada sección desplegable
   const toggleSection = (key) => {
     setExpandedSections(prev => ({
       ...prev,
@@ -13,6 +21,9 @@ function OtrosModal({ isOpen, onClose }) {
     }));
   };
 
+  // ============================================================
+  // 3. RENDER DEL MODAL Y CURSOS
+  // ============================================================
   return (
     <BuildingModal
       isOpen={isOpen}
@@ -23,11 +34,12 @@ function OtrosModal({ isOpen, onClose }) {
       maxHeight="90%"
     >
       <div className="otros-grid">
-        {/* Meta Front-End */}
+        {/* =============================
+            3.1 META FRONT-END CAPSTONE
+            ============================= */}
         <div className="building-section">
           <h2>⚛️ Desarrollador Front-End Capstone</h2>
           <p><strong> Meta | 2025</strong></p>
-          
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -42,7 +54,6 @@ function OtrosModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          
           <a 
             href="https://coursera.org/share/a5ca3d250670d7b36d55f7418bcf0a80" 
             target="_blank" 
@@ -52,12 +63,12 @@ function OtrosModal({ isOpen, onClose }) {
             Ver Credencial →
           </a>
         </div>
-
-        {/* Python */}
+        {/* =============================
+            3.2 PROGRAMACIÓN EN PYTHON
+            ============================= */}
         <div className="building-section">
           <h2>🐍 Programación en Python</h2>
           <p><strong>Universidad de los Andes | 2025</strong></p>
-          
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -72,7 +83,6 @@ function OtrosModal({ isOpen, onClose }) {
               </div>
             )}
           </div>
-          
           <a 
             href="https://coursera.org/share/36b387fb539a9190a4caa7f18f2af92a" 
             target="_blank" 
@@ -82,12 +92,12 @@ function OtrosModal({ isOpen, onClose }) {
             Ver Credencial →
           </a>
         </div>
-
-        {/* Marketing Online */}
+        {/* =============================
+            3.3 MARKETING ONLINE
+            ============================= */}
         <div className="building-section">
           <h2>📈 Marketing Online</h2>
           <p><strong>Grupo Conforsa | 2020</strong></p>
-          
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -103,12 +113,12 @@ function OtrosModal({ isOpen, onClose }) {
             )}
           </div>
         </div>
-
-        {/* WordPress */}
+        {/* =============================
+            3.4 WORDPRESS
+            ============================= */}
         <div className="building-section">
           <h2>🌐 Gráfico WordPress</h2>
           <p><strong>Grupo Conforsa | 2020</strong></p>
-          
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -124,12 +134,12 @@ function OtrosModal({ isOpen, onClose }) {
             )}
           </div>
         </div>
-
-        {/* Visual Merchandising */}
+        {/* =============================
+            3.5 VISUAL MERCHANDISING
+            ============================= */}
         <div className="building-section">
           <h2>🎨 Máster en Visual Merchandising y Escaparatismo</h2>
           <p><strong>Salesas Instituto | 2017</strong></p>
-          
           <div className="exp-dropdown-item">
             <button 
               className="exp-dropdown-btn"
@@ -150,4 +160,7 @@ function OtrosModal({ isOpen, onClose }) {
   );
 }
 
+// ============================================================
+// 4. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default OtrosModal;

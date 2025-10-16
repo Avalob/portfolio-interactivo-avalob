@@ -38,6 +38,8 @@ const Car = ({ x, y, direction, currentSprites, showHorn, tileSize, hornMessage 
             position: 'absolute',
             left: `${index * tileSize}px`,
             top: 0,
+          }}
+          loading="lazy"
             width: `${tileSize}px`,
             height: `${tileSize}px`,
             imageRendering: 'pixelated',

@@ -1,8 +1,15 @@
-import React from 'react';
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS
+// ============================================================
 import BuildingModal from './BuildingModal';
 import './BuildingModal.css';
 
+// ============================================================
+// 2. COMPONENTE: HobbiesModal
+// Modal para mostrar hobbies y pasiones personales
+// ============================================================
 function HobbiesModal({ isOpen, onClose }) {
+  // Lista de hobbies y pasiones, cada uno con icono, título y descripción
   const hobbies = [
     {
       icon: '🎭',
@@ -46,6 +53,9 @@ function HobbiesModal({ isOpen, onClose }) {
     }
   ];
 
+  // ============================================================
+  // 3. RENDER DEL MODAL Y LISTADO DE HOBBIES
+  // ============================================================
   return (
     <BuildingModal
       isOpen={isOpen}
@@ -56,7 +66,8 @@ function HobbiesModal({ isOpen, onClose }) {
       maxHeight="90%"
     >
       <div className="building-section">
-        <div >
+        <div>
+          {/* Renderiza cada hobby como una tarjeta visual */}
           {hobbies.map((hobby, index) => (
             <div
               key={index}
@@ -80,6 +91,7 @@ function HobbiesModal({ isOpen, onClose }) {
                 marginBottom: '0.75rem',
                 width: '100%'
               }}>
+                {/* Icono visual del hobby */}
                 <div style={{
                   fontSize: '2.5rem',
                   lineHeight: 1,
@@ -87,6 +99,7 @@ function HobbiesModal({ isOpen, onClose }) {
                 }}>
                   {hobby.icon}
                 </div>
+                {/* Título del hobby */}
                 <h3 style={{
                   margin: 0,
                   fontSize: '1.1rem',
@@ -97,6 +110,7 @@ function HobbiesModal({ isOpen, onClose }) {
                   {hobby.title}
                 </h3>
               </div>
+              {/* Descripción del hobby */}
               <p style={{
                 margin: 0,
                 fontSize: '0.9rem',
@@ -115,4 +129,7 @@ function HobbiesModal({ isOpen, onClose }) {
   );
 }
 
+// ============================================================
+// 4. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default HobbiesModal;

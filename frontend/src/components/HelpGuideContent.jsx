@@ -1,12 +1,18 @@
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS
+// ============================================================
 import React, { useState } from 'react';
 import './BuildingModal.css';
 
-/**
- * Contenido reutilizable para la guía de ayuda.
- */
+// ============================================================
+// 2. COMPONENTE: HelpGuideContent
+// Contenido interactivo y desplegable para la guía de ayuda
+// ============================================================
 const HelpGuideContent = () => {
+  // Estado local para controlar qué secciones están expandidas
   const [expandedSections, setExpandedSections] = useState({});
 
+  // Esta función alterna la visibilidad de cada sección desplegable
   const toggleSection = (key) => {
     setExpandedSections((prev) => ({
       ...prev,
@@ -14,11 +20,15 @@ const HelpGuideContent = () => {
     }));
   };
 
+  // Render principal: estructura de la guía de ayuda con secciones y dropdowns
   return (
     <div className="experiencia-columns">
+      {/* =============================
+          2.1 CONTROLES DEL JUEGO
+          ============================= */}
       <div className="building-section">
         <h2>⌨️ Controles del Juego</h2>
-
+        {/* Dropdown: Movimiento */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -40,7 +50,7 @@ const HelpGuideContent = () => {
             </div>
           )}
         </div>
-
+        {/* Dropdown: Acciones */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -65,10 +75,13 @@ const HelpGuideContent = () => {
         </div>
       </div>
 
+      {/* =============================
+          2.2 OBJETIVO DEL JUEGO
+          ============================= */}
       <div className="building-section">
         <h2>🎯 Objetivo del Juego</h2>
         <p><strong>Explora la ciudad interactiva y descubre mi portfolio</strong></p>
-
+        {/* Dropdown: ¿Qué debo hacer? */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -81,6 +94,7 @@ const HelpGuideContent = () => {
           </button>
           {expandedSections['objetivo'] && (
             <div className="exp-dropdown-content">
+              {/* Explicación de los edificios y secciones */}
               Recorre el mapa interactivo y visita los diferentes edificios para conocer mi trayectoria profesional. Cada edificio representa una sección de mi portfolio:
               <ul>
                 <li><strong>🎓 Educación</strong> - Formación académica y certificaciones</li>
@@ -97,9 +111,12 @@ const HelpGuideContent = () => {
         </div>
       </div>
 
+      {/* =============================
+          2.3 NAVEGACIÓN Y MINIMAPA
+          ============================= */}
       <div className="building-section">
         <h2>🗺️ Navegación</h2>
-
+        {/* Dropdown: Usar el minimapa */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -122,7 +139,7 @@ const HelpGuideContent = () => {
             </div>
           )}
         </div>
-
+        {/* Dropdown: HUD */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -145,9 +162,12 @@ const HelpGuideContent = () => {
         </div>
       </div>
 
+      {/* =============================
+          2.4 FUNCIONALIDADES ESPECIALES
+          ============================= */}
       <div className="building-section">
         <h2>✨ Funcionalidades Especiales</h2>
-
+        {/* Dropdown: Modo Día/Noche */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -164,7 +184,7 @@ const HelpGuideContent = () => {
             </div>
           )}
         </div>
-
+        {/* Dropdown: Panel de Reclutador */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -187,7 +207,7 @@ const HelpGuideContent = () => {
             </div>
           )}
         </div>
-
+        {/* Dropdown: Sistema de progreso */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -206,9 +226,12 @@ const HelpGuideContent = () => {
         </div>
       </div>
 
+      {/* =============================
+          2.5 NPCs Y DIÁLOGOS
+          ============================= */}
       <div className="building-section">
         <h2>🤝 NPCs y diálogos</h2>
-
+        {/* Dropdown: Interacción con NPCs */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -227,9 +250,12 @@ const HelpGuideContent = () => {
         </div>
       </div>
 
+      {/* =============================
+          2.6 CONSEJOS ÚTILES
+          ============================= */}
       <div className="building-section">
         <h2>💡 Consejos Útiles</h2>
-
+        {/* Dropdown: Tips para la experiencia */}
         <div className="exp-dropdown-item">
           <button
             className="exp-dropdown-btn"
@@ -258,4 +284,7 @@ const HelpGuideContent = () => {
   );
 };
 
+// ============================================================
+// 3. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default HelpGuideContent;

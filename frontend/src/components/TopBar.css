@@ -1,3 +1,6 @@
+/* ============================================================
+  1. RESPONSIVE: MOBILE (max-width: 599px)
+  ============================================================ */
 @media (max-width: 599px) {
   .hud-building-btn,
   .topbar-btn {
@@ -9,6 +12,7 @@
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
     border: 1.5px solid rgba(59, 176, 199, 0.6) !important;
+    /* Sombra y fondo especial para botones HUD en móvil */
     box-shadow: 
       0 4px 16px 0 rgba(0, 0, 0, 0.5),
       0 2px 8px 0 rgba(59, 176, 199, 0.25),
@@ -19,6 +23,7 @@
   .hud-building-btn.visited {
     background: linear-gradient(135deg, rgba(47, 66, 102, 0.85) 0%, rgba(66, 91, 122, 0.85) 100%) !important;
     border: 1.5px solid rgba(77, 209, 230, 0.7) !important;
+    /* Sombra especial para visitados */
     box-shadow: 
       0 4px 16px 0 rgba(0, 0, 0, 0.5),
       0 0 20px rgba(59, 255, 136, 0.3),
@@ -29,25 +34,31 @@
   .hud-building-btn:active,
   .topbar-btn:active {
     transform: translateY(2px) scale(0.96) !important;
+    /* Efecto de presión al pulsar */
     box-shadow: 
       0 2px 8px 0 rgba(0, 0, 0, 0.6),
       0 0 24px rgba(59, 176, 199, 0.35),
       inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
   }
 }
+/* ============================================================
+  2. RESPONSIVE: MOBILE HUD Y CONTENEDOR
+  ============================================================ */
 @media (max-width: 599px) {
   .topbar {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
-    /* Sin fondo, sin borde, sin sombra, ni color ni degradado */
   }
   .topbar-section {
     gap: 0.2rem !important;
 }
 }
 
+/* ============================================================
+  3. RESPONSIVE: EXTRA PEQUEÑO (max-width: 420px)
+  ============================================================ */
 @media (max-width: 420px) {
   .topbar {
     height: 42px;
@@ -87,6 +98,9 @@
   }
 }
 
+/* ============================================================
+  4. RESPONSIVE: ULTRA PEQUEÑO (max-width: 360px)
+  ============================================================ */
 @media (max-width: 360px) {
   .topbar {
     height: 40px;
@@ -120,16 +134,12 @@
     font-size: 0.5rem;
   }
 }
-/**
- * ============================================
- * TOPBAR - RESPONSIVE HUD SYSTEM
- * Adaptive heights: 44px (mobile) → 52px (tablet) → 56px (desktop) → 64px (desktop-lg)
- * ============================================
- */
+/* ============================================================
+  5. TOPBAR - RESPONSIVE HUD SYSTEM
+  Alturas adaptativas: 44px (mobile) → 52px (tablet) → 56px (desktop) → 64px (desktop-lg)
+  ============================================================ */
 
-/**
- * CONTENEDOR PRINCIPAL - Mobile First
- */
+/* Contenedor principal de la barra superior (mobile first) */
 .topbar {
   position: fixed;
   top: 0;
@@ -156,6 +166,7 @@
   will-change: transform;
 }
 
+/* Animación de aparición de la barra superior */
 @keyframes slideDownTopBar {
   from {
     transform: translateY(-100%);
@@ -167,7 +178,9 @@
   }
 }
 
-/* Tablet (600px+) */
+/* ============================================================
+  6. RESPONSIVE: TABLET (min-width: 600px)
+  ============================================================ */
 @media (min-width: 600px) {
   .topbar {
     height: 52px;
@@ -176,7 +189,9 @@
   }
 }
 
-/* Desktop (900px+) */
+/* ============================================================
+  7. RESPONSIVE: DESKTOP (min-width: 900px)
+  ============================================================ */
 @media (min-width: 900px) {
   .topbar {
     height: 56px;
@@ -185,7 +200,9 @@
   }
 }
 
-/* Desktop Large (1200px+) */
+/* ============================================================
+  8. RESPONSIVE: DESKTOP GRANDE (min-width: 1200px)
+  ============================================================ */
 @media (min-width: 1200px) {
   .topbar {
     height: 64px;
@@ -214,7 +231,9 @@
   flex-shrink: 0;
 }
 
-/* Mobile - Show only center HUD */
+/* ============================================================
+  9. MOBILE: SOLO HUD CENTRAL
+  ============================================================ */
 @media (max-width: 599px) {
   .topbar-right {
     display: none;
@@ -225,11 +244,9 @@
   }
 }
 
-/**
- * ============================================
- * HUD MENU - Scrollable center menu
- * ============================================
- */
+/* ============================================================
+  10. HUD MENU CENTRAL SCROLLABLE
+  ============================================================ */
 .topbar-hud-menu {
   display: flex;
   gap: 0.375rem;
@@ -255,7 +272,9 @@
   display: none;
 }
 
-/* Tablet+ */
+/* ============================================================
+  11. HUD MENU: TABLET+
+  ============================================================ */
 @media (min-width: 600px) {
   .topbar-hud-menu {
     gap: 0.5rem;
@@ -392,11 +411,9 @@
   }
 }
 
-/**
- * ============================================
- * CONTROL BUTTONS - Right side
- * ============================================
- */
+/* ============================================================
+  12. BOTONES DE CONTROL (DERECHA)
+  ============================================================ */
 .topbar-btn {
   width: 40px;
   height: 40px;
@@ -452,7 +469,7 @@
   box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
 }
 
-/* Active state */
+/* Estado activo: botón resaltado */
 .topbar-btn.active {
   background: linear-gradient(135deg, 
     rgba(57, 255, 20, 0.25) 0%, 
@@ -464,7 +481,7 @@
     inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
-/* Reset button */
+/* Botón de reset: color especial */
 .reset-btn {
   background: linear-gradient(135deg, 
     rgba(255, 0, 110, 0.25) 0%, 
@@ -485,7 +502,7 @@
     inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
-/* Recruiter button active */
+/* Botón reclutador activo: animación y color especial */
 .recruiter-btn.active {
   background: linear-gradient(135deg, 
     rgba(255, 107, 53, 0.35) 0%, 
@@ -507,7 +524,9 @@
   }
 }
 
-/* Tablet+ */
+/* ============================================================
+  13. BOTONES DE CONTROL: TABLET+
+  ============================================================ */
 @media (min-width: 600px) {
   .topbar-btn {
     width: 42px;
@@ -516,7 +535,9 @@
   }
 }
 
-/* Desktop+ */
+/* ============================================================
+  14. BOTONES DE CONTROL: DESKTOP+
+  ============================================================ */
 @media (min-width: 900px) {
   .topbar-btn {
     width: 44px;
@@ -525,11 +546,9 @@
   }
 }
 
-/**
- * ============================================
- * PROGRESS CIRCLE - Adaptive sizing
- * ============================================
- */
+/* ============================================================
+  15. CÍRCULO DE PROGRESO
+  ============================================================ */
 .topbar-progress {
   width: 40px;
   height: 40px;
@@ -607,7 +626,9 @@
   pointer-events: none;
 }
 
-/* Tablet+ */
+/* ============================================================
+  16. PROGRESS CIRCLE: TABLET+
+  ============================================================ */
 @media (min-width: 600px) {
   .topbar-progress,
   .progress-circle {
@@ -620,7 +641,9 @@
   }
 }
 
-/* Desktop+ */
+/* ============================================================
+  17. PROGRESS CIRCLE: DESKTOP+
+  ============================================================ */
 @media (min-width: 900px) {
   .topbar-progress,
   .progress-circle {
@@ -633,22 +656,18 @@
   }
 }
 
-/**
- * ============================================
- * ACCESSIBILITY
- * ============================================
- */
+/* ============================================================
+  18. ACCESIBILIDAD
+  ============================================================ */
 .hud-building-btn:focus-visible,
 .topbar-btn:focus-visible {
   outline: 2px solid rgba(0, 245, 255, 0.6);
   outline-offset: 2px;
 }
 
-/**
- * ============================================
- * REDUCED MOTION
- * ============================================
- */
+/* ============================================================
+  19. REDUCED MOTION
+  ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   .topbar,
   .hud-building-btn,

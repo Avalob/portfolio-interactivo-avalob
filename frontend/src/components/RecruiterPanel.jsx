@@ -1,13 +1,24 @@
+
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS
+// ============================================================
 import { useEffect, useRef, useState } from 'react';
 import { PiLinkedinLogoDuotone, PiGithubLogoDuotone, PiBehanceLogoFill } from 'react-icons/pi';
 import './RecruiterPanel.css';
 
-/**
- * Panel informativo para reclutadores con preguntas frecuentes
- */
+// ============================================================
+// 2. COMPONENTE PRINCIPAL: RecruiterPanel
+// ============================================================
+// Panel informativo y de contacto para reclutadores, con acceso rápido a CV, skills, experiencia y formulario de contacto.
 function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
+  // ------------------------------------------------------------
+  // Referencia para evitar cierre inmediato al abrir el panel
+  // ------------------------------------------------------------
   const justOpenedRef = useRef(false);
 
+  // ------------------------------------------------------------
+  // Efecto: Controla el estado de apertura para evitar cierre accidental
+  // ------------------------------------------------------------
   useEffect(() => {
     if (isOpen) {
       justOpenedRef.current = true;
@@ -19,13 +30,22 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
     justOpenedRef.current = false;
     return undefined;
   }, [isOpen]);
+
+  // ------------------------------------------------------------
+  // Estado: Formulario de contacto y control de envío
+  // ------------------------------------------------------------
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
     message: ''
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(null);
 
+  // ------------------------------------------------------------
+  // Maneja cambios en los campos del formulario de contacto
+  // ------------------------------------------------------------
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setContactForm(prev => ({
@@ -34,9 +54,9 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
     }));
   };
 
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState(null);
-
+  // ------------------------------------------------------------
+  // Envía el formulario de contacto usando EmailJS
+  // ------------------------------------------------------------
   const handleSubmit = (e) => {
     e.preventDefault();
     setSending(true);
@@ -44,14 +64,14 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
     import('emailjs-com').then(emailjs => {
       emailjs.default
         .send(
-          'service_4ggfl6r', // ID del servicio EmailJS
-          'template_uvsjcl5',  // ID de la plantilla EmailJS
+          'service_4ggfl6r', // ID de servicio EmailJS
+          'template_uvsjcl5',  // ID de plantilla EmailJS
           {
             name: contactForm.name,
             email: contactForm.email,
             message: contactForm.message,
           },
-          'FxUWVTdKBWSYfkWEz' // Clave pública de EmailJS
+          'FxUWVTdKBWSYfkWEz' // Clave pública EmailJS
         )
         .then(
           () => {
@@ -68,9 +88,12 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
     });
   };
 
+  // ------------------------------------------------------------
+  // Descarga el CV desde la ruta pública
+  // ------------------------------------------------------------
   const handleDownloadCV = () => {
-    // Aquí pondrás la ruta real de tu CV
-    const cvUrl = '/frontend/public/Curriculum Andrea Valbuena.pdf'; // Cambia esto por tu ruta real
+    // Si la ruta del CV cambia, actualízala aquí
+    const cvUrl = '/frontend/public/Curriculum Andrea Valbuena.pdf';
     const link = document.createElement('a');
     link.href = cvUrl;
     link.download = 'CV-Andres-Developer.pdf';
@@ -79,25 +102,33 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
     document.body.removeChild(link);
   };
 
+  // ------------------------------------------------------------
+  // Cierra el panel al pulsar el botón de cierre
+  // ------------------------------------------------------------
   const handleToggle = (e) => {
     e.stopPropagation();
     onClose();
   };
 
+  // ------------------------------------------------------------
+  // Cierra el panel al hacer click fuera, salvo justo al abrir
+  // ------------------------------------------------------------
   const handleBackdropClick = () => {
     if (justOpenedRef.current) return;
     onClose();
   };
 
+  // ============================================================
+  // 3. RENDERIZADO DEL PANEL Y SECCIONES
+  // ============================================================
   return (
     <>
-      {/* Botón flotante eliminado - ahora está en TopBar */}
-
-      {/* Panel lateral */}
+      {/* Panel lateral principal con toda la información relevante */}
       <div 
         className={`recruiter-panel ${isOpen ? 'open' : ''}`} 
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Cabecera del panel con título y botón de cierre */}
         <div className="recruiter-panel-header">
           <h2 className="recruiter-panel-title">
             <span className="recruiter-icon">P</span>
@@ -107,20 +138,19 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
         </div>
 
         <div className="recruiter-panel-content">
-          
-          {/* Sección: Sobre mí */}
+          {/* ============================================================ */}
+          {/* 3.1 SOBRE MÍ */}
+          {/* ============================================================ */}
           <section className="building-section about-section">
             <h3 className="recruiter-section-title">Sobre mí</h3>
             <p className="about-description">
-              Desarrolladora de aplicaciones multiplataforma con formación en
-              DAM y conocimientos en Java, SQL, JavaScript, Git y React. Me
-              apasiona crear soluciones tecnológicas, aprender de manera continua y
-              aportar en proyectos colaborativos, combinando organización y
-              capacidad de resolución de problemas.
+              Desarrolladora de aplicaciones multiplataforma con formación en DAM y conocimientos en Java, SQL, JavaScript, Git y React. Me apasiona crear soluciones tecnológicas, aprender de manera continua y aportar en proyectos colaborativos, combinando organización y capacidad de resolución de problemas.
             </p>
           </section>
-          
-          {/* Sección: Información rápida */}
+
+          {/* ============================================================ */}
+          {/* 3.2 INFORMACIÓN PROFESIONAL */}
+          {/* ============================================================ */}
           <section className="building-section info-section">
             <h3 className="recruiter-section-title">Información Profesional</h3>
             <div className="recruiter-quick-info">
@@ -161,7 +191,9 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
             </div>
           </section>
 
-          {/* Sección: Descargar CV */}
+          {/* ============================================================ */}
+          {/* 3.3 DESCARGA DE CV */}
+          {/* ============================================================ */}
           <section className="building-section cv-section">
             <h3 className="recruiter-section-title">Currículum</h3>
             <button className="download-cv-btn" onClick={handleDownloadCV}>
@@ -170,7 +202,9 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
             </button>
           </section>
 
-          {/* Sección: Links profesionales */}
+          {/* ============================================================ */}
+          {/* 3.4 ENLACES PROFESIONALES */}
+          {/* ============================================================ */}
           <section className="building-section links-section">
             <h3 className="recruiter-section-title">Enlaces Profesionales</h3>
             <div className="social-links">
@@ -207,7 +241,9 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
             </div>
           </section>
 
-          {/* Sección: Experiencia resumida */}
+          {/* ============================================================ */}
+          {/* 3.5 EXPERIENCIA PROFESIONAL */}
+          {/* ============================================================ */}
           <section className="building-section experience-section">
             <h3 className="recruiter-section-title">Experiencia Profesional</h3>
             <div className="experience-timeline">
@@ -238,7 +274,9 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
             </div>
           </section>
 
-          {/* Sección: Formación académica */}
+          {/* ============================================================ */}
+          {/* 3.6 FORMACIÓN ACADÉMICA */}
+          {/* ============================================================ */}
           <section className="building-section education-section">
             <h3 className="recruiter-section-title">Formación Académica</h3>
             <div className="experience-timeline">
@@ -277,7 +315,9 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
             </div>
           </section>
 
-          {/* Sección: Otros cursos */}
+          {/* ============================================================ */}
+          {/* 3.7 OTROS CURSOS */}
+          {/* ============================================================ */}
           <section className="building-section courses-section">
             <h3 className="recruiter-section-title">Otros Cursos</h3>
             <div className="experience-timeline">
@@ -324,10 +364,12 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
             </div>
           </section>
 
-          {/* Sección: Skills destacadas */}
+          {/* ============================================================ */}
+          {/* 3.8 SKILLS DESTACADAS */}
+          {/* ============================================================ */}
           <section className="building-section skills-section">
             <h3 className="recruiter-section-title">Skills</h3>
-            
+            {/* Categorías de skills para una visión clara y profesional */}
             {/* FRONTEND */}
             <div className="skills-category">
               <h4 className="skills-category-title">FRONTEND</h4>
@@ -339,7 +381,6 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
                 <div className="skill-chip">TAILWIND</div>
               </div>
             </div>
-
             {/* BACKEND */}
             <div className="skills-category">
               <h4 className="skills-category-title">BACKEND</h4>
@@ -353,7 +394,6 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
                 <div className="skill-chip">PYTHON</div>
               </div>
             </div>
-
             {/* DEVOPS */}
             <div className="skills-category">
               <h4 className="skills-category-title">DEVOPS</h4>
@@ -368,7 +408,6 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
                 <div className="skill-chip">WORDPRESS</div>
               </div>
             </div>
-
             {/* DESIGN */}
             <div className="skills-category">
               <h4 className="skills-category-title">DESIGN</h4>
@@ -384,7 +423,6 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
                 <div className="skill-chip">CLO3D</div>
               </div>
             </div>
-
             {/* MARKUP */}
             <div className="skills-category">
               <h4 className="skills-category-title">MARKUP</h4>
@@ -395,19 +433,24 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
             </div>
           </section>
 
-          {/* Botón para ver proyectos */}
+          {/* ============================================================ */}
+          {/* 3.9 BOTÓN: VER PROYECTOS */}
+          {/* ============================================================ */}
           <button
             className="download-cv-btn"
             onClick={() => {
-              onClose(); // Cerrar panel reclutador
-              onOpenProjects(); // Abrir modal de proyectos
+              // Al pulsar, cierra el panel y abre el modal de proyectos
+              onClose();
+              onOpenProjects();
             }}
           >
             <span className="download-icon">🚀</span>
             Ver Mis Proyectos
           </button>
 
-          {/* Sección: Contacto rápido */}
+          {/* ============================================================ */}
+          {/* 3.10 CONTACTO RÁPIDO */}
+          {/* ============================================================ */}
           <section className="building-section contact-section">
             <h3 className="recruiter-section-title">📬 Contacto Rápido</h3>
             {formSubmitted ? (
@@ -473,10 +516,13 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
         </div>
       </div>
 
-      {/* Backdrop */}
-  {isOpen && <div className="recruiter-backdrop" onClick={handleBackdropClick}></div>}
+      {/* Backdrop para cerrar el panel al hacer click fuera */}
+      {isOpen && <div className="recruiter-backdrop" onClick={handleBackdropClick}></div>}
     </>
   );
 }
 
+// ============================================================
+// 4. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default RecruiterPanel;

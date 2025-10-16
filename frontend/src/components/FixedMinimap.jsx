@@ -1,14 +1,17 @@
 
-// =============================
-// FixedMinimap.jsx
-// Minimapa interactivo con validación de colisiones y efectos visuales
-// =============================
+// ============================================================
+// FIXEDMINIMAP - MINIMAPA INTERACTIVO CON TELETRANSPORTE
+// Muestra un minimapa fijo (desktop) o modal (móvil) con feedback visual y validación de colisiones
+// ============================================================
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './FixedMinimap.css';
 import BuildingModal from './BuildingModal';
 
+// ============================================================
+// COMPONENTE PRINCIPAL
+// ============================================================
 function FixedMinimap({ 
   avatar, 
   buildings, 
@@ -17,27 +20,29 @@ function FixedMinimap({
   canWalkFunction,
   isMobile = false
 }) {
-  // =============================
-  // ESTADO LOCAL (UI y efectos)
-  // =============================
+  // ============================================================
+  // 1. ESTADO LOCAL (UI Y EFECTOS)
+  // ============================================================
+  // Controla hover, efecto de click y apertura de modal móvil
   const [isHovered, setIsHovered] = useState(false);
   const [clickEffect, setClickEffect] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  // =============================
-  // CONSTANTES DE MAPA Y ESCALADO
-  // =============================
+  // ============================================================
+  // 2. CONSTANTES DE MAPA Y ESCALADO
+  // ============================================================
+  // Dimensiones del mapa lógico y del canvas del minimapa
   const MAP_WIDTH = 45;
   const MAP_HEIGHT = 30;
   const MINIMAP_WIDTH = 220;
   const MINIMAP_HEIGHT = (MINIMAP_WIDTH * MAP_HEIGHT) / MAP_WIDTH;
-  
   const scaleX = MINIMAP_WIDTH / MAP_WIDTH;
   const scaleY = MINIMAP_HEIGHT / MAP_HEIGHT;
 
-  // =============================
-  // EDIFICIOS: icono y color para cada tipo
-  // =============================
+  // ============================================================
+  // 3. DATOS DE EDIFICIOS (ICONO Y COLOR)
+  // ============================================================
+  // Diccionario con icono y color para cada tipo de edificio
   const buildingData = {
     EDUCACION: { icon: '🎓', color: '#4CAF50' },
     EXPERIENCIA: { icon: '💼', color: '#2196F3' },
@@ -50,9 +55,10 @@ function FixedMinimap({
     CONTACTO: { icon: '📧', color: '#607D8B' }
   };
 
-  // =============================
-  // LÓGICA: Buscar punto caminable más cercano (BFS)
-  // =============================
+  // ============================================================
+  // 4. LÓGICA: BÚSQUEDA DE PUNTO CAMINABLE (BFS)
+  // ============================================================
+  // Busca el punto más cercano al click donde el avatar puede caminar
   const findNearestValidPoint = (targetX, targetY, maxRadius = 10) => {
     const snapX = Math.round(targetX);
     const snapY = Math.round(targetY);
@@ -81,13 +87,15 @@ function FixedMinimap({
         queue.push({ x: nx, y: ny, dist: dist + 1 });
       }
     }
+    // Si no se encuentra punto válido, devuelve null
     console.warn(`⚠️ No se encontró punto válido cerca de (${snapX}, ${snapY}) en radio ${maxRadius}`);
     return null;
   };
 
-  // =============================
-  // HANDLER: Click en el minimapa (teletransporte y feedback visual)
-  // =============================
+  // ============================================================
+  // 5. HANDLER: CLICK EN EL MINIMAPA (TELETRANSPORTE Y FEEDBACK)
+  // ============================================================
+  // Gestiona el click en el minimapa: busca punto válido, muestra efecto y teletransporta
   const handleMapClick = (e) => {
     e.stopPropagation();
     e.preventDefault();
@@ -105,6 +113,7 @@ function FixedMinimap({
         setTimeout(() => setIsOpen(false), 300);
       }
     } else {
+      // Si el área está bloqueada, muestra shake
       const minimapEl = e.currentTarget.closest('.fixed-minimap, .minimap-mobile-canvas');
       if (minimapEl) {
         minimapEl.classList.add('minimap-shake');
@@ -114,21 +123,22 @@ function FixedMinimap({
     }
   };
 
-  // =============================
-  // HANDLER: Abrir/cerrar modal en móvil
-  // =============================
+  // ============================================================
+  // 6. HANDLER: ABRIR/CERRAR MODAL EN MÓVIL
+  // ============================================================
+  // Alterna la apertura del modal del minimapa en móvil
   const toggleMinimap = (e) => {
     e.stopPropagation();
     setIsOpen(!isOpen);
   };
 
-  // =============================
-  // UI: Renderizado MÓVIL (modal BuildingModal + canvas responsive)
-  // =============================
+  // ============================================================
+  // 7. UI: RENDERIZADO MÓVIL (MODAL + CANVAS RESPONSIVE)
+  // ============================================================
   if (isMobile) {
     return (
       <>
-        {/* Botón flotante para abrir mapa en móvil */}
+        {/* Botón flotante para abrir el minimapa en móvil */}
         <button
           className="minimap-mobile-button"
           onClick={toggleMinimap}
@@ -148,9 +158,9 @@ function FixedMinimap({
             className="minimap-mobile-canvas"
             onClick={handleMapClick}
           >
-            {/* === Grid de fondo === */}
+            {/* Grid de fondo */}
             <div className="fixed-minimap-grid" />
-            {/* === Avatar (jugador) === */}
+            {/* Avatar del jugador */}
             {avatar && (
               <div
                 className="fixed-minimap-avatar"
@@ -164,7 +174,7 @@ function FixedMinimap({
                 <div className="fixed-minimap-avatar-pulse" />
               </div>
             )}
-            {/* === Edificios (iconos) === */}
+            {/* Edificios (iconos) */}
             {buildings && Object.entries(buildings).map(([name, coords]) => {
               const data = buildingData[name];
               const isVisited = visitedBuildings?.[name];
@@ -193,7 +203,7 @@ function FixedMinimap({
                 </div>
               );
             })}
-            {/* === Efecto de click (ping) === */}
+            {/* Efecto de click (ping visual) */}
             {clickEffect && (
               <div
                 className="minimap-click-effect"
@@ -204,7 +214,7 @@ function FixedMinimap({
               />
             )}
           </div>
-          {/* === Hint inferior === */}
+          {/* Hint inferior para el usuario */}
           <div className="minimap-mobile-hint">
             Toca cualquier punto para teletransportarte
           </div>
@@ -213,20 +223,20 @@ function FixedMinimap({
     );
   }
 
-  // =============================
-  // UI: Renderizado DESKTOP (minimapa fijo esquina)
-  // =============================
+  // ============================================================
+  // 8. UI: RENDERIZADO DESKTOP (MINIMAPA FIJO)
+  // ============================================================
   return (
     <div 
       className={`fixed-minimap ${isHovered ? 'fixed-minimap-hover' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-  {/* === Título === */}
+      {/* Título del minimapa */}
       <div className="fixed-minimap-title">
         🗺️ Mapa
       </div>
-  {/* === Canvas del mapa === */}
+      {/* Canvas del minimapa */}
       <div 
         className="fixed-minimap-canvas"
         style={{ 
@@ -238,9 +248,9 @@ function FixedMinimap({
         onMouseUp={(e) => e.stopPropagation()}
         title="Click para teletransportarte"
       >
-  {/* === Grid de fondo === */}
+        {/* Grid de fondo */}
         <div className="fixed-minimap-grid" />
-  {/* === Avatar (jugador) === */}
+        {/* Avatar del jugador */}
         {avatar && (
           <div
             className="fixed-minimap-avatar"
@@ -254,7 +264,7 @@ function FixedMinimap({
             <div className="fixed-minimap-avatar-pulse" />
           </div>
         )}
-  {/* === Edificios (iconos) === */}
+        {/* Edificios (iconos) */}
         {buildings && Object.entries(buildings).map(([name, coords]) => {
           const data = buildingData[name];
           const isVisited = visitedBuildings?.[name];
@@ -287,7 +297,7 @@ function FixedMinimap({
             </div>
           );
         })}
-  {/* === Efecto de click (ping) === */}
+        {/* Efecto de click (ping visual) */}
         {clickEffect && (
           <div
             className="minimap-click-effect"
@@ -298,7 +308,7 @@ function FixedMinimap({
           />
         )}
       </div>
-  {/* === Hint inferior === */}
+      {/* Hint inferior para el usuario */}
       <div className="fixed-minimap-hint">
         Click para viajar
       </div>
@@ -306,6 +316,9 @@ function FixedMinimap({
   );
 }
 
+// ============================================================
+// PROPTYPES DEL COMPONENTE
+// ============================================================
 FixedMinimap.propTypes = {
   avatar: PropTypes.shape({
     x: PropTypes.number.isRequired,

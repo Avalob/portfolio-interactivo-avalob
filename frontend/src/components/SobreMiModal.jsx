@@ -1,9 +1,17 @@
 
+
+// ============================================================
+// 1. IMPORTACIONES Y ESTILOS
+// ============================================================
 import BuildingModal from './BuildingModal';
 import './BuildingModal.css';
 
-
+// ============================================================
+// 2. COMPONENTE PRINCIPAL: SobreMiModal
+// ============================================================
+// Modal informativo sobre el perfil personal y profesional.
 function SobreMiModal({ isOpen, onClose }) {
+  // Esta función renderiza el modal "Sobre Mí" con diferentes secciones de presentación personal.
   return (
     <BuildingModal
       isOpen={isOpen}
@@ -15,13 +23,20 @@ function SobreMiModal({ isOpen, onClose }) {
     >
       <div style={{width: '100%', height: '100%'}}>
         <div className="sobremi-columns-container">
-                  <div className="building-section sobremi-foto-section">
-          <img 
-            src={`${import.meta.env.BASE_URL}Mi_foto.jpg`} 
-            alt="Foto personal" 
-            className="sobremi-foto-img"
-          />
-        </div>
+          {/* ============================================================ */}
+          {/* 2.1 FOTO PERSONAL */}
+          {/* ============================================================ */}
+          <div className="building-section sobremi-foto-section">
+            <img 
+              src={`${import.meta.env.BASE_URL}Mi_foto.jpg`} 
+              alt="Foto personal" 
+              className="sobremi-foto-img"
+            />
+          </div>
+
+          {/* ============================================================ */}
+          {/* 2.2 SECCIÓN: ¿QUIÉN SOY? */}
+          {/* ============================================================ */}
           <div className="building-section">
             <h2>💡 ¿Quién Soy?</h2>
             <p>
@@ -31,6 +46,9 @@ function SobreMiModal({ isOpen, onClose }) {
             </p>
           </div>
 
+          {/* ============================================================ */}
+          {/* 2.3 SECCIÓN: DE LA MODA AL CÓDIGO */}
+          {/* ============================================================ */}
           <div className="building-section">
             <h2>🎨 De la Moda al Código</h2>
             <p>
@@ -45,6 +63,9 @@ function SobreMiModal({ isOpen, onClose }) {
             </p>
           </div>
 
+          {/* ============================================================ */}
+          {/* 2.4 SECCIÓN: LÓGICA, CREATIVIDAD Y PERSEVERANCIA */}
+          {/* ============================================================ */}
           <div className="building-section">
             <h2>⚙️ Lógica, Creatividad y Perseverancia</h2>
             <p>
@@ -57,6 +78,9 @@ function SobreMiModal({ isOpen, onClose }) {
             </p>
           </div>
 
+          {/* ============================================================ */}
+          {/* 2.5 SECCIÓN: MI MUNDO TECH */}
+          {/* ============================================================ */}
           <div className="building-section">
             <h2>💻 Mi Mundo Tech</h2>
             <p>
@@ -66,6 +90,9 @@ function SobreMiModal({ isOpen, onClose }) {
             </p>
           </div>
 
+          {/* ============================================================ */}
+          {/* 2.6 SECCIÓN: CÓMO TRABAJO */}
+          {/* ============================================================ */}
           <div className="building-section">
             <h2>🤝 Cómo Trabajo</h2>
             <p>
@@ -75,6 +102,9 @@ function SobreMiModal({ isOpen, onClose }) {
             </p>
           </div>
 
+          {/* ============================================================ */}
+          {/* 2.7 SECCIÓN: INFORMACIÓN PERSONAL */}
+          {/* ============================================================ */}
           <div className="building-section">
             <h2>📍 Información Personal</h2>
             <p>
@@ -84,6 +114,9 @@ function SobreMiModal({ isOpen, onClose }) {
             </p>
           </div>
 
+          {/* ============================================================ */}
+          {/* 2.8 SECCIÓN: EN RESUMEN */}
+          {/* ============================================================ */}
           <div className="building-section">
             <h2>🚀 En Resumen</h2>
             <p>
@@ -98,4 +131,7 @@ function SobreMiModal({ isOpen, onClose }) {
   );
 }
 
+// ============================================================
+// 3. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default SobreMiModal;

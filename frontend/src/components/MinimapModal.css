@@ -1,9 +1,13 @@
-/**
- * MinimapModal.css
- * Estilos para el modal expandido del minimapa - Layout lado-a-lado
- */
+/* ============================================================
+   MINIMAPMODAL.CSS - ESTILOS DEL MODAL EXPANDIDO DEL MINIMAPA
+   Estilos para el layout, animaciones, mapa interactivo y leyenda
+   ============================================================ */
 
+/* ============================================================
+   1. OVERLAY Y CONTENEDOR PRINCIPAL DEL MODAL
+   ============================================================ */
 .minimap-modal-overlay {
+  /* Cubre toda la pantalla con fondo oscuro y desenfoque */
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.92);
@@ -22,6 +26,7 @@
 }
 
 .minimap-modal-content {
+  /* Contenedor principal del modal, con fondo, borde y sombra */
   background: linear-gradient(135deg, rgba(10, 14, 39, 0.98) 0%, rgba(15, 23, 42, 0.96) 100%);
   border: 2px solid rgba(0, 212, 255, 0.3);
   border-radius: 20px;
@@ -42,6 +47,7 @@
 }
 
 .minimap-modal-close {
+  /* Botón de cierre en la esquina superior derecha */
   position: absolute;
   top: 20px;
   right: 20px;
@@ -67,7 +73,11 @@
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
 }
 
+/* ============================================================
+   2. LAYOUT: GRID PRINCIPAL DEL MODAL
+   ============================================================ */
 .minimap-modal-grid {
+  /* Grid de dos columnas: mapa a la izquierda, leyenda a la derecha */
   display: grid;
   grid-template-columns: 1fr 400px;
   gap: 30px;
@@ -77,6 +87,7 @@
 }
 
 .minimap-section-map {
+  /* Sección izquierda: mapa interactivo */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,6 +97,7 @@
 }
 
 .minimap-title {
+  /* Título del mapa */
   margin: 0;
   font-size: 28px;
   color: var(--color-primary);
@@ -93,7 +105,11 @@
   text-shadow: var(--shadow-neon-cyan);
 }
 
+/* ============================================================
+   3. MAPA INTERACTIVO Y ELEMENTOS INTERNOS
+   ============================================================ */
 .minimap-large {
+  /* Área principal del mapa expandido */
   position: relative;
   background: linear-gradient(135deg, rgba(6, 8, 15, 0.9) 0%, rgba(10, 14, 39, 0.8) 100%);
   border: 3px solid rgba(0, 212, 255, 0.4);
@@ -105,6 +121,7 @@
 }
 
 .minimap-grid {
+  /* Grid visual de fondo del mapa */
   position: absolute;
   inset: 0;
   background-image: 
@@ -114,6 +131,7 @@
 }
 
 .minimap-avatar-large {
+  /* Avatar del usuario en el mapa */
   position: absolute;
   width: 28px;
   height: 28px;
@@ -134,6 +152,7 @@
 }
 
 .minimap-building-large {
+  /* Botones de edificios clickeables en el mapa */
   position: absolute;
   transform: translate(-50%, -50%);
   width: 40px;
@@ -150,6 +169,7 @@
 }
 
 .minimap-building-large:hover {
+  /* Efecto hover en edificios */
   transform: translate(-50%, -50%) scale(1.3);
   border-color: var(--building-color, var(--color-primary));
   background: var(--building-color, rgba(0, 212, 255, 0.2));
@@ -158,17 +178,20 @@
 }
 
 .minimap-building-large.visited {
+  /* Edificios ya visitados */
   border-color: var(--color-success);
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.35) 100%);
   box-shadow: 0 0 16px rgba(16, 185, 129, 0.5);
 }
 
 .building-icon-small {
+  /* Icono del edificio */
   font-size: 18px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
 }
 
 .building-check-small {
+  /* Check de edificio visitado */
   position: absolute;
   top: -4px;
   right: -4px;
@@ -185,7 +208,11 @@
   font-weight: bold;
 }
 
+/* ============================================================
+   4. LEYENDA, INSTRUCCIONES Y LISTA DE EDIFICIOS
+   ============================================================ */
 .minimap-section-legend {
+  /* Sección derecha: leyenda e instrucciones */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -195,6 +222,7 @@
 }
 
 .legend-header {
+  /* Encabezados de la leyenda */
   margin: 0;
   font-size: 18px;
   color: var(--color-primary);
@@ -205,6 +233,7 @@
 }
 
 .legend-instructions {
+  /* Instrucciones de uso */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -225,6 +254,7 @@
 }
 
 .minimap-legend {
+  /* Leyenda visual de iconos */
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -312,6 +342,7 @@
 }
 
 .legend-hint {
+  /* Tip visual al final de la leyenda */
   margin-top: 10px;
   padding: 12px;
   background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 255, 0.05) 100%);
@@ -322,6 +353,9 @@
   line-height: 1.5;
 }
 
+/* ============================================================
+   5. RESPONSIVE: ADAPTACIÓN A DISTINTOS TAMAÑOS DE PANTALLA
+   ============================================================ */
 @media (max-width: 1024px) {
   .minimap-modal-grid {
     grid-template-columns: 1fr;

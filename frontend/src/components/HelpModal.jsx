@@ -1,11 +1,15 @@
-import React from 'react';
+// ============================================================
+// 1. IMPORTACIONES Y DEPENDENCIAS
+// ============================================================
 import BuildingModal from './BuildingModal';
 import HelpGuideContent from './HelpGuideContent';
 
-// =============================
-// UI: Modal de Guía de Ayuda del Portfolio Interactivo
-// =============================
+// ============================================================
+// 2. COMPONENTE: HelpModal
+// Modal de ayuda general para el portfolio interactivo
+// ============================================================
 function HelpModal({ isOpen, onClose }) {
+  // Renderiza el modal reutilizable con el contenido de la guía de ayuda
   return (
     <BuildingModal
       isOpen={isOpen}
@@ -20,4 +24,7 @@ function HelpModal({ isOpen, onClose }) {
   );
 }
 
+// ============================================================
+// 3. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default HelpModal;

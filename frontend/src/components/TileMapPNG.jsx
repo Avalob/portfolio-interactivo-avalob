@@ -1,19 +1,11 @@
-// ██████████████████████████████████████████████████████████████████████████████
-// ██                                                                          ██
-// ██                           TILEMAPPNG COMPONENT                          ██
-// ██                         Portfolio Interactive Map                        ██
-// ██                                                                          ██
-// ██████████████████████████████████████████████████████████████████████████████
-
+// ============================================================
+// 1. IMPORTACIONES Y CARGA DIFERIDA
+// ============================================================
 import React, { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from "react";
 
-// ============================================
-// ========== SECCIÓN 1: IMPORTS =============
-// ============================================
-
-// ──────────────────────────────────────────
-// 1.1 MODALES (Lazy Loading)
-// ──────────────────────────────────────────
+// ------------------------------------------------------------
+// 1.1 Modales con carga diferida
+// ------------------------------------------------------------
 const EducacionModal = lazy(() => import('./EducacionModal'));
 const ExperienciaModal = lazy(() => import('./ExperienciaModal'));
 const SkillsBuildingModal = lazy(() => import('./SkillsModal'));
@@ -24,23 +16,22 @@ const RRSSModal = lazy(() => import('./RRSSModal'));
 const HobbiesModal = lazy(() => import('./HobbiesModal'));
 const ProyectosModal = lazy(() => import('./ProyectosModal'));
 const HelpModal = lazy(() => import('./HelpModal'));
-const BuildingModal = lazy(() => import('./BuildingModal')); // Modal base para minimap móvil
-const WelcomeScreen = lazy(() => import('./WelcomeScreen')); // Pantalla de bienvenida
+const BuildingModal = lazy(() => import('./BuildingModal'));
+const WelcomeScreen = lazy(() => import('./WelcomeScreen'));
 
-// ──────────────────────────────────────────
-// 1.2 COMPONENTES DE UI
-// ──────────────────────────────────────────
+// ------------------------------------------------------------
+// 1.2 Componentes de interfaz
+// ------------------------------------------------------------
 import RecruiterPanel from './RecruiterPanel';
-import RecruiterMenu from './RecruiterMenu';
 import Notification, { useNotifications } from './Notification';
 import TopBar from './TopBar';
 import MobileJoystick from './MobileJoystick';
 import FixedMinimap from './FixedMinimap';
 import ResetConfirmModal from './ResetConfirmModal';
 
-// ──────────────────────────────────────────
-// 1.3 UTILIDADES Y CONFIGURACIÓN DEL MAPA
-// ──────────────────────────────────────────
+// ------------------------------------------------------------
+// 1.3 Utilidades de mapa y configuración general
+// ------------------------------------------------------------
 import { MAP, WIDTH, HEIGHT } from "../utils/tiledMapData";
 import {
   TILE_SIZE,
@@ -59,9 +50,9 @@ import {
   isNearby
 } from "../utils/mapConfig";
 
-// ──────────────────────────────────────────
-// 1.4 DECORADORES Y EDIFICIOS
-// ──────────────────────────────────────────
+// ------------------------------------------------------------
+// 1.4 Decoradores y constructores de edificios
+// ------------------------------------------------------------
 import {
   crearEdificio, CASA_TILES, EDIFICIO_EDUCACION_TILES, EDIFICIO_SOBRE_MI_TILES, EDIFICIO_SKILLS_TILES, EDIFICIO_OTROS_TILES, EDIFICIO_EXPERIENCIA_TILES, EDIFICIO_CONTACTO_TILES, EDIFICIO_PROYECTOS_TILES, EDIFICIO_RRSS_TILES, EDIFICIO_HOBBIES_TILES,
   PUERTA_285, PUERTA_310, PUERTA_311, PUERTA_312, PUERTA_386, PUERTA_388, PUERTA_414, PUERTA_415, PUERTA_DOBLE, PUERTA1, PUERTA_EMERGENCIA,
@@ -89,14 +80,9 @@ import { useNPCRouteMovement } from "../hooks/useNPCRouteMovement";
 import CarsManager from './CarsManager';
 import './TileMapPNG.css';
 
-// ══════════════════════════════════════════════════════════════════════════════
-// ══════════════════════════════════════════════════════════════════════════════
-// ██                                                                          ██
-// ██                    objetos y edificios                  ██
-// ██                                                                          ██
-// ══════════════════════════════════════════════════════════════════════════════
-// ══════════════════════════════════════════════════════════════════════════════
-
+// ============================================================
+// 2. INICIALIZACIÓN DE EDIFICIOS Y RENDER HELPERS
+// ============================================================
 const CASA = crearEdificio(CASA_TILES);
 const EDIFICIO_EDUCACION = crearEdificio(EDIFICIO_EDUCACION_TILES);
 const EDIFICIO_SOBRE_MI = crearEdificio(EDIFICIO_SOBRE_MI_TILES);
@@ -108,6 +94,9 @@ const EDIFICIO_PROYECTOS = crearEdificio(EDIFICIO_PROYECTOS_TILES);
 const EDIFICIO_RRSS = crearEdificio(EDIFICIO_RRSS_TILES);
 const EDIFICIO_HOBBIES = crearEdificio(EDIFICIO_HOBBIES_TILES);
 
+// ------------------------------------------------------------
+// 2.1 Helpers reutilizables para renderizar decoraciones
+// ------------------------------------------------------------
 const renderSingleParamFunc = (func, coords) => coords.map(([x, y]) => func(x, y));
 const renderVentanas = (coords) => coords.flatMap(([x, y]) => VENTANA(x, y));
 const renderVentanas338 = (coords) => coords.map(([x, y]) => VENTANA_338(x, y));
@@ -128,8 +117,15 @@ const renderCoches = (func, coords) => coords.flatMap(([x, y]) => func(x, y));
 const renderFarolas = (coords) => coords.flatMap(([x, y, flip]) => FAROLA_GRIS(x, y, flip));
 const renderFarolaVerde = (coords) => coords.flatMap(([x, y]) => FAROLA_VERDE(x, y));
 const renderTiles = (tile, coords) => coords.map(([x, y]) => ({ x, y, tile }));
+
+// ------------------------------------------------------------
+// 2.2 Textos y estados iniciales persistentes
+// ------------------------------------------------------------
 const WELCOME_NPC_PHRASE = "¡Bienvenido a mi ciudad! 🌟 Explora los edificios y descubre mi mundo.";
 
+// ------------------------------------------------------------
+// 2.3 Estado inicial de edificios visitados
+// ------------------------------------------------------------
 const VISITED_BUILDINGS_DEFAULT = Object.freeze({
   EDUCACION: false,
   EXPERIENCIA: false,
@@ -142,32 +138,26 @@ const VISITED_BUILDINGS_DEFAULT = Object.freeze({
   HOBBIES: false
 });
 
+// ------------------------------------------------------------
+// 2.4 Dimensiones precomputadas del mapa
+// ------------------------------------------------------------
 const MAP_PIXEL_WIDTH = WIDTH * TILE_SIZE;
 const MAP_PIXEL_HEIGHT = HEIGHT * TILE_SIZE;
 
-// ══════════════════════════════════════════════════════════════════════════════
-// ══════════════════════════════════════════════════════════════════════════════
-// ██                                                                          ██
-// ██                  SECCIÓN 4: COMPONENTE PRINCIPAL                        ██
-// ██                       TileMapPNG Function                                ██
-// ██                                                                          ██
-// ══════════════════════════════════════════════════════════════════════════════
-// ══════════════════════════════════════════════════════════════════════════════
-
+// ============================================================
+// 3. COMPONENTE PRINCIPAL TILEMAPPNG
+// ============================================================
 function TileMapPNG() {
-  
-  // ══════════════════════════════════════════════════════════════════════════════
-  // SECCIÓN 4.1: DECLARACIÓN DE ESTADOS
-  // ══════════════════════════════════════════════════════════════════════════════
-  
+  // ------------------------------------------------------------
+  // 3.1 Estados fundamentales del avatar y del entorno
+  // ------------------------------------------------------------
   const [avatar, setAvatar] = useState({ 
     ...AVATAR_START, 
     dir: "down", 
     step: 0,
-    teleporting: false // Estado para efecto de teletransporte
+    teleporting: false
   });
 
-  // Detectar si es dispositivo móvil
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -176,7 +166,9 @@ function TileMapPNG() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Andrea punto 0
+  // ------------------------------------------------------------
+  // 3.2 Estados para personajes no jugables
+  // ------------------------------------------------------------
   const [npc, setNpc] = useState({ 
     x: 6,
     y: 6,
@@ -212,7 +204,6 @@ function TileMapPNG() {
     waiting: false,
     zone: { minX: 29, maxX: 40, minY: 10, maxY: 21 }
   });
-    // Pedro
   const [pedro, setPedro] = useState({
     x: 24,
     y: 28,
@@ -235,19 +226,15 @@ function TileMapPNG() {
   const [showRRSS, setShowRRSS] = useState(false);
   const [enEdificio, setEnEdificio] = useState(false);
   const [lastBuildingVisited, setLastBuildingVisited] = useState(null);
-  const [lastDoorUsed, setLastDoorUsed] = useState(null); // Guardar puerta de entrada específica
-  
-  // Estado para el panel de Recruiter
+  const [lastDoorUsed, setLastDoorUsed] = useState(null);
+
   const [showRecruiterPanel, setShowRecruiterPanel] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
-  
-  // ============================================
-  // === DETECCIÓN DE SUPERPOSICIÓN CON NPCs ===
-  // ============================================
-  // Estado para detectar si el avatar está sobre otro jugador
+
+  // ------------------------------------------------------------
+  // 3.3 Estados de superposición y progreso
+  // ------------------------------------------------------------
   const [isOverlappingNPC, setIsOverlappingNPC] = useState(false);
-  
-  // Efecto para detectar superposición con NPCs
   useEffect(() => {
     const overlapping = 
       (avatar.x === npc.x && avatar.y === npc.y) ||
@@ -257,11 +244,6 @@ function TileMapPNG() {
     
     setIsOverlappingNPC(overlapping);
   }, [avatar.x, avatar.y, npc.x, npc.y, obrero.x, obrero.y, fernando.x, fernando.y, pedro.x, pedro.y]);
-  
-  // ============================================
-  // === SISTEMA DE PROGRESO ===
-  // ============================================
-  // Estado para edificios visitados (se guarda en localStorage)
   const [visitedBuildings, setVisitedBuildings] = useState(() => {
     const saved = localStorage.getItem('portfolio-visited-buildings');
 
@@ -286,18 +268,16 @@ function TileMapPNG() {
 
   // Estado para pausar movimiento durante interacción con UI
   const [movementPaused, setMovementPaused] = useState(false);
-  
-  // ============================================
-  // === SISTEMA DE NOTIFICACIONES ===
-  // ============================================
+
+  // ------------------------------------------------------------
+  // 3.4 Sistema de notificaciones y recordatorios
+  // ------------------------------------------------------------
   const { notifications, addNotification, removeNotification } = useNotifications();
-  
-  // Ref para evitar notificaciones duplicadas
   const notificationShownRef = useRef(new Set());
   
-  // ============================================
-  // === FUNCIÓN HELPER PARA CERRAR MODALES ===
-  // ============================================
+  // ------------------------------------------------------------
+  // 3.5 Gestión del cierre de modales y retorno al mapa
+  // ------------------------------------------------------------
   const handleCloseModal = useCallback((buildingKey, setModalState) => {
     setModalState(false);
     let puertaSalida = PUERTAS[buildingKey];
@@ -316,12 +296,10 @@ function TileMapPNG() {
       }));
       setEnEdificio(false);
       
-      // Notificación especial al salir del edificio HOME
       if (buildingKey === 'SOBRE_MI') {
         addNotification('info', '¡Gracias por visitarme!', 'Espero que hayas conocido un poco más sobre mí. ¡Sigue explorando!', '👋');
       }
       
-      // Teletransportar NPC al lado del jugador
       setNpc(prev => ({
         ...prev,
         x: puertaSalida.x + 1,
@@ -330,7 +308,6 @@ function TileMapPNG() {
         showPhrase: false
       }));
       
-      // Mostrar notificación de logro solo la primera vez
       if (!visitedBuildings[buildingKey]) {
         const buildingIcons = {
           EDUCACION: '🎓',
@@ -359,7 +336,6 @@ function TileMapPNG() {
         const icon = buildingIcons[buildingKey] || '🏢';
         const name = buildingNames[buildingKey] || buildingKey;
         
-        // Usar addNotification del hook
         addNotification({
           message: `${icon} ${name}`,
           type: 'achievement'
@@ -367,20 +343,13 @@ function TileMapPNG() {
       }
     }
   }, [visitedBuildings, addNotification, lastDoorUsed]);
-
-  // ============================================
-  // === FUNCIÓN DE TELETRANSPORTE CON ANIMACIÓN MEJORADA ===
-  // ============================================
-  /**
-   * Teletransporta el avatar con animación fade-out → teleport → fade-in
-   * @param {number} x - Coordenada X destino en tiles
-   * @param {number} y - Coordenada Y destino en tiles
-   */
+  
+  // ------------------------------------------------------------
+  // 3.6 Teletransporte con animación suave
+  // ------------------------------------------------------------
   const handleTeleport = useCallback((x, y) => {
-    // Fase 1: Fade out (opacity 0 + blur + scale)
     setAvatar(prev => ({ ...prev, teleporting: true }));
     
-    // Fase 2: Esperar 250ms → cambiar posición → Fade in
     setTimeout(() => {
       setAvatar(prev => ({ 
         ...prev, 
@@ -388,34 +357,28 @@ function TileMapPNG() {
         y,
         teleporting: false 
       }));
-    }, 250); // ✅ Aumentado de 200ms a 250ms para animación más visible
+    }, 250);
   }, []);
 
-  // Estado para el movimiento automático con mouse
+  // ------------------------------------------------------------
+  // 3.7 Movimiento automático y soporte de minimapa
+  // ------------------------------------------------------------
   const [targetPosition, setTargetPosition] = useState(null);
   const [pathToTarget, setPathToTarget] = useState([]);
-  
-  // ✅ Ref para almacenar posiciones de los coches (para colisiones)
   const carsPositionsRef = useRef([]);
-  const [autoEnterBuilding, setAutoEnterBuilding] = useState(null); // Para entrar automáticamente
-  
-  // Andrea (NPC principal) permanece estático
-
-  // Estado para detectar inactividad del jugador
+  const [autoEnterBuilding, setAutoEnterBuilding] = useState(null);
   const [lastMoveTime, setLastMoveTime] = useState(Date.now());
   const [inactivityWarningShown, setInactivityWarningShown] = useState(false);
-  
-  // === NUEVOS ESTADOS PARA NAVEGACIÓN ===
   const [recruiterMode, setRecruiterMode] = useState(false);
-  const [showRecruiterMenu, setShowRecruiterMenu] = useState(false);
   const [isPlayerInactive, setIsPlayerInactive] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const [showMinimapModal, setShowMinimapModal] = useState(false); // Modal del minimap en móvil
+  const [showMinimapModal, setShowMinimapModal] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(false);
-  
-  // === PANTALLA DE BIENVENIDA ===
-  // SIEMPRE se muestra al cargar/recargar la página
   const [showWelcome, setShowWelcome] = useState(true);
+
+  // ------------------------------------------------------------
+  // 3.8 Métricas de progreso del jugador
+  // ------------------------------------------------------------
 
   const totalBuildingsCount = Object.keys(visitedBuildings).length;
   const visitedBuildingsCount = Object.values(visitedBuildings).filter(Boolean).length;
@@ -424,11 +387,9 @@ function TileMapPNG() {
     : 0;
   const autoPathIntervalMs = useMemo(() => (isMobileDevice ? 190 : 190), [isMobileDevice]);
 
-  // ══════════════════════════════════════════════════════════════════════════════
-  // SECCIÓN 4.2: HOOKS Y EFECTOS
-  // ══════════════════════════════════════════════════════════════════════════════
-
-  // Detectar si es dispositivo móvil
+  // ------------------------------------------------------------
+  // 3.9 Efectos para adaptación por dispositivo e inactividad
+  // ------------------------------------------------------------
   useEffect(() => {
     const checkMobile = () => {
       const mobile = window.matchMedia('(max-width: 768px) and (hover: none) and (pointer: coarse)').matches;
@@ -439,10 +400,7 @@ function TileMapPNG() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Control para mensaje de bienvenida inicial
   const [showingWelcomeMessage, setShowingWelcomeMessage] = useState(false);
-
-  // Mostrar mensaje de bienvenida cuando se cierra la pantalla inicial
   useEffect(() => {
     if (showWelcome) {
       setNpc(prev => ({ ...prev, showPhrase: false }));
@@ -460,7 +418,6 @@ function TileMapPNG() {
     return () => clearTimeout(timer);
   }, [showWelcome]);
 
-  // === DETECCIÓN DE INACTIVIDAD ===
   useEffect(() => {
     const checkInactivity = setInterval(() => {
       const now = Date.now();
@@ -471,132 +428,106 @@ function TileMapPNG() {
     return () => clearInterval(checkInactivity);
   }, [lastMoveTime]);
 
-  // Helper para poner step=0 cuando no se mueve (con pequeño delay)
   useEffect(() => {
     if (!avatar.moving && avatar.step !== 0) {
-      // Pequeño delay antes de resetear para que se vea la animación
       const timer = setTimeout(() => {
         setAvatar(prev => ({ ...prev, step: 0 }));
       }, 100);
       return () => clearTimeout(timer);
     }
   }, [avatar.moving, avatar.step]);
-
-  // ============================================
-  // === DETECCIÓN DE PROXIMIDAD CON NPC ===
-  // ============================================
-  
+  // ------------------------------------------------------------
+  // 3.10 Diálogos contextuales de NPC y animaciones de frase
+  // ------------------------------------------------------------
   // Mostrar frase solo si el avatar está cerca
   const phraseTimeout = React.useRef();
   useEffect(() => {
-    // No interferir con el mensaje de bienvenida inicial
     if (showingWelcomeMessage) return;
-    
-    // Limpiar timeout anterior si cambia la frase
     if (phraseTimeout.current) clearTimeout(phraseTimeout.current);
-    
+
     const isNear = isNearby(avatar, npc);
-    if (isNear) {
-      if (!npc.showPhrase) {
-        // Usar frases contextuales inteligentes
-        const phrase = getContextualNPCPhrase(visitedBuildings, isDarkMode, lastBuildingVisited);
-        
-        setNpc(prev => ({
-          ...prev,
-          phrase: phrase,
-          showPhrase: true
-        }));
-        phraseTimeout.current = setTimeout(() => {
-          setNpc(prev => ({ ...prev, showPhrase: false }));
-        }, 4000);
-        
-        // Resetear edificio visitado después de usar la frase
-        if (lastBuildingVisited) {
-          setTimeout(() => setLastBuildingVisited(null), 500);
-        }
+    if (isNear && !npc.showPhrase) {
+      const phrase = getContextualNPCPhrase(visitedBuildings, isDarkMode, lastBuildingVisited);
+      setNpc(prev => ({ ...prev, phrase, showPhrase: true }));
+      phraseTimeout.current = setTimeout(() => {
+        setNpc(prev => ({ ...prev, showPhrase: false }));
+      }, 4000);
+
+      if (lastBuildingVisited) {
+        setTimeout(() => setLastBuildingVisited(null), 500);
       }
     } else if (!isNear && npc.showPhrase) {
       setNpc(prev => ({ ...prev, showPhrase: false }));
     }
+
     return () => {
       if (phraseTimeout.current) clearTimeout(phraseTimeout.current);
     };
   }, [avatar.x, avatar.y, npc.x, npc.y, visitedBuildings, isDarkMode, lastBuildingVisited, showingWelcomeMessage]);
 
-  // Interacción con Obrero
   const obreroTimeout = React.useRef();
   useEffect(() => {
     if (obreroTimeout.current) clearTimeout(obreroTimeout.current);
-
     const isNear = isNearby(avatar, obrero);
+
     if (isNear && !obrero.showPhrase) {
       const phrase = getObreroPhrase();
-      setObrero(prev => ({
-        ...prev,
-        phrase: phrase,
-        showPhrase: true
-      }));
+      setObrero(prev => ({ ...prev, phrase, showPhrase: true }));
       obreroTimeout.current = setTimeout(() => {
         setObrero(prev => ({ ...prev, showPhrase: false }));
       }, 4000);
     } else if (!isNear && obrero.showPhrase) {
       setObrero(prev => ({ ...prev, showPhrase: false }));
     }
+
     return () => {
       if (obreroTimeout.current) clearTimeout(obreroTimeout.current);
     };
   }, [avatar.x, avatar.y, obrero.x, obrero.y]);
-  // Interacción con Pedro
+
   const pedroTimeout = React.useRef();
   useEffect(() => {
     if (pedroTimeout.current) clearTimeout(pedroTimeout.current);
-
     const isNear = isNearby(avatar, pedro);
+
     if (isNear && !pedro.showPhrase) {
-        const phrase = getPedroPhrase();
-        setPedro((prev) => ({
-            ...prev,
-            phrase: phrase,
-            showPhrase: true,
-        }));
-        pedroTimeout.current = setTimeout(() => {
-            setPedro((prev) => ({ ...prev, showPhrase: false }));
-        }, 4000);
+      const phrase = getPedroPhrase();
+      setPedro(prev => ({ ...prev, phrase, showPhrase: true }));
+      pedroTimeout.current = setTimeout(() => {
+        setPedro(prev => ({ ...prev, showPhrase: false }));
+      }, 4000);
     } else if (!isNear && pedro.showPhrase) {
-        setPedro((prev) => ({ ...prev, showPhrase: false }));
+      setPedro(prev => ({ ...prev, showPhrase: false }));
     }
+
     return () => {
-        if (pedroTimeout.current) clearTimeout(pedroTimeout.current);
+      if (pedroTimeout.current) clearTimeout(pedroTimeout.current);
     };
   }, [avatar.x, avatar.y, pedro.x, pedro.y]);
 
-  // Interacción con Fernando
   const fernandoTimeout = React.useRef();
   useEffect(() => {
     if (fernandoTimeout.current) clearTimeout(fernandoTimeout.current);
-
     const isNear = isNearby(avatar, fernando);
+
     if (isNear && !fernando.showPhrase) {
-        const phrase = getFernandoPhrase();
-        setFernando((prev) => ({
-            ...prev,
-            phrase: phrase,
-            showPhrase: true,
-        }));
-        fernandoTimeout.current = setTimeout(() => {
-            setFernando((prev) => ({ ...prev, showPhrase: false }));
-        }, 4000);
+      const phrase = getFernandoPhrase();
+      setFernando(prev => ({ ...prev, phrase, showPhrase: true }));
+      fernandoTimeout.current = setTimeout(() => {
+        setFernando(prev => ({ ...prev, showPhrase: false }));
+      }, 4000);
     } else if (!isNear && fernando.showPhrase) {
-        setFernando((prev) => ({ ...prev, showPhrase: false }));
+      setFernando(prev => ({ ...prev, showPhrase: false }));
     }
+
     return () => {
-        if (fernandoTimeout.current) clearTimeout(fernandoTimeout.current);
+      if (fernandoTimeout.current) clearTimeout(fernandoTimeout.current);
     };
   }, [avatar.x, avatar.y, fernando.x, fernando.y]);
 
-  // ============================================
-  // === EDIFICIOS Y OBJETOS DEL MAPA ===
-  // ============================================
+  // ------------------------------------------------------------
+  // 3.11 Plantillas de edificios renderizados
+  // ------------------------------------------------------------
   const EDIFICIOS_RENDER = useMemo(() => [
     ...EDIFICIO_EDUCACION(8, 0),
     ...EDIFICIO_EXPERIENCIA(14, 0),
@@ -618,25 +549,19 @@ function TileMapPNG() {
 
   ], []);
 
-  // ══════════════════════════════════════════════════════════════════════════════
-  // SECCIÓN 4.3: OBJETOS DECORATIVOS DEL MAPA
-  // ══════════════════════════════════════════════════════════════════════════════
-  
+  // ------------------------------------------------------------
+  // 3.12 Catálogo de decoraciones urbanas
+  // ------------------------------------------------------------
   const OBJECTS = useMemo(() => [
-  // Estatuas de dos tiles (500 arriba, 501 abajo)
-  { x: 24, y: 25, tile: 500 },
-  { x: 24, y: 26, tile: 501 },
-  { x: 28, y: 25, tile: 500 },
-  { x: 28, y: 26, tile: 501 },
-  // Tendedero con camiseta
-  ...renderTiles(245, [[44, 23]]),
-  // Vallas luminosas
-  ...renderTiles(248, [[3, 1], [5, 2]]),
+    // -- Esculturas y detalles de plaza
+    { x: 24, y: 25, tile: 500 },
+    { x: 24, y: 26, tile: 501 },
+    { x: 28, y: 25, tile: 500 },
+    { x: 28, y: 26, tile: 501 },
+    ...renderTiles(245, [[44, 23]]),
+    ...renderTiles(248, [[3, 1], [5, 2]]),
     
-    // ============================================
-    // 1️⃣ PUERTAS
-    // ============================================
-
+    // -- Puertas y accesos principales
     PUERTA_EMERGENCIA(4, 15),
     ...renderSingleParamFunc(PUERTA_386, [[5, 16], [7, 16], [10, 16]]),
     ...renderSingleParamFunc(PUERTA_388, [[6, 16], [9, 16], [11, 16]]),
@@ -651,10 +576,7 @@ function TileMapPNG() {
     ...PUERTA_DOBLE(17, 3),
     ...renderSingleParamFunc(PUERTA_285, [[16, 3], [18, 3], [25, 25], [27, 25]]),
 
-    // ============================================
-    // 2️⃣ VENTANAS
-    // ============================================
-    
+    // -- Ventanas y cristaleras
     ...renderSingleParamFunc(VENTANA_445, [[32, 2], [36, 2]]),
     ...renderSingleParamFunc(VENTANA_255, [[32, 3], [36, 3]]),
     ...renderSingleParamFunc(VENTANA_470, [[32, 4], [36, 4]]),
@@ -667,24 +589,18 @@ function TileMapPNG() {
     ...renderSingleParamFunc(VENTANA_338, [[38, 16], [39, 16], [42, 16], [40, 4], [43, 4], [1, 16], [2, 29]]),
     ...renderVentanas363([[7, 15], [8, 15], [9, 15]]),
 
-    // ============================================
-    // 3️⃣ CARTELES NEÓN
-    // ============================================
+    // -- Cartelería de referencia
+    { x: 9, y: 2, text: "ESCUELA", neon: true, compact: true, tiles: 3, colorClass: "neon-green" },
+    { x: 16, y: 1, text: "OFICINA", neon: true, compact: true, tiles: 3, colorClass: "neon-blue" },
+    { x: 33, y: 2, text: "ACADEMIA", neon: true, compact: true, tiles: 3, colorClass: "neon-yellow" },
+    { x: 20, y: 14, text: "HOME", neon: true, compact: true, tiles: 2, colorClass: "neon-orange" },
+    { x: 7, y: 14, text: "CAFETERIA", neon: true, compact: true, colorClass: "neon-red" },
+    { x: 25, y: 22, text: "MUSEO", neon: true, compact: true, colorClass: "neon-purple" },
+    { x: 37, y: 24, text: "TALLER", neon: true, compact: true, tiles: 2, colorClass: "neon-cyan" },
+    { x: 41, y: 24, text: "RADIO", neon: true, compact: true, tiles: 2, colorClass: "neon-pink" },
+    { x: 5, y: 26, text: "CLUB", neon: true, compact: true, tiles: 2, colorClass: "neon-teal" },
 
-    { x: 9, y: 2, text: "ESCUELA", neon: true, compact: true, tiles: 3, colorClass: "neon-green" }, // Educación - Verde
-    { x: 16, y: 1, text: "OFICINA", neon: true, compact: true, tiles: 3, colorClass: "neon-blue" }, // Experiencia - Azul
-    { x: 33, y: 2, text: "ACADEMIA", neon: true, compact: true, tiles: 3, colorClass: "neon-yellow" }, // Otros - Amarillo
-    { x: 20, y: 14, text: "HOME", neon: true, compact: true, tiles: 2, colorClass: "neon-orange" }, // Sobre mí - Naranja
-    { x: 7, y: 14, text: "CAFETERIA", neon: true, compact: true, colorClass: "neon-red" }, // Contacto - Rojo
-    { x: 25, y: 22, text: "MUSEO", neon: true, compact: true, colorClass: "neon-purple" }, // Proyectos - Morado
-    { x: 37, y: 24, text: "TALLER", neon: true, compact: true, tiles: 2, colorClass: "neon-cyan" }, // Skills - Cyan
-    { x: 41, y: 24, text: "RADIO", neon: true, compact: true, tiles: 2, colorClass: "neon-pink" }, // RRSS - Rosa
-    { x: 5, y: 26, text: "CLUB", neon: true, compact: true, tiles: 2, colorClass: "neon-teal" }, // Hobbies - Teal
-    
-    // ============================================
-    // 4️⃣ FAROLAS E ILUMINACIÓN
-    // ============================================
-    
+    // -- Iluminación pública
     ...FAROLA_VERDE(1, 2),
     ...FAROLA_GRIS(7, 3),
     ...FAROLA_GRIS(22, 3, true),
@@ -700,11 +616,8 @@ function TileMapPNG() {
     ...renderTiles(196, [[34, 17], [30, 15]]),
     ...renderTiles(164, [[31, 3]]),
     { x: 31, y: 4, tile: 191, flip: false },
-    
-    // ============================================
-    // 5️⃣ SEMÁFOROS Y SEÑALIZACIÓN
-    // ============================================
-    
+
+    // -- Señalización y comercios al aire libre
     ...renderSemaforos([[2, 4, true], [23, 9, true], [14, 9, true], [9, 22, true], [30, 5, false]]),
     ...renderToldos([[5, 16], [10, 16]]),
     ...TOLDO_GRANDE(7, 16),
@@ -712,67 +625,52 @@ function TileMapPNG() {
     BUZON(13, 23),
     { x: 17, y: 26, tile: 550 }, // Carrito parte superior
     { x: 17, y: 25, tile: 553 }, // Carrito parte inferior
-      { x: 10, y: 17, tile: 676 }, // Caja de manzanas
-  { x: 11, y: 17, tile: 679 }, // Caja de peras verdes
+    { x: 10, y: 17, tile: 676 }, // Caja de manzanas
+    { x: 11, y: 17, tile: 679 }, // Caja de peras verdes
     ESCALERITA(22, 2),
     ...STOP(18, 9),
     ...CARTELITOS(26, 9),
-    
-    // ============================================
-  // 6️⃣ NATURALEZA Y VEGETACIÓN
-  // ============================================
-    
-  ...renderArboles([[21, 3], [12, 15], [23,25], [22,25], [21,25], [20,25], [29,25], [30,25], [31,25], [32,25], [33,25], [19,25]]),
-  ...renderArbolesTriples([[37, 17], [38, 17], [39, 17], [42, 17], [43, 17], [46, 17], [13, 26], [13, 29]]),
-  ...renderSimpleFunc(ARBUSTO, [[40, 18], [41, 18], [44, 18], [45, 18], [14, 26], [14, 27], [14, 28], [14, 30], [14,31]]),
 
-  // === NUEVOS OBJETOS ===
-  { x: 21, y: 12, tile: 333 }, // Extractor
-  ...FAROLA_GRIS(19, 23),
+    // -- Naturaleza y zonas verdes
+    ...renderArboles([[21, 3], [12, 15], [23, 25], [22, 25], [21, 25], [20, 25], [29, 25], [30, 25], [31, 25], [32, 25], [33, 25], [19, 25]]),
+    ...renderArbolesTriples([[37, 17], [38, 17], [39, 17], [42, 17], [43, 17], [46, 17], [13, 26], [13, 29]]),
+    ...renderSimpleFunc(ARBUSTO, [[40, 18], [41, 18], [44, 18], [45, 18], [14, 26], [14, 27], [14, 28], [14, 30], [14, 31]]),
 
-  // ============================================
-  // 7️⃣ MOBILIARIO URBANO
-  // ============================================
-    
+    // -- Detalles industriales puntuales
+    { x: 21, y: 12, tile: 333 },
+    ...FAROLA_GRIS(19, 23),
+
+    // -- Mobiliario urbano
     CABLE(13, 1),
     ...renderSimpleFunc(BANCO, [[0, 4], [40, 19], [41, 19], [44, 19], [45, 19]]),
     ...renderSimpleFunc(BANCO_IZQ, [[33, 18], [33, 13]]),
     ...renderSimpleFunc(BANCO_DER, [[31, 18], [31, 13]]),
     ...renderSimpleFunc(PARK, [[28, 12], [28, 13], [28, 14], [28, 15], [28, 16], [28, 17]]),
     PARKIMETRO(28, 11),
-    { x: 0, y: 0, tile: 499 }, // Papelera
-    { x: 36, y: 5, tile: 499 }, // Papelera
-    { x: 30, y: 17, tile: 499 }, // Papelera
-    { x: 7, y: 30, tile: 499 }, // Papelera
+    { x: 0, y: 0, tile: 499 },
+    { x: 36, y: 5, tile: 499 },
+    { x: 30, y: 17, tile: 499 },
+    { x: 7, y: 30, tile: 499 },
 
-  // ============================================
-  // 8️⃣ FUENTES Y DECORACIONES AGUA
-  // ============================================
+    // -- Fuentes y detalles acuáticos
+    ...renderFuentesAlargadas([[21, 28], [30, 28], [21, 31], [30, 31]]),
+    ...FUENTE_ESPECIAL(25, 28),
+    ...renderTiles(230, [[32, 15]]),
 
-  ...renderFuentesAlargadas([[21, 28], [30, 28],[21, 31], [30, 31] ]),
-  ...FUENTE_ESPECIAL(25, 28),
-  ...renderTiles(230, [[32, 15]]),
+    // -- Baldosas decorativas
+    ...renderTiles(238, [[30, 12], [31, 12], [30, 13], [33, 12], [34, 12], [30, 18], [33, 19], [34, 19], [34, 18], [34, 13]]),
 
-  // ============================================
-  // 9️⃣ TILES DECORATIVOS
-  // ============================================
-    
-  ...renderTiles(238, [[30, 12], [31, 12], [30, 13], [33, 12], [34, 12], [30, 18], [33, 19], [34, 19], [34, 18], [34, 13]]),
+    // -- Vehículos estacionados
+    ...renderCoches(COCHE_VERDE_DERECHA, [[26, 17]]),
+    ...renderCoches(COCHE_NARANJA_DERECHA, [[26, 13]]),
 
-  // ============================================
-  // 🔟 VEHÍCULOS
-  // ============================================
-    
-  ...renderCoches(COCHE_VERDE_DERECHA, [[26, 17]]),
-  ...renderCoches(COCHE_NARANJA_DERECHA, [[26, 13]]),
-
-    // ============================================
-    // 1️⃣1️⃣ VALLA DECORATIVA (FENCE)
-    // ============================================
+    // -- Valla decorativa perimetral
     ...renderTiles(356, [[13, 2]]),
 
   ], []);
-
+  // ------------------------------------------------------------
+  // 3.13 Puertas transitables y malla de colisiones
+  // ------------------------------------------------------------
   const PUERTAS_CAMINABLES = useMemo(() => [
     { x: PUERTAS.EDUCACION.x, y: PUERTAS.EDUCACION.y },
     { x: PUERTAS.EXPERIENCIA.x, y: PUERTAS.EXPERIENCIA.y },
@@ -795,22 +693,17 @@ function TileMapPNG() {
     });
   }, [EDIFICIOS_RENDER, OBJECTS, PUERTAS_CAMINABLES]);
 
-  // ══════════════════════════════════════════════════════════════════════════════
-  // SECCIÓN 4.4: LÓGICA DEL JUEGO
-  // ══════════════════════════════════════════════════════════════════════════════
+  // ------------------------------------------------------------
+  // 3.14 Validación de tiles caminables
+  // ------------------------------------------------------------
   const canWalk = useCallback((x, y, checkNPCs = true) => {
-    // Verifica límites del mapa
     if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) return false;
-    
-    // TODO el MAP base es caminable (tiles 28, 63, 36, 9, 461, etc.)
-    // SOLO bloqueamos objetos/edificios que están ENCIMA del mapa
-    
-    // Verifica si hay un objeto o edificio en esa posición
+
+  // El mapa base es transitable; bloqueamos únicamente los elementos superpuestos
     const hasCollision = COLLISION_OBJECTS.some(obj => obj.x === x && obj.y === y);
     if (hasCollision) return false;
-    
-    // ✅ Verificar colisión con TODOS los coches (objetos sólidos móviles)
-    // Los coches ocupan espacio según su orientación
+
+    // Comprobamos ocupación por vehículos, que ocupan dos tiles según su orientación
     const hasCarCollision = carsPositionsRef.current.some(car => {
       if (!car.isActive) return false;
       
@@ -833,7 +726,7 @@ function TileMapPNG() {
     });
     if (hasCarCollision) return false;
     
-    // ✅ Verificar colisión con TODOS los NPCs - el avatar NO puede traspasarlos
+    // Evitamos superposición con NPC activos
     if (checkNPCs) {
       if ((npc.x === x && npc.y === y) || 
           (obrero.x === x && obrero.y === y) || 
@@ -845,12 +738,11 @@ function TileMapPNG() {
     
     return true;
   }, [COLLISION_OBJECTS, npc.x, npc.y, obrero.x, obrero.y, fernando.x, fernando.y, pedro.x, pedro.y]);
+  // ------------------------------------------------------------
+  // 3.15 Movimiento automático de NPCs
+  // ------------------------------------------------------------
+  // Los NPC patrullan de forma aleatoria y se detienen al detectar obstáculos
 
-  // ============================================
-  // === MOVIMIENTO AUTOMÁTICO DE NPCs ===
-  // ============================================
-  // Sistema simplificado: Se mueven aleatoriamente, se paran al chocar
-  
   const createNPCMovement = useCallback((setNPC, moveSpeed, initialDelay, zone = null) => {
     if (enEdificio) return;
     
@@ -975,10 +867,9 @@ function TileMapPNG() {
       window.visualViewport?.removeEventListener?.('resize', syncViewportMetrics);
     };
   }, []);
-
-  // ============================================
-  // === CÁLCULO DE CÁMARA ===
-  // ============================================
+  // ------------------------------------------------------------
+  // 3.16 Cálculo de cámara y centrado del mapa
+  // ------------------------------------------------------------
   // Dimensiones totales del mapa en píxeles
   const viewportWidth = viewportSize.width;
   const viewportHeight = viewportSize.height;
@@ -987,7 +878,7 @@ function TileMapPNG() {
   const containerWidth = Math.min(viewportWidth, MAP_PIXEL_WIDTH);
   const containerHeight = Math.min(viewportHeight, MAP_PIXEL_HEIGHT);
 
-  // === CÁMARA SIEMPRE CENTRADA EN EL AVATAR ===
+  // Mantener la cámara centrada en el avatar
   // Centro del avatar en píxeles para mantener la cámara estable
   const avatarCenterX = avatar.x * TILE_SIZE + TILE_SIZE / 2;
   const avatarCenterY = avatar.y * TILE_SIZE + TILE_SIZE / 2;
@@ -1017,11 +908,9 @@ function TileMapPNG() {
   const cameraOffsetX = rawOffsetX;
   const cameraOffsetY = rawOffsetY;
 
-  // ============================================
-  // === EFECTOS ===
-  // ============================================
-
-  
+  // ------------------------------------------------------------
+  // 3.17 Pathfinding y efectos de desplazamiento
+  // ------------------------------------------------------------
 
   // Función de pathfinding A* para encontrar rutas esquivando obstáculos
   const findPath = useCallback((start, end) => {
@@ -1107,11 +996,10 @@ function TileMapPNG() {
     // No se encontró camino
     return null;
   }, [canWalk]);
+  // ------------------------------------------------------------
+  // 3.18 Seguimiento de progreso por edificio
+  // ------------------------------------------------------------
 
-  // ============================================
-  // === SISTEMA DE PROGRESO - FUNCIÓN HELPER ===
-  // ============================================
-  
   const markBuildingAsVisited = useCallback((buildingName) => {
     // Verificar si ya mostramos la notificación en esta sesión
     if (notificationShownRef.current.has(buildingName)) {
@@ -1163,22 +1051,19 @@ function TileMapPNG() {
       return updated;
     });
   }, [addNotification]);
+  // ------------------------------------------------------------
+  // 3.19 Seguimiento desactivado del NPC al jugador
+  // ------------------------------------------------------------
 
-  // ============================================
-  // === NPC DETECTA Y CAMINA HACIA JUGADOR ===
-  // ============================================
-  
-  // Detectar si el jugador está en rango y calcular ruta
-  // DESACTIVADO: El NPC ya no sigue al jugador
+  // Detectar si el jugador está en rango y calcular ruta (desactivado actualmente)
   useEffect(() => {
-    // No hacer nada - NPC desactivado
+    // Comportamiento intencionalmente inactivo para conservar la lógica previa
     return;
   }, [avatar.x, avatar.y, npc.x, npc.y, findPath]);
   
-  // Mover el NPC por la ruta hacia el jugador
-  // DESACTIVADO: El NPC ya no sigue al jugador
+  // Mover el NPC por la ruta hacia el jugador (desactivado)
   useEffect(() => {
-    // No hacer nada - NPC desactivado
+    // Comportamiento intencionalmente inactivo para conservar la lógica previa
     return;
   }, [npc.x, npc.y]);
 
@@ -1219,21 +1104,19 @@ function TileMapPNG() {
     
     return () => clearInterval(interval);
   }, [targetPosition, pathToTarget, enEdificio, avatar.dir, avatar.x, avatar.y, autoPathIntervalMs]);
+  // ------------------------------------------------------------
+  // 3.20 Rutas predefinidas para NPC principales
+  // ------------------------------------------------------------
 
-  // ============================================
-  // === MOVIMIENTO AUTOMÁTICO DE NPCs CON RUTAS PREDEFINIDAS ===
-  // ============================================
-  
   // Aplicar movimiento basado en rutas para cada NPC
   useNPCRouteMovement(npc, setNpc, NPC_ROUTES.ANDREA, avatar, NPC_ROUTE_CONFIG);
   useNPCRouteMovement(obrero, setObrero, NPC_ROUTES.OBRERO, avatar, NPC_ROUTE_CONFIG);
   useNPCRouteMovement(fernando, setFernando, NPC_ROUTES.FERNANDO, avatar, NPC_ROUTE_CONFIG);
   useNPCRouteMovement(pedro, setPedro, NPC_ROUTES.PEDRO, avatar, NPC_ROUTE_CONFIG);
+  // ------------------------------------------------------------
+  // 3.21 Detección de inactividad y recordatorios
+  // ------------------------------------------------------------
 
-  // ============================================
-  // === DETECCIÓN DE INACTIVIDAD ===
-  // ============================================
-  
   // Actualizar tiempo de última actividad cuando el avatar se mueve
   useEffect(() => {
     setLastMoveTime(Date.now());
@@ -1510,11 +1393,10 @@ function TileMapPNG() {
       if (moveInterval) clearInterval(moveInterval);
     };
   }, [showEducacion, showExperiencia, showSkills, showOtros, enEdificio, canWalk, showWelcome]);
+  // ------------------------------------------------------------
+  // 3.22 Handlers de interacción con la interfaz
+  // ------------------------------------------------------------
 
-  // ============================================
-  // === HANDLERS PARA NUEVOS COMPONENTES ===
-  // ============================================
-  
   // Handler para navegación desde HUD Menu
   const handleNavigateToBuilding = useCallback((buildingId) => {
     const doorCoords = {
@@ -1530,19 +1412,19 @@ function TileMapPNG() {
 
     const door = doorCoords[buildingId];
     if (door) {
-      // Calcular ruta hasta LA PUERTA MISMA (no afuera)
+      // Calcular ruta hasta la puerta exacta
       const target = { x: door.x, y: door.y };
       
       const path = findPath({ x: avatar.x, y: avatar.y }, target);
       if (path && path.length > 0) {
         setTargetPosition(target);
-        setPathToTarget(path);
-        // Marcar para ENTRAR AUTOMÁTICAMENTE cuando llegue
-        setAutoEnterBuilding(buildingId);
+  setPathToTarget(path);
+  // Programar entrada automática al llegar
+  setAutoEnterBuilding(buildingId);
       } else if (avatar.x === door.x && avatar.y === door.y) {
         // Ya está en la puerta, abrir directamente
-        setAutoEnterBuilding(buildingId);
-        // Trigger manual de entrada
+  setAutoEnterBuilding(buildingId);
+  // Apertura manual si ya está en la puerta
         setTimeout(() => {
           switch(buildingId) {
             case 'EDUCACION':
@@ -1616,8 +1498,9 @@ function TileMapPNG() {
       setShowProyectos(false);
     }
   }, []);
-
-  // === HANDLERS PARA MOBILE JOYSTICK ===
+  // ------------------------------------------------------------
+  // 3.23 Controles móviles y joystick digital
+  // ------------------------------------------------------------
   const mobileKeysPressed = useRef(new Set());
   const mobileMoveInterval = useRef(null);
   const MOBILE_MOVE_INTERVAL_MS = 190;
@@ -1717,10 +1600,9 @@ function TileMapPNG() {
       handleMobileDirectionRelease(null);
     }
   }, [enEdificio, handleMobileDirectionRelease]);
-
-  // ============================================
-  // === RENDER ===
-  // ============================================
+  // ------------------------------------------------------------
+  // 3.24 Renderizado del mapa y gestión de clics
+  // ------------------------------------------------------------
 
   // Función para manejar clics en el mapa
   const handleMapClick = useCallback((e) => {
@@ -1728,7 +1610,7 @@ function TileMapPNG() {
     const isMobile = window.matchMedia('(max-width: 768px) and (hover: none) and (pointer: coarse)').matches;
     if (isMobile || enEdificio || showWelcome) return;
 
-    // NUEVO: Detectar si el click fue en un elemento UI (sidebar, topbar, modal, etc.)
+    // Detectar si el clic ocurrió sobre elementos de interfaz superpuestos
     const target = e.target;
     const clickedOnUI = target.closest('.recruiter-panel') || 
                         target.closest('.topbar') || 
@@ -1747,7 +1629,7 @@ function TileMapPNG() {
     const mapX = Math.floor(clickX / TILE_SIZE);
     const mapY = Math.floor(clickY / TILE_SIZE);
 
-    // === DETECTAR CLICK EN PUERTA DE EDIFICIO ===
+  // Detectar si el clic corresponde a una puerta de edificio
     let clickedBuilding = null;
     
     // Verificar si se hizo click en una puerta
@@ -1842,7 +1724,7 @@ function TileMapPNG() {
         }, 100);
       }
       
-      return; // No hacer pathfinding normal
+  return; // Evita ejecutar el pathfinding genérico en este caso
     }
 
     // Si no se hizo click en puerta, comportamiento normal de movimiento
@@ -1854,14 +1736,9 @@ function TileMapPNG() {
       }
     }
   }, [enEdificio, cameraOffsetX, cameraOffsetY, TILE_SIZE, WIDTH, HEIGHT, canWalk, findPath, avatar.x, avatar.y, visitedBuildings, showWelcome]);
-
-  // ══════════════════════════════════════════════════════════════════════════════
-  // ══════════════════════════════════════════════════════════════════════════════
-  // ██                                                                          ██
-  // ██                      SECCIÓN 5: RENDERIZADO JSX                         ██
-  // ██                                                                          ██
-  // ══════════════════════════════════════════════════════════════════════════════
-  // ══════════════════════════════════════════════════════════════════════════════
+  // ------------------------------------------------------------
+  // 3.25 Renderizado del escenario en JSX
+  // ------------------------------------------------------------
 
   return (
     <div 
@@ -1880,7 +1757,7 @@ function TileMapPNG() {
         position: 'relative'
       }}
     >
-      {/* ✅ Ocultar completamente el mapa si showWelcome está activo */}
+    {/* Oculta el mapa cuando la pantalla de bienvenida está activa */}
       {!showWelcome && (
         <div 
           className="tilemap-canvas"
@@ -1895,7 +1772,7 @@ function TileMapPNG() {
         {MAP.map((row, y) => (
           <div key={y} className="tilemap-row">
             {row.map((tile, x) => {
-              // Debug border removido
+              // Borde de depuración desactivado
               return (
                 <img
                   key={x}
@@ -1904,6 +1781,7 @@ function TileMapPNG() {
                   height={TILE_SIZE}
                   alt={`tile ${tile}`}
                   className={`tilemap-tile${WATER_TILES.includes(tile) ? ' water-tile' : ''}`}
+                  loading="lazy"
                 />
               );
             })}
@@ -1921,6 +1799,7 @@ function TileMapPNG() {
               className={`tilemap-edificio${obj.flip ? ' flip-x' : ''}`}
               style={{ left: obj.x * TILE_SIZE, top: obj.y * TILE_SIZE }}
               alt={`edificio ${obj.tile}`}
+              loading="lazy"
             />
           )
         ))}
@@ -1945,23 +1824,23 @@ function TileMapPNG() {
                   className={`${cssClass}${obj.flip && !obj.rotate ? ' flip-x' : ''}${obj.rotate ? ' rotate' + obj.rotate : ''}`}
                   style={{ left: obj.x * TILE_SIZE, top: obj.y * TILE_SIZE }}
                   alt={`objeto ${obj.tile}`}
+                  loading="lazy"
                 />
               )}
               {obj.text && (
                 <span
-  className={`tilemap-cartel
-    ${obj.neon ? ' neon-sign' : ''}
-    ${obj.letter ? ' neon-letter' : ''}
-    ${obj.compact ? ' neon-compact' : ''}
-    ${obj.colorClass ? ' ' + obj.colorClass : ''}`}
-  style={{
-    left: obj.x * TILE_SIZE + (obj.tiles ? (TILE_SIZE * obj.tiles) / 2 : (TILE_SIZE * 3) / 2),
-    top: obj.y * TILE_SIZE + TILE_SIZE / 2,
-    width: obj.tiles ? TILE_SIZE * obj.tiles * 0.9 : TILE_SIZE * 3 * 0.9,
-    height: TILE_SIZE * 0.85,
-  }}
->
-
+                  className={`tilemap-cartel
+                    ${obj.neon ? ' neon-sign' : ''}
+                    ${obj.letter ? ' neon-letter' : ''}
+                    ${obj.compact ? ' neon-compact' : ''}
+                    ${obj.colorClass ? ' ' + obj.colorClass : ''}`}
+                  style={{
+                    left: obj.x * TILE_SIZE + (obj.tiles ? (TILE_SIZE * obj.tiles) / 2 : (TILE_SIZE * 3) / 2),
+                    top: obj.y * TILE_SIZE + TILE_SIZE / 2,
+                    width: obj.tiles ? TILE_SIZE * obj.tiles * 0.9 : TILE_SIZE * 3 * 0.9,
+                    height: TILE_SIZE * 0.85,
+                  }}
+                >
                   {obj.text.toUpperCase()}
                 </span>
               )}
@@ -2013,6 +1892,7 @@ function TileMapPNG() {
             className={`tilemap-avatar ${avatar.teleporting ? 'teleporting' : ''} ${isOverlappingNPC ? 'overlapping-npc' : ''}`}
             style={{ left: avatar.x * TILE_SIZE, top: avatar.y * TILE_SIZE }}
             alt="avatar"
+            loading="lazy"
           />
         )}
 
@@ -2024,6 +1904,7 @@ function TileMapPNG() {
           className="tilemap-npc"
           style={{ left: npc.x * TILE_SIZE, top: npc.y * TILE_SIZE }}
           alt="npc"
+          loading="lazy"
         />
         {npc.showPhrase && (
           <div
@@ -2045,6 +1926,7 @@ function TileMapPNG() {
           className="tilemap-npc"
           style={{ left: pedro.x * TILE_SIZE, top: pedro.y * TILE_SIZE }}
           alt="pedro"
+          loading="lazy"
         />
         {pedro.showPhrase && (
           <div
@@ -2068,6 +1950,7 @@ function TileMapPNG() {
           className="tilemap-npc"
           style={{ left: obrero.x * TILE_SIZE, top: obrero.y * TILE_SIZE }}
           alt="obrero"
+          loading="lazy"
         />
         {obrero.showPhrase && (
           <div
@@ -2090,6 +1973,7 @@ function TileMapPNG() {
           className="tilemap-npc"
           style={{ left: fernando.x * TILE_SIZE, top: fernando.y * TILE_SIZE }}
           alt="fernando"
+          loading="lazy"
         />
         {fernando.showPhrase && (
           <div
@@ -2114,8 +1998,8 @@ function TileMapPNG() {
         />
 
       </div>
-      )}
-      {/* ✅ Fin del bloque condicional del mapa */}
+  )}
+  {/* Fin del bloque condicional del mapa */}
 
       {/* Modales Unificados con Lazy Loading y Suspense */}
       <Suspense fallback={<div style={{display: 'none'}} />}>
@@ -2210,8 +2094,8 @@ function TileMapPNG() {
         </BuildingModal>
       </Suspense>
       
-      {/* === BARRA SUPERIOR UNIFICADA === */}
-      {/* ✅ Ocultar TopBar si showWelcome está activo */}
+  {/* Barra superior unificada */}
+  {/* Oculta la TopBar cuando la pantalla de bienvenida está activa */}
       {!enEdificio && !showWelcome && (
         <TopBar
           visitedBuildings={visitedBuildings}
@@ -2225,9 +2109,9 @@ function TileMapPNG() {
         />
       )}
 
-      {/* === MINIMAPA FIJO (Mejorado) === */}
-      {/* ✅ Ocultar Minimap si hay modales activos */}
-      {!enEdificio && !showWelcome && !showHelp && !showEducacion && !showExperiencia && !showSkills && !showSkillsBuilding && !showOtros && !showProyectos && !showContacto && !showHobbies && !showRRSS && !showRecruiterPanel && !showRecruiterMenu && !showMinimapModal && (
+  {/* Minimap fijo mejorado */}
+  {/* Oculta el minimapa cuando hay modales activos */}
+      {!enEdificio && !showWelcome && !showHelp && !showEducacion && !showExperiencia && !showSkills && !showSkillsBuilding && !showOtros && !showProyectos && !showContacto && !showHobbies && !showRRSS && !showRecruiterPanel && !showMinimapModal && (
         <FixedMinimap
           avatar={avatar}
           buildings={PUERTAS}
@@ -2250,19 +2134,6 @@ function TileMapPNG() {
         onOpenProjects={() => setShowProyectos(true)}
       />
 
-      {/* Menú de Recruiter */}
-      <RecruiterMenu 
-        isOpen={showRecruiterMenu}
-        onClose={() => {
-          setShowRecruiterMenu(false);
-          setRecruiterMode(false);
-        }}
-        onShowMinimap={() => {}} // No-op: Minimap ahora es fijo y siempre visible
-        isDarkMode={isDarkMode}
-        onToggleDarkMode={() => setIsDarkMode(!isDarkMode)}
-        onShowHelp={() => setShowHelp(true)}
-      />
-
       {/* Sistema de Notificaciones */}
       <Notification 
         notifications={notifications} 
@@ -2270,8 +2141,8 @@ function TileMapPNG() {
       />
 
 
-      {/* Mobile Joystick - Controles táctiles para móvil */}
-      {/* ✅ Ocultar joystick si showWelcome está activo */}
+  {/* Mobile Joystick - Controles táctiles para móvil */}
+  {/* Oculta el joystick cuando la pantalla de bienvenida está activa */}
       {!showWelcome && (
         <MobileJoystick
           onDirectionPress={handleMobileDirectionPress}
@@ -2294,10 +2165,6 @@ function TileMapPNG() {
   );
 }
 
-// ══════════════════════════════════════════════════════════════════════════════
-// ██                                                                          ██
-// ██                           FIN DEL COMPONENTE                            ██
-// ██                                                                          ██
-// ══════════════════════════════════════════════════════════════════════════════
+// Fin del componente TileMapPNG
 
 export default TileMapPNG;

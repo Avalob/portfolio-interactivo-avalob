@@ -1,16 +1,25 @@
-/**
- * WelcomeScreen.jsx
- * Pantalla de bienvenida animada con presentación e instrucciones
- */
-
+// ============================================================
+// 1. IMPORTACIONES Y ESTILOS
+// ============================================================
 import React, { useEffect, useState } from 'react';
 import './WelcomeScreen.css';
 import HelpGuideContent from './HelpGuideContent';
 
+// ============================================================
+// 2. COMPONENTE PRINCIPAL: WelcomeScreen
+// ============================================================
+// Pantalla de bienvenida animada con presentación e instrucciones.
 function WelcomeScreen({ isOpen, onEnter }) {
+  // ------------------------------------------------------------
+  // 2.1 ESTADOS LOCALES
+  // ------------------------------------------------------------
+  // Controla la animación de salida y la visualización de la guía
   const [isExiting, setIsExiting] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
 
+  // ------------------------------------------------------------
+  // 2.2 EFECTO DE REINICIO AL ABRIR
+  // ------------------------------------------------------------
   useEffect(() => {
     if (isOpen) {
       setIsExiting(false);
@@ -18,24 +27,37 @@ function WelcomeScreen({ isOpen, onEnter }) {
     }
   }, [isOpen]);
 
-  // No renderizar si no está abierto
+  // ------------------------------------------------------------
+  // 2.3 CONTROL DE RENDERIZADO
+  // ------------------------------------------------------------
+  // Si el modal no está abierto, no se renderiza nada
   if (!isOpen) return null;
 
+  // ------------------------------------------------------------
+  // 2.4 MANEJADORES DE ACCIONES
+  // ------------------------------------------------------------
+  // Inicia la animación de salida y ejecuta la función de entrada
   const handleEnter = () => {
     setIsExiting(true);
     setTimeout(() => {
       onEnter();
-    }, 800); // Tiempo de animación de salida
+    }, 800); // Duración de la animación de salida
   };
 
+  // Muestra la guía rápida
   const handleShowHelp = () => {
     setShowGuide(true);
   };
 
+  // ------------------------------------------------------------
+  // 2.5 RENDERIZADO DEL COMPONENTE
+  // ------------------------------------------------------------
+  // Muestra la pantalla de bienvenida o la guía según el estado
   return (
     <div className={`welcome-overlay ${isExiting ? 'exit' : ''}`}>
       <div className={`welcome-container ${showGuide ? 'guide-view' : ''}`}>
         {showGuide ? (
+          // Vista de la guía rápida
           <>
             <div className="welcome-guide-header">
               <h1>Guía rápida</h1>
@@ -55,6 +77,7 @@ function WelcomeScreen({ isOpen, onEnter }) {
             </div>
           </>
         ) : (
+          // Vista de bienvenida principal
           <>
             <div className="welcome-logo-container">
               <div className="welcome-logo">
@@ -95,4 +118,7 @@ function WelcomeScreen({ isOpen, onEnter }) {
   );
 }
 
+// ============================================================
+// 3. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default WelcomeScreen;

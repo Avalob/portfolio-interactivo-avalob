@@ -1,6 +1,9 @@
-/* ================================================
-   BOTÓN FLOTANTE - MINIMALISTA Y MODERNO
-   ================================================ */
+
+/* ============================================================
+  1. BOTÓN FLOTANTE DEL PANEL RECLUTADOR
+  ============================================================
+  Estilos para el botón flotante que abre el panel lateral de reclutador.
+*/
 
 .recruiter-toggle-btn {
   position: fixed;
@@ -51,9 +54,12 @@
   font-size: var(--font-size-sm);
 }
 
-/* ================================================
-   PANEL LATERAL
-   ================================================ */
+
+/* ============================================================
+  2. PANEL LATERAL DE RECLUTADOR
+  ============================================================
+  Estilos principales del panel lateral, con efecto glassmorphism y animaciones de apertura/cierre.
+*/
 
 .recruiter-panel {
   position: fixed;
@@ -87,7 +93,12 @@
   right: 0;
 }
 
-/* Header del panel */
+
+/* ------------------------------------------------------------
+  2.1 CABECERA DEL PANEL
+  ------------------------------------------------------------
+  Título, icono y botón de cierre del panel reclutador.
+*/
 .recruiter-panel-header {
   background: rgba(26, 26, 46, 0.5); /* ✅ Mismo tono semitransparente */
   padding: var(--space-xl) var(--space-lg);
@@ -151,7 +162,12 @@
   transform: translateY(1px);
 }
 
-/* Contenido con scroll */
+
+/* ------------------------------------------------------------
+  2.2 CONTENIDO SCROLLABLE DEL PANEL
+  ------------------------------------------------------------
+  Área principal con scroll para mostrar todas las secciones.
+*/
 .recruiter-panel-content {
   flex: 1;
   overflow-y: auto;
@@ -177,7 +193,12 @@
   background: rgba(0, 245, 255, 0.5);
 }
 
-/* Secciones - Estilo moderno unificado */
+
+/* ------------------------------------------------------------
+  2.3 SECCIONES DEL PANEL (SOBRE MÍ, INFO, ETC.)
+  ------------------------------------------------------------
+  Cada sección tiene su propio fondo, borde y sombra para diferenciar visualmente.
+*/
 .building-section {
   background: rgba(26, 26, 46, 0.35);
   border: 1px solid rgba(0, 245, 255, 0.15);
@@ -192,7 +213,12 @@
   margin-bottom: 0;
 }
 
-/* Variaciones sutiles de color por sección */
+
+/* ------------------------------------------------------------
+  2.4 VARIACIONES DE COLOR POR SECCIÓN
+  ------------------------------------------------------------
+  Diferentes colores de borde y sombra para cada tipo de sección.
+*/
 .about-section {
   border-color: rgba(0, 220, 255, 0.25);
   box-shadow: 0 4px 12px rgba(0, 220, 255, 0.12);
@@ -240,7 +266,11 @@
   box-shadow: 0 4px 12px rgba(0, 245, 255, 0.12);
 }
 
-/* Tablet+ adjustments */
+
+/* ------------------------------------------------------------
+  2.5 AJUSTES PARA TABLET Y SUPERIOR
+  ------------------------------------------------------------
+*/
 @media (min-width: 600px) {
   .building-section {
     padding: 1.5rem;
@@ -263,7 +293,11 @@
   border-bottom: 2px solid rgba(0, 245, 255, 0.25);
 }
 
-/* Variaciones sutiles de color para títulos de sección */
+
+/* ------------------------------------------------------------
+  2.6 COLORES DE TÍTULOS DE SECCIÓN
+  ------------------------------------------------------------
+*/
 .about-section .recruiter-section-title {
   color: rgba(0, 220, 255, 1);
   border-bottom-color: rgba(0, 220, 255, 0.35);
@@ -309,9 +343,12 @@
   border-bottom-color: rgba(0, 245, 255, 0.35);
 }
 
-/* ================================================
-   SECCIÓN SOBRE MÍ
-   ================================================ */
+
+/* ============================================================
+  3. SECCIÓN SOBRE MÍ
+  ============================================================
+  Estilos para la descripción personal en el panel.
+*/
 
 .about-description {
   color: rgba(226, 232, 240, 0.9);
@@ -326,9 +363,12 @@
   margin-bottom: 0;
 }
 
-/* ================================================
-   INFORMACIÓN RÁPIDA
-   ================================================ */
+
+/* ============================================================
+  4. INFORMACIÓN PROFESIONAL Y CONTACTO RÁPIDO
+  ============================================================
+  Estilos para la info profesional, teléfono, email y disponibilidad.
+*/
 
 .recruiter-quick-info {
   display: flex;
@@ -425,7 +465,12 @@
   }
 }
 
-/* DOWNLOAD CV BUTTON - Estilo elegante */
+
+/* ------------------------------------------------------------
+  4.1 BOTÓN DE DESCARGA DE CV
+  ------------------------------------------------------------
+  Botón destacado para descargar el currículum.
+*/
 .download-cv-btn {
   width: 100%;
   background: rgba(0, 245, 255, 0.1);
@@ -465,7 +510,12 @@
   opacity: 0.8;
 }
 
-/* SOCIAL LINKS - Estilo moderno */
+
+/* ------------------------------------------------------------
+  4.2 ENLACES SOCIALES Y PROFESIONALES
+  ------------------------------------------------------------
+  Estilos para los links a LinkedIn, GitHub, Behance, etc.
+*/
 .social-links {
   display: flex;
   flex-direction: column;
@@ -582,7 +632,12 @@
   color: rgba(0, 245, 255, 1);
 }
 
-/* SKILLS GRID - Estilo moderno */
+
+/* ============================================================
+  5. SKILLS Y CATEGORÍAS
+  ============================================================
+  Grid de skills y chips para cada tecnología o herramienta.
+*/
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -617,7 +672,11 @@
   box-shadow: 0 2px 6px rgba(0, 245, 255, 0.15);
 }
 
-/* SKILLS CATEGORIES */
+
+/* ------------------------------------------------------------
+  5.1 CATEGORÍAS DE SKILLS
+  ------------------------------------------------------------
+*/
 .skills-category {
   margin-bottom: 1.5rem;
 }
@@ -638,7 +697,12 @@
   border-bottom: 1px solid rgba(0, 245, 255, 0.2);
 }
 
-/* EXPERIENCE TIMELINE - Estilo moderno */
+
+/* ============================================================
+  6. EXPERIENCIA, EDUCACIÓN Y CURSOS (TIMELINE)
+  ============================================================
+  Timeline vertical para mostrar experiencia, formación y cursos.
+*/
 .experience-timeline {
   display: flex;
   flex-direction: column;
@@ -680,7 +744,11 @@
   }
 }
 
-/* Variaciones de color para puntos de timeline por sección */
+
+/* ------------------------------------------------------------
+  6.1 VARIACIONES DE COLOR EN TIMELINE SEGÚN SECCIÓN
+  ------------------------------------------------------------
+*/
 .experience-section .experience-dot {
   background: rgba(0, 180, 255, 0.7);
   box-shadow: 0 0 10px rgba(0, 180, 255, 0.5);
@@ -778,7 +846,12 @@
   margin: 0;
 }
 
-/* CONTACT FORM - Estilo moderno */
+
+/* ============================================================
+  7. FORMULARIO DE CONTACTO
+  ============================================================
+  Estilos para el formulario de contacto rápido y mensajes de éxito.
+*/
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -863,7 +936,11 @@
   font-size: 1.125rem;
 }
 
-/* Form Success Message */
+
+/* ------------------------------------------------------------
+  7.1 MENSAJE DE ÉXITO AL ENVIAR FORMULARIO
+  ------------------------------------------------------------
+*/
 .form-success {
   text-align: center;
   padding: 1.5rem 1rem;
@@ -897,7 +974,12 @@
   font-size: 0.9375rem;
 }
 
-/* BACKDROP */
+
+/* ============================================================
+  8. BACKDROP DEL PANEL
+  ============================================================
+  Fondo semitransparente que oscurece el resto de la pantalla al abrir el panel.
+*/
 .recruiter-backdrop {
   position: fixed;
   top: 0;
@@ -919,9 +1001,12 @@
   }
 }
 
-/* ================================================
-   RESPONSIVE
-   ================================================ */
+
+/* ============================================================
+  9. RESPONSIVE DESIGN
+  ============================================================
+  Ajustes para pantallas pequeñas y móviles.
+*/
 
 @media (max-width: 768px) {
   .recruiter-panel {

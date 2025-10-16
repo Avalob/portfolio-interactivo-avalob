@@ -1,68 +1,45 @@
-/**
- * TopBar.jsx
- * 
- * Barra superior unificada con todos los controles del juego
- * 
- * CARACTERÍSTICAS:
- * - Diseño compacto y semi-transparente
- * - Botón de ayuda
- * - Toggle día/noche
- * - Indicador de progreso
- * - HUD Menu con iconos de edificios
- * - Botón modo reclutador
- * - Responsive: se adapta a móvil, tablet y desktop
- * - Ocupa mínimo espacio en pantalla
- */
-
+// ============================================================
+// 1. IMPORTACIONES Y ESTILOS
+// ============================================================
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tooltip from './Tooltip';
 import './TopBar.css';
 
+// ============================================================
+// 2. COMPONENTE PRINCIPAL: TopBar
+// ============================================================
+// Barra superior con controles de navegación, progreso y modos del portfolio interactivo.
 function TopBar({
-  // Props eliminadas: avatar, buildings, visitedBuildings, onTeleport, minimapTrigger
   visitedBuildings,
-  // Día/Noche props
   isDarkMode,
   onToggleDarkMode,
-  // Ayuda props
   onShowHelp,
-  // HUD Menu props
   onNavigate,
-  // Modo Recruiter props
   recruiterMode,
   onToggleRecruiterMode,
-  // Reset props
   onResetProgress
 }) {
-  // Calcular progreso
+  // ------------------------------------------------------------
+  // 2.1 CÁLCULO DE PROGRESO
+  // ------------------------------------------------------------
+  // Calcula el porcentaje de edificios visitados
   const totalBuildings = Object.keys(visitedBuildings).length;
   const visitedCount = Object.values(visitedBuildings).filter(Boolean).length;
   const progressPercent = totalBuildings > 0
     ? (visitedCount / totalBuildings) * 100
     : 0;
 
-  // Estado para animación gradual del progreso
+  // ------------------------------------------------------------
+  // 2.2 ANIMACIÓN DEL PROGRESO
+  // ------------------------------------------------------------
+  // Estado para animar el progreso de forma gradual
   const [animatedProgress, setAnimatedProgress] = useState(0);
 
-  // Función para obtener el color según el progreso
-  const getProgressColor = (progress) => {
-    if (progress === 0) return '#64748b'; // Gris para 0%
-    if (progress < 12.5) return '#dc2626'; // Rojo oscuro para 0-12.5%
-    if (progress < 25) return '#ef4444'; // Rojo para 12.5-25%
-    if (progress < 37.5) return '#f97316'; // Naranja rojizo para 25-37.5%
-    if (progress < 50) return '#fb923c'; // Naranja para 37.5-50%
-    if (progress < 62.5) return '#eab308'; // Amarillo para 50-62.5%
-    if (progress < 75) return '#84cc16'; // Verde lima para 62.5-75%
-    if (progress < 87.5) return '#22c55e'; // Verde para 75-87.5%
-    if (progress < 100) return '#16a34a'; // Verde oscuro para 87.5-100%
-    return '#059669'; // Verde esmeralda para 100%
-  };
-
-  // Efecto para animar el progreso gradualmente
+  // Efecto para animar el progreso suavemente
   useEffect(() => {
     const targetProgress = progressPercent;
-    const duration = 500; // 0.5 segundos de animación (más rápido)
+    const duration = 500; // Duración de la animación en ms
     const steps = 60; // 60 fps
     const increment = (targetProgress - animatedProgress) / steps;
     const stepDuration = duration / steps;
@@ -76,7 +53,6 @@ function TopBar({
     const timer = setInterval(() => {
       currentStep++;
       const newProgress = animatedProgress + (increment * currentStep);
-      
       if (currentStep >= steps) {
         setAnimatedProgress(targetProgress);
         clearInterval(timer);
@@ -88,7 +64,27 @@ function TopBar({
     return () => clearInterval(timer);
   }, [progressPercent, animatedProgress]);
 
-  // Datos de edificios para HUD
+  // ------------------------------------------------------------
+  // 2.3 COLORES DEL PROGRESO
+  // ------------------------------------------------------------
+  // Devuelve el color del círculo de progreso según el porcentaje
+  const getProgressColor = (progress) => {
+    if (progress === 0) return '#64748b';
+    if (progress < 12.5) return '#dc2626';
+    if (progress < 25) return '#ef4444';
+    if (progress < 37.5) return '#f97316';
+    if (progress < 50) return '#fb923c';
+    if (progress < 62.5) return '#eab308';
+    if (progress < 75) return '#84cc16';
+    if (progress < 87.5) return '#22c55e';
+    if (progress < 100) return '#16a34a';
+    return '#059669';
+  };
+
+  // ------------------------------------------------------------
+  // 2.4 DATOS DE EDIFICIOS PARA EL HUD
+  // ------------------------------------------------------------
+  // Define los edificios y sus iconos para el menú HUD
   const buildingData = [
     { id: 'EDUCACION', icon: '🎓', name: 'Formación', color: '#4CAF50' },
     { id: 'EXPERIENCIA', icon: '💼', name: 'Experiencia', color: '#2196F3' },
@@ -100,33 +96,35 @@ function TopBar({
     { id: 'CONTACTO', icon: '📧', name: 'Contacto', color: '#607D8B' }
   ];
 
+  // ------------------------------------------------------------
+  // 2.5 RENDERIZADO DEL COMPONENTE
+  // ------------------------------------------------------------
+  // Estructura la barra superior con HUD, progreso y controles
   return (
     <div className="topbar">
-      {/* Sección Centro: HUD Menu con iconos de edificios */}
+      {/* HUD central con iconos de edificios */}
       <div className="topbar-section topbar-center">
-       
-          {buildingData.map((building) => {
-            const isVisited = visitedBuildings[building.id];
-            return (
-              <Tooltip 
-                key={building.id}
-                text={building.name}
-                className={`tooltip-small ${isVisited ? 'active' : ''}`}
+        {buildingData.map((building) => {
+          const isVisited = visitedBuildings[building.id];
+          return (
+            <Tooltip 
+              key={building.id}
+              text={building.name}
+              className={`tooltip-small ${isVisited ? 'active' : ''}`}
+            >
+              <button
+                className={`hud-building-btn ${isVisited ? 'visited' : ''}`}
+                onClick={() => onNavigate(building.id)}
+                style={{ '--building-color': building.color }}
               >
-                <button
-                  className={`hud-building-btn ${isVisited ? 'visited' : ''}`}
-                  onClick={() => onNavigate(building.id)}
-                  style={{ '--building-color': building.color }}
-                >
-                  <span className="hud-building-icon">{building.icon}</span>
-                </button>
-              </Tooltip>
-            );
-          })}
-       
+                <span className="hud-building-icon">{building.icon}</span>
+              </button>
+            </Tooltip>
+          );
+        })}
       </div>
 
-      {/* Sección Derecha: Controles */}
+      {/* Controles a la derecha: progreso, modos y acciones */}
       <div className="topbar-section topbar-right">
         {/* Indicador de Progreso */}
         <Tooltip text={`Progreso: ${visitedCount}/${totalBuildings}`}>
@@ -206,16 +204,21 @@ function TopBar({
   );
 }
 
-// PropTypes para validación de props
+// ============================================================
+// 3. DEFINICIÓN DE TIPOS DE PROPIEDADES
+// ============================================================
 TopBar.propTypes = {
-  visitedBuildings: PropTypes.object.isRequired,
-  isDarkMode: PropTypes.bool.isRequired,
-  onToggleDarkMode: PropTypes.func.isRequired,
-  onShowHelp: PropTypes.func.isRequired,
-  onNavigate: PropTypes.func.isRequired,
-  recruiterMode: PropTypes.bool.isRequired,
-  onToggleRecruiterMode: PropTypes.func.isRequired,
-  onResetProgress: PropTypes.func.isRequired
+  visitedBuildings: PropTypes.object.isRequired, // Edificios visitados por el usuario
+  isDarkMode: PropTypes.bool.isRequired,        // Estado de modo oscuro
+  onToggleDarkMode: PropTypes.func.isRequired,  // Cambia entre día y noche
+  onShowHelp: PropTypes.func.isRequired,        // Muestra la ayuda
+  onNavigate: PropTypes.func.isRequired,        // Navega a un edificio
+  recruiterMode: PropTypes.bool.isRequired,     // Estado del modo reclutador
+  onToggleRecruiterMode: PropTypes.func.isRequired, // Cambia el modo reclutador
+  onResetProgress: PropTypes.func.isRequired    // Resetea el progreso
 };
 
+// ============================================================
+// 4. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default TopBar;

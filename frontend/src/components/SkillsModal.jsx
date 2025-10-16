@@ -1,4 +1,6 @@
-import React from 'react';
+// ============================================================
+// 1. IMPORTACIONES Y ESTILOS
+// ============================================================
 import BuildingModal from './BuildingModal';
 import './BuildingModal.css';
 import { FaPython, FaWordpress, FaCubes, FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJava, FaGitAlt, FaGithub, FaAndroid, FaCloud } from 'react-icons/fa';
@@ -6,7 +8,16 @@ import { SiSketchup, SiAdobepremierepro, SiCanva, SiCoreldraw, SiAdobeindesign, 
 import { IoLogoJavascript } from "react-icons/io";
 import { GrMysql } from "react-icons/gr";
 import { VscVscode } from "react-icons/vsc";
+
+// ============================================================
+// 2. COMPONENTE PRINCIPAL: SkillsModal
+// ============================================================
+// Modal para mostrar las habilidades técnicas agrupadas por categoría.
 function SkillsModal({ isOpen, onClose, showBackButton = false }) {
+  // ------------------------------------------------------------
+  // 2.1 DEFINICIÓN DE SKILLS POR CATEGORÍA
+  // ------------------------------------------------------------
+  // Cada categoría agrupa las tecnologías y herramientas dominadas.
   const skillsByCategory = {
     'Frontend': [
       { name: 'JavaScript', icon: <IoLogoJavascript />, color: '#f7df1e' },
@@ -51,6 +62,9 @@ function SkillsModal({ isOpen, onClose, showBackButton = false }) {
     ]
   };
 
+  // ============================================================
+  // 3. RENDERIZADO DEL MODAL Y GRID DE SKILLS
+  // ============================================================
   return (
     <BuildingModal
       isOpen={isOpen}
@@ -62,6 +76,9 @@ function SkillsModal({ isOpen, onClose, showBackButton = false }) {
       maxHeight="90%"
     >
       <div className="building-section">
+        {/* ============================================================ */}
+        {/* 3.1 GRID DE SKILLS POR CATEGORÍA */}
+        {/* ============================================================ */}
         {Object.entries(skillsByCategory).map(([category, skills]) => (
           <div key={category} style={{ marginBottom: '32px' }}>
             <h3 style={{
@@ -123,4 +140,7 @@ function SkillsModal({ isOpen, onClose, showBackButton = false }) {
   );
 }
 
+// ============================================================
+// 4. EXPORTACIÓN DEL COMPONENTE
+// ============================================================
 export default SkillsModal;
