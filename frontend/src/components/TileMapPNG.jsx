@@ -179,6 +179,13 @@ function TileMapPNG() {
   const { viewportSize, isMobile, isMobileDevice, autoPathIntervalMs } = useViewport();
 
   // ------------------------------------------------------------
+  // 3.1c Función para alternar modo oscuro
+  // ------------------------------------------------------------
+  const toggleDarkMode = useCallback(() => {
+    setIsDarkMode(prev => !prev);
+  }, [setIsDarkMode]);
+
+  // ------------------------------------------------------------
   // 3.2 Estados locales adicionales (no en el hook global)
   // ------------------------------------------------------------
   // Estado para pausar movimiento durante interacción con UI
