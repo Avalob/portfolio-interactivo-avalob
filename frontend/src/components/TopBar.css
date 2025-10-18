@@ -1,0 +1,679 @@
+/* ============================================================
+  1. RESPONSIVE: MOBILE (max-width: 599px)
+  ============================================================ */
+@media (max-width: 599px) {
+  .hud-building-btn,
+  .topbar-btn {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 1.45rem !important;
+    margin-top: 10px;
+    background: linear-gradient(135deg, rgba(26, 35, 50, 0.75) 0%, rgba(35, 43, 58, 0.75) 100%) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1.5px solid rgba(59, 176, 199, 0.6) !important;
+    /* Sombra y fondo especial para botones HUD en móvil */
+    box-shadow: 
+      0 4px 16px 0 rgba(0, 0, 0, 0.5),
+      0 2px 8px 0 rgba(59, 176, 199, 0.25),
+      0 0 20px 0 rgba(59, 176, 199, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  .hud-building-btn.visited {
+    background: linear-gradient(135deg, rgba(47, 66, 102, 0.85) 0%, rgba(66, 91, 122, 0.85) 100%) !important;
+    border: 1.5px solid rgba(77, 209, 230, 0.7) !important;
+    /* Sombra especial para visitados */
+    box-shadow: 
+      0 4px 16px 0 rgba(0, 0, 0, 0.5),
+      0 0 20px rgba(59, 255, 136, 0.3),
+      0 2px 8px 0 rgba(77, 209, 230, 0.3),
+      inset 0 1px 2px rgba(59, 176, 199, 0.2) !important;
+  }
+  
+  .hud-building-btn:active,
+  .topbar-btn:active {
+    transform: translateY(2px) scale(0.96) !important;
+    /* Efecto de presión al pulsar */
+    box-shadow: 
+      0 2px 8px 0 rgba(0, 0, 0, 0.6),
+      0 0 24px rgba(59, 176, 199, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  }
+}
+/* ============================================================
+  2. RESPONSIVE: MOBILE HUD Y CONTENEDOR
+  ============================================================ */
+@media (max-width: 599px) {
+  .topbar {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .topbar-section {
+    gap: 0.2rem !important;
+}
+}
+
+/* ============================================================
+  3. RESPONSIVE: EXTRA PEQUEÑO (max-width: 420px)
+  ============================================================ */
+@media (max-width: 420px) {
+  .topbar {
+    height: 42px;
+    padding: 0 0.5rem;
+  }
+
+  .topbar-section {
+    gap: 0.25rem !important;
+  }
+
+  .topbar-hud-menu {
+    gap: 0.25rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .hud-building-btn,
+  .topbar-btn {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .hud-building-check {
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 0.7rem !important;
+  }
+
+  .topbar-progress,
+  .progress-circle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .progress-text {
+    font-size: 0.55rem;
+  }
+}
+
+/* ============================================================
+  4. RESPONSIVE: ULTRA PEQUEÑO (max-width: 360px)
+  ============================================================ */
+@media (max-width: 360px) {
+  .topbar {
+    height: 40px;
+  }
+
+  .topbar-hud-menu {
+    gap: 0.2rem;
+    padding: 0.25rem 0.4rem;
+  }
+
+  .hud-building-btn,
+  .topbar-btn {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .hud-building-check {
+    width: 16px !important;
+    height: 16px !important;
+    font-size: 0.65rem !important;
+  }
+
+  .topbar-progress,
+  .progress-circle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .progress-text {
+    font-size: 0.5rem;
+  }
+}
+/* ============================================================
+  5. TOPBAR - RESPONSIVE HUD SYSTEM
+  Alturas adaptativas: 44px (mobile) → 52px (tablet) → 56px (desktop) → 64px (desktop-lg)
+  ============================================================ */
+
+/* Contenedor principal de la barra superior (mobile first) */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.75rem;
+
+  background: linear-gradient(120deg, rgba(22,28,44,0.82) 0%, rgba(30,38,58,0.82) 60%, rgba(0,40,80,0.78) 100%);
+  box-shadow: 0 4px 24px 0 rgba(0,32,64,0.10), 0 1.5px 0 0 rgba(0,212,255,0.10);
+  border-bottom: 1.5px solid rgba(60, 180, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1.5px solid rgba(0, 212, 255, 0.25);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4),
+              0 0 20px rgba(0, 212, 255, 0.06);
+  z-index: var(--z-hud, 50);
+  gap: 0.5rem;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideDownTopBar 400ms ease-out;
+  will-change: transform;
+}
+
+/* Animación de aparición de la barra superior */
+@keyframes slideDownTopBar {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+  6. RESPONSIVE: TABLET (min-width: 600px)
+  ============================================================ */
+@media (min-width: 600px) {
+  .topbar {
+    height: 52px;
+    padding: 0 1rem;
+    gap: 0.75rem;
+  }
+}
+
+/* ============================================================
+  7. RESPONSIVE: DESKTOP (min-width: 900px)
+  ============================================================ */
+@media (min-width: 900px) {
+  .topbar {
+    height: 56px;
+    padding: 0 1.25rem;
+    gap: 1rem;
+  }
+}
+
+/* ============================================================
+  8. RESPONSIVE: DESKTOP GRANDE (min-width: 1200px)
+  ============================================================ */
+@media (min-width: 1200px) {
+  .topbar {
+    height: 64px;
+    padding: 0 1.5rem;
+  }
+}
+
+.topbar-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar-left {
+  flex-shrink: 0;
+}
+
+.topbar-center {
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  display: flex;
+}
+
+.topbar-right {
+  flex-shrink: 0;
+}
+
+/* ============================================================
+  9. MOBILE: SOLO HUD CENTRAL
+  ============================================================ */
+@media (max-width: 599px) {
+  .topbar-right {
+    display: none;
+  }
+  
+  .topbar-center {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+  10. HUD MENU CENTRAL SCROLLABLE
+  ============================================================ */
+.topbar-hud-menu {
+  display: flex;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background: linear-gradient(135deg, 
+    rgba(10, 14, 39, 0.88) 0%, 
+    rgba(15, 23, 42, 0.92) 100%
+  );
+  border-radius: 1.875rem;
+  border: 1.5px solid rgba(0, 212, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 
+    0 0 12px rgba(0, 212, 255, 0.2),
+    inset 0 1px 0 rgba(0, 212, 255, 0.15);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  max-width: 100%;
+}
+
+.topbar-hud-menu::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================================
+  11. HUD MENU: TABLET+
+  ============================================================ */
+@media (min-width: 600px) {
+  .topbar-hud-menu {
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+
+.hud-building-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg,
+    #1a23328c 0%,
+    #232b3a 100%
+  );
+  border: 1.5px solid #3bb0c7;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.125rem;
+  padding: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.hud-building-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(0, 212, 255, 0.15) 0%, 
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.hud-building-btn:hover::before {
+  opacity: 1;
+}
+
+
+.hud-building-btn:hover {
+  background: linear-gradient(135deg, #22304a 0%, #2a3a4d 100%);
+  border-color: #4fd1e6;
+  transform: translateY(-3px) scale(1.08);
+  box-shadow:
+    0 0 16px #3bb0c7,
+    0 6px 20px rgba(0,0,0,0.5);
+}
+
+
+.hud-building-btn.visited {
+  background: linear-gradient(135deg, #2f4266 0%, #425b7a 100%);
+  border-color: #4fd1e6;
+  box-shadow:
+    0 0 12px #3bb0c7,
+    0 6px 20px rgba(0,0,0,0.5),
+    inset 0 1px 2px #3bb0c7;
+}
+
+.hud-building-icon {
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  transition: transform 300ms ease;
+}
+
+.hud-building-btn:hover .hud-building-icon {
+  transform: scale(1.15);
+}
+
+.hud-building-check {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, 
+    var(--color-success, #39ff14) 0%, 
+    #059669 100%
+  );
+  border: 1.5px solid rgba(0, 212, 255, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 
+    0 0 12px rgba(57, 255, 20, 0.7),
+    inset 0 1px 0 rgba(0, 212, 255, 0.3);
+  z-index: 2;
+  animation: checkNeonPulse 2s ease-in-out infinite;
+}
+
+@keyframes checkNeonPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.9);
+  }
+}
+
+/* Tablet+ */
+@media (min-width: 600px) {
+  .hud-building-btn {
+    width: 46px; /* Aumentado desde 38px */
+    height: 46px;
+    font-size: 1.25rem;
+  }
+  
+  .hud-building-check {
+    width: 20px;
+    height: 20px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Desktop+ */
+@media (min-width: 900px) {
+  .hud-building-btn {
+    width: 50px; /* Aumentado desde 42px */
+    height: 50px;
+    font-size: 1.375rem;
+  }
+}
+
+/* ============================================================
+  12. BOTONES DE CONTROL (DERECHA)
+  ============================================================ */
+.topbar-btn {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, 
+    rgba(20, 24, 48, 0.75) 0%, 
+    rgba(10, 14, 39, 0.92) 100%
+  );
+  border: 1.5px solid rgba(0, 212, 255, 0.25);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.125rem;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.topbar-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(0, 212, 255, 0.15) 0%, 
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.topbar-btn:hover::before {
+  opacity: 1;
+}
+
+.topbar-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(0, 212, 255, 0.3) 0%, 
+    rgba(0, 180, 216, 0.4) 100%
+  );
+  border-color: rgba(0, 212, 255, 0.6);
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 
+    0 0 20px rgba(0, 212, 255, 0.5),
+    0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.topbar-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+}
+
+/* Estado activo: botón resaltado */
+.topbar-btn.active {
+  background: linear-gradient(135deg, 
+    rgba(57, 255, 20, 0.25) 0%, 
+    rgba(5, 150, 105, 0.35) 100%
+  );
+  border-color: rgba(57, 255, 20, 0.5);
+  box-shadow: 
+    0 4px 16px rgba(57, 255, 20, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Botón de reset: color especial */
+.reset-btn {
+  background: linear-gradient(135deg, 
+    rgba(255, 0, 110, 0.25) 0%, 
+    rgba(220, 38, 38, 0.35) 100%
+  );
+  border-color: rgba(255, 0, 110, 0.4);
+}
+
+.reset-btn:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 0, 110, 0.4) 0%, 
+    rgba(220, 38, 38, 0.5) 100%
+  );
+  border-color: rgba(255, 0, 110, 0.7);
+  box-shadow: 
+    0 6px 20px rgba(255, 0, 110, 0.3),
+    0 0 20px rgba(255, 0, 110, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+/* Botón reclutador activo: animación y color especial */
+.recruiter-btn.active {
+  background: linear-gradient(135deg, 
+    rgba(255, 107, 53, 0.35) 0%, 
+    rgba(249, 115, 22, 0.45) 100%
+  );
+  border-color: rgba(255, 107, 53, 0.6);
+  box-shadow: 
+    0 4px 16px rgba(255, 107, 53, 0.4),
+    0 0 20px rgba(255, 107, 53, 0.3);
+  animation: pulseRecruiter 2s ease-in-out infinite;
+}
+
+@keyframes pulseRecruiter {
+  0%, 100% {
+    box-shadow: 0 0 16px rgba(255, 107, 53, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(255, 107, 53, 0.9);
+  }
+}
+
+/* ============================================================
+  13. BOTONES DE CONTROL: TABLET+
+  ============================================================ */
+@media (min-width: 600px) {
+  .topbar-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 1.25rem;
+  }
+}
+
+/* ============================================================
+  14. BOTONES DE CONTROL: DESKTOP+
+  ============================================================ */
+@media (min-width: 900px) {
+  .topbar-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.375rem;
+  }
+}
+
+/* ============================================================
+  15. CÍRCULO DE PROGRESO
+  ============================================================ */
+.topbar-progress {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  position: relative;
+}
+
+.topbar-progress::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, 
+    rgba(96, 165, 250, 0.2) 0%, 
+    rgba(59, 130, 246, 0.1) 100%
+  );
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.topbar-progress:hover::before {
+  opacity: 1;
+}
+
+.progress-circle {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.progress-ring-bg {
+  fill: none;
+  stroke: rgba(148, 163, 184, 0.2);
+  stroke-width: 3;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke: url(#progressGradient);
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease;
+  filter: drop-shadow(0 0 4px rgba(57, 255, 20, 0.6));
+  animation: progressGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes progressGlow {
+  0% {
+    filter: drop-shadow(0 0 4px rgba(57, 255, 20, 0.4));
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.8));
+  }
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+/* ============================================================
+  16. PROGRESS CIRCLE: TABLET+
+  ============================================================ */
+@media (min-width: 600px) {
+  .topbar-progress,
+  .progress-circle {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .progress-text {
+    font-size: 0.6875rem;
+  }
+}
+
+/* ============================================================
+  17. PROGRESS CIRCLE: DESKTOP+
+  ============================================================ */
+@media (min-width: 900px) {
+  .topbar-progress,
+  .progress-circle {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .progress-text {
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================================
+  18. ACCESIBILIDAD
+  ============================================================ */
+.hud-building-btn:focus-visible,
+.topbar-btn:focus-visible {
+  outline: 2px solid rgba(0, 245, 255, 0.6);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+  19. REDUCED MOTION
+  ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .topbar,
+  .hud-building-btn,
+  .topbar-btn,
+  .hud-building-check {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

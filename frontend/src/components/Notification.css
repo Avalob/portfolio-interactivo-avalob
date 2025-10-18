@@ -1,0 +1,217 @@
+/* ============================================================
+   NOTIFICATION.CSS - ESTILOS DE NOTIFICACIONES INTERACTIVAS
+   Notificaciones deslizantes, animaciones y variantes visuales
+   ============================================================ */
+
+/* ============================================================
+   1. CONTENEDOR PRINCIPAL DE NOTIFICACIONES
+   ============================================================ */
+.notification-container {
+  /* Fija las notificaciones en la parte inferior central */
+  position: fixed;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  pointer-events: none;
+  max-width: 90%;
+  width: var(--modal-width-sm);
+}
+
+/* ============================================================
+   2. NOTIFICACIÓN INDIVIDUAL Y ANIMACIONES
+   ============================================================ */
+.notification {
+  /* Tarjeta de notificación con fondo, borde y sombra */
+  background: rgba(10, 14, 39, 0.95);
+  border: 2px solid rgba(0, 212, 255, 0.4);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: 
+    var(--shadow-neon-cyan),
+    var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  pointer-events: auto;
+  font-family: var(--font-family-base);
+  position: relative;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.notification-enter {
+  /* Animación de entrada desde abajo */
+  animation: notificationSlideInBottom var(--transition-slow) var(--ease-out) forwards;
+}
+
+@keyframes notificationSlideInBottom {
+  0% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.notification-exit {
+  /* Animación de salida hacia abajo */
+  animation: notificationSlideOutBottom var(--transition-base) var(--ease-in) forwards;
+}
+
+@keyframes notificationSlideOutBottom {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   3. ICONO, CONTENIDO Y BOTÓN DE CIERRE
+   ============================================================ */
+.notification-icon {
+  /* Icono visual de la notificación */
+  font-size: var(--font-size-xl);
+  flex-shrink: 0;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+}
+
+.notification-content {
+  /* Contenedor de título y mensaje */
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
+  line-height: var(--line-height-tight);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+.notification-message {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+  word-break: break-word;
+}
+
+.notification-close {
+  /* Botón para cerrar la notificación */
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: transparent;
+  border: none;
+  font-size: var(--font-size-lg);
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.notification-close:hover {
+  background: rgba(0, 212, 255, 0.2);
+  color: var(--color-primary);
+}
+
+.notification-close:active {
+  transform: scale(0.95);
+}
+
+/* ============================================================
+   4. VARIANTES DE NOTIFICACIÓN POR TIPO
+   ============================================================ */
+.notification-success {
+  border-left: 4px solid var(--color-success);
+}
+
+.notification-success .notification-icon {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--color-success);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+}
+
+.notification-achievement {
+  border-left: 4px solid var(--color-warning);
+}
+
+.notification-achievement .notification-icon {
+  background: rgba(251, 191, 36, 0.2);
+  color: var(--color-warning);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+}
+
+.notification-info {
+  border-left: 4px solid var(--color-info);
+}
+
+.notification-info .notification-icon {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+
+.notification-warning {
+  border-left: 4px solid var(--color-error);
+}
+
+.notification-warning .notification-icon {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+/* ============================================================
+   5. RESPONSIVE: ADAPTACIÓN A MÓVIL
+   ============================================================ */
+@media (max-width: 768px) {
+  .notification-container {
+    width: 95%;
+    bottom: var(--space-sm);
+  }
+  .notification {
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+  .notification-icon {
+    font-size: var(--font-size-base);
+    width: 28px;
+    height: 28px;
+  }
+  .notification-title {
+    font-size: var(--font-size-xs);
+  }
+  .notification-message {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* ============================================================
+   6. EFECTOS ESPECIALES PARA LOGROS
+   ============================================================ */
+.notification-achievement {
+  box-shadow: var(--shadow-xl), 0 0 20px rgba(245, 158, 11, 0.15);
+}

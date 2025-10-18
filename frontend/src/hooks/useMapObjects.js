@@ -1,0 +1,49 @@
+import { useMemo } from 'react';
+import {
+  crearEdificio,
+  CASA_TILES,
+  EDIFICIO_EDUCACION_TILES,
+  EDIFICIO_SOBRE_MI_TILES,
+  EDIFICIO_SKILLS_TILES,
+  EDIFICIO_OTROS_TILES,
+  EDIFICIO_EXPERIENCIA_TILES,
+  EDIFICIO_CONTACTO_TILES,
+  EDIFICIO_PROYECTOS_TILES,
+  EDIFICIO_RRSS_TILES,
+  EDIFICIO_HOBBIES_TILES
+} from '../utils/mapDecorators';
+
+const CASA = crearEdificio(CASA_TILES);
+const EDIFICIO_EDUCACION = crearEdificio(EDIFICIO_EDUCACION_TILES);
+const EDIFICIO_SOBRE_MI = crearEdificio(EDIFICIO_SOBRE_MI_TILES);
+const EDIFICIO_SKILLS = crearEdificio(EDIFICIO_SKILLS_TILES);
+const EDIFICIO_OTROS = crearEdificio(EDIFICIO_OTROS_TILES);
+const EDIFICIO_EXPERIENCIA = crearEdificio(EDIFICIO_EXPERIENCIA_TILES);
+const EDIFICIO_CONTACTO = crearEdificio(EDIFICIO_CONTACTO_TILES);
+const EDIFICIO_PROYECTOS = crearEdificio(EDIFICIO_PROYECTOS_TILES);
+const EDIFICIO_RRSS = crearEdificio(EDIFICIO_RRSS_TILES);
+const EDIFICIO_HOBBIES = crearEdificio(EDIFICIO_HOBBIES_TILES);
+
+export function useMapObjects() {
+  const EDIFICIOS_RENDER = useMemo(() => [
+    ...EDIFICIO_EDUCACION(8, 0),
+    ...EDIFICIO_EXPERIENCIA(14, 0),
+    ...EDIFICIO_SOBRE_MI(19, 12),
+    ...EDIFICIO_OTROS(32, 0),
+    ...CASA(38, -1),
+    ...CASA(42, -1),
+    ...EDIFICIO_PROYECTOS(20, 19),
+    ...CASA(0, 11),
+    ...EDIFICIO_CONTACTO(4, 12),
+    ...CASA(37, 11),
+    ...CASA(41, 11),
+    ...CASA(46, 11),
+    ...CASA(0, 24),
+    ...EDIFICIO_HOBBIES(4, 24),
+    ...EDIFICIO_SKILLS(36, 22),
+    ...EDIFICIO_RRSS(40, 22),
+    ...CASA(45, 22),
+  ], []);
+
+  return { EDIFICIOS_RENDER };
+}
