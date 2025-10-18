@@ -10,7 +10,7 @@ import react from "@vitejs/plugin-react";
 // 2. CONFIGURACIÓN PRINCIPAL DE VITE
 // ============================================================
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   // Plugins principales utilizados en el proyecto (React)
   plugins: [react()],
 
@@ -19,7 +19,8 @@ export default defineConfig({
   // ============================================================
 
   // Define la ruta base para despliegue en GitHub Pages o desarrollo local
-  base: '/portfolio-interactivo-avalob/',
+  // En desarrollo usa '/', en producción usa el path de GitHub Pages
+  base: mode === 'production' ? '/portfolio-interactivo-avalob/' : '/',
 
   // ============================================================
   // 4. CONFIGURACIÓN DEL SERVIDOR DE DESARROLLO
@@ -70,5 +71,5 @@ export default defineConfig({
     include: ['react', 'react-dom', 'framer-motion'],
   },
 
-});
+}));
 
