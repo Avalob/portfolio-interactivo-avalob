@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 // ============================================
 // === Configuración básica ===
 // ============================================
@@ -17,82 +12,44 @@ export const AVATAR_START = {
 // === Sprites ===
 // ============================================
 export const AVATAR_SPRITES = {
-<<<<<<< HEAD
-  down:  [1, 5, 9],    
-  left:  [0, 4, 8],   
-  right: [3, 7, 11],  
-  up:    [2, 6, 10] 
-=======
   down:  [105, 132, 159],
   up:    [106, 133, 160],
   right: [107, 134, 161],
   left:  [104, 131, 158],
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 };
 
 // Andrea
 export const NPC_SPRITES = {
-<<<<<<< HEAD
-  down:  [1, 5, 9],    
-  left:  [0, 4, 8],   
-  right: [3, 7, 11],  
-  up:    [2, 6, 10] 
-=======
   right: [431, 458, 485],
   left:  [428, 455, 482],
   down:  [429, 456, 483],
   up:    [430, 457, 484],
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 };
 
 // NPC casco obra - chaleco naranja
 export const OBRERO_SPRITES = {
-<<<<<<< HEAD
-  down:  [1, 5, 9],    
-  left:  [0, 4, 8],   
-  right: [3, 7, 11],  
-  up:    [2, 6, 10] 
-=======
   right: [269, 296, 323],
   left:  [266, 320, 293],
   down:  [267, 321, 294],
   up:    [268, 322, 295],
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 };
 
 // NPC Fernando
 export const FERNANDO_SPRITES = {
-<<<<<<< HEAD
-  down:  [1, 5, 9],    
-  left:  [0, 4, 8],   
-  right: [3, 7, 11],  
-  up:    [2, 6, 10] 
-=======
   right: [350, 377, 404],
   left:  [347, 374, 401],
   down:  [348, 375, 402],
   up:    [349, 376, 403],
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 };
 
 // NPC PEDRO
 export const PEDRO_SPRITES = {
-<<<<<<< HEAD
-  down:  [1, 5, 9],    
-  left:  [0, 4, 8],   
-  right: [3, 7, 11],  
-  up:    [2, 6, 10] 
-};
-
-
-=======
+  down:  [186, 213, 240],
   right: [188, 215, 242],
   left:  [185, 212, 239],
-  down:  [186, 213, 240],
   up:    [187, 214, 241],
 };
 
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 // ============================================
 // === Puertas de edificios ===
 // ============================================
@@ -103,11 +60,7 @@ export const PUERTAS = {
     { x: 20, y: 16 },
     { x: 21, y: 16 }
   ],
-<<<<<<< HEAD
   SKILLS: { x: 38, y: 27 },
-=======
-  SKILLS: { x: 38, y: 27 }, // Edificio SKILLS (habilidades técnicas)
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   OTROS: { x: 34, y: 4 },
   PROYECTOS: { x: 26, y: 25 },
   CONTACTO: { x: 8, y: 16 },
@@ -120,18 +73,6 @@ export const PUERTAS = {
 // ============================================
 export const FAROLILLOS = [
   // === FAROLAS VERDES (FAROLA_VERDE) ===
-<<<<<<< HEAD
-  { x: 1, y: 2 }, 
-  { x: 34, y: 16 }, 
-  { x: 30, y: 14 }, 
-  
-  // === FAROLAS GRISES (FAROLA_GRIS) ===
-  { x: 7, y: 3 },
-  { x: 22, y: 3 },
-  { x: 13, y: 14 },
-  { x: 36, y: 15 },
-  { x: 31, y: 3 },
-=======
   { x: 1, y: 2 },     // FAROLA_VERDE(1, 2)
   { x: 34, y: 16 },   // Farola verde adicional
   { x: 30, y: 14 },   // Farola verde adicional
@@ -142,7 +83,6 @@ export const FAROLILLOS = [
   { x: 13, y: 14 },   // FAROLA_GRIS(13, 14, true)
   { x: 36, y: 15 },   // FAROLA_GRIS(36, 15)
   { x: 31, y: 3 },    // Farola gris adicional
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   { x: 19, y: 23 },
   { x: 24, y: 29 },
   { x: 28, y: 29 },
@@ -151,22 +91,6 @@ export const FAROLILLOS = [
   { x: 20, y: 31 },
   
   // === FAROLAS DOBLES (FAROLA_DOBLE) ===
-<<<<<<< HEAD
-  { x: 0, y: 9 }, 
-  { x: 13, y: 4 },
-  { x: 8, y: 18 },  
-  { x: 2, y: 18 },  
-  { x: 8, y: 9 },  
-  { x: 32, y: 9 }, 
-  { x: 41, y: 9 },  
-  
-  // === SEMÁFOROS (SEMAFORO) ===
-  { x: 2, y: 4 },   
-  { x: 23, y: 9 },  
-  { x: 14, y: 9 }, 
-  { x: 9, y: 22 }, 
-  { x: 30, y: 5 }   
-=======
   { x: 0, y: 9 },     // FAROLA_DOBLE(0, 9)
   { x: 13, y: 4 },    // FAROLA_DOBLE(13, 4)
   { x: 8, y: 18 },    // FAROLA_DOBLE(8, 18)
@@ -181,7 +105,6 @@ export const FAROLILLOS = [
   { x: 14, y: 9 },    // SEMAFORO(14, 9, true)
   { x: 9, y: 22 },    // SEMAFORO(9, 22, true)
   { x: 30, y: 5 }     // SEMAFORO(30, 5, false)
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 ];
 
 // Posiciones de semáforos para luces superiores
@@ -200,8 +123,6 @@ export const SEMAFOROS = [
 import { MAP } from "./tiledMapData";
 export const NPC_WALKABLE_TILES = Array.from(new Set(MAP.flat()));
 
-<<<<<<< HEAD
-=======
 // ============================================
 // === Tiles de agua ===
 // ============================================
@@ -209,7 +130,6 @@ export const WATER_TILES = [
   // Agrega aquí los tiles que representan agua si los necesitas
   // Ejemplo: 100, 101, 102, 127, 128, 129
 ];
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 
 // ============================================
 // === Configuración de Coches NPC ===
@@ -218,18 +138,6 @@ export const WATER_TILES = [
 // Sprites de los coches
 export const CAR_SPRITES = {
   CAR1: {
-<<<<<<< HEAD
-    down: [476],      
-    up: [479],       
-    right: [477, 478], 
-    left: [474, 475],  
-  },
-  CAR2: {
-    down: [426], 
-    up: [427],
-    right: [480, 481],
-    left: [453, 454],
-=======
     down: [476],      // De frente (1 tile)
     up: [479],        // De espaldas (1 tile)  
     right: [477, 478], // Hacia la derecha (2 tiles: parte trasera, parte delantera)
@@ -240,7 +148,6 @@ export const CAR_SPRITES = {
     up: [427],        // De espaldas (1 tile) - CORREGIDO para que mire hacia arriba
     right: [480, 481], // Hacia la derecha (2 tiles)
     left: [453, 454],  // Hacia la izquierda (2 tiles - orden invertido)
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   },
 };
 
@@ -260,7 +167,7 @@ export const CAR_PATHS = {
   // Coche 2: Empieza fuera del mapa (izquierda), entra y hace un recorrido con giros
   CAR2_PATH: [
     [-1, 22], [0, 22], [1, 22], [2, 22], [3, 22], [4, 22], [5, 22],
-    [6, 22], [7, 22], [8, 22], [9, 22], [10, 22], [11, 22],
+    [6, 22], [7,2], [8, 22], [9, 22], [10, 22], [11, 22],
     [12, 22], [13, 22], [14, 22], [15, 22], [16, 22], [17, 22],
     [17, 21], [17, 20], [17, 19], [17, 18], [17, 17], [17, 16],
     [17, 15], [17, 14], [17, 13], [17, 12], [17, 11], [17, 10],
@@ -298,11 +205,7 @@ export const CARS_CONFIG = [
     id: 'car1',
     sprites: CAR_SPRITES.CAR1,
     path: CAR_PATHS.CAR1_PATH,
-<<<<<<< HEAD
-    speed: 150, 
-=======
     speed: 150, // Más rápido y fluido
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
     spawnDelay: 0,
     respawnDelay: { min: 3000, max: 8000 },
     hornMessage: '🚗 PI PIIIII!!',
@@ -312,11 +215,7 @@ export const CARS_CONFIG = [
     id: 'car2',
     sprites: CAR_SPRITES.CAR2,
     path: CAR_PATHS.CAR2_PATH,
-<<<<<<< HEAD
-    speed: 150, 
-=======
     speed: 150, // Más rápido y fluido
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
     spawnDelay: 0,
     respawnDelay: { min: 4000, max: 10000 },
     hornMessage: '🚙 PI PIIIII!!',
@@ -326,11 +225,7 @@ export const CARS_CONFIG = [
     id: 'car3',
     sprites: CAR_SPRITES.CAR1,
     path: CAR_PATHS.CAR3_PATH,
-<<<<<<< HEAD
-    speed: 150, 
-=======
     speed: 150, // Más rápido y fluido
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
     spawnDelay: 0,
     respawnDelay: { min: 5000, max: 9000 },
     hornMessage: '🚗 PI PIIIII!!',
@@ -340,11 +235,7 @@ export const CARS_CONFIG = [
     id: 'car4',
     sprites: CAR_SPRITES.CAR2,
     path: CAR_PATHS.CAR4_PATH,
-<<<<<<< HEAD
-    speed: 150,
-=======
     speed: 150, // Más rápido y fluido
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
     spawnDelay: 0,
     respawnDelay: { min: 6000, max: 11000 },
     hornMessage: '🚙 PI PIIIII!!',
@@ -392,37 +283,22 @@ export const NPC_PHRASES = [
 // ============================================
 export const NPC_BUILDING_PHRASES = {
   EDUCACION: [
-<<<<<<< HEAD
-    "Aquí descubrí mi camino profesional 💡❤️"
-=======
     "Descubrí mi camino profesional aquí y me enamoré de él 💡❤️"
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   ],
   EXPERIENCIA: [
     "Cada proyecto me enseñó algo nuevo 💼❤️"
   ],
   SOBRE_MI: [
-<<<<<<< HEAD
-    "Esta es mi casa, mi rincón personal 🏠✨"
-  ],
-  SKILLS: [
-    "Aquí practico y refuerzo mis habilidades constantemente 💡🛠️"
-=======
     "Esta es mi base, donde todo comienza y donde te cuento sobre mí 🏠✨"
   ],
   SKILLS: [
     "Aquí practico y refuerzo mis skills constantemente 💡🛠️"
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   ],
   HOBBIES: [
   "Aquí conoces un poco más sobre mí y mis hobbies 🎶😄"
 ],
   OTROS: [
-<<<<<<< HEAD
-    "Aprender es un viaje sin fin… 💡🌟"
-=======
     "Aprender es un viaje sin fin… ¡y me encanta! 💡🌟"
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   ],
   RRSS: [
     "Si quieres seguirme, aquí está toda la información 📻🌟"
@@ -439,69 +315,6 @@ export const NPC_BUILDING_PHRASES = {
 // === Frases de NPCs Adicionales ===
 // ============================================
 
-<<<<<<< HEAD
-// Obrero 
-export const OBRERO_PHRASES = [
-  // Cafetería
-  "Un café rapidito y al tajo, que el trabajo no sale solo ☕💼",
-  "Yo no paro por cansancio, paro por respeto al café ☕😉",
-  "El café es pausa de manos, no de mente ☕🛠️",
-
-
-  // Contacto
-  "Si buscas al jefe de todo esto, entra en la cafetería. Allí te dirán como encontrarlo 😉",
-  "Si quieres hablar con el que hizo todo esto, entra en la cafetería, ami no me líes que tengo faena 🛠️",
-  "Si entras en la cafetería dí que vas de mi parte, igual te escucha 😉",
-
-  // Club / Diversión
-  "Si bajas al club no esperes silencio, ahí suena la vida 🎶",
-  "El club es donde se suelta el estrés del día a día 🎉",
-  "Si buscas diversión, el club es tu sitio 🎶😄"
-];
-
-// FERNANDO
-export const FERNANDO_PHRASES = [
- //A perdido al perro
- "Siempre que salgo a despejarme acabo perdiendo algo... hoy le ha tocado al perro 🐕‍🦺",
- "A veces pienso que el perro me entiende mejor que la gente... por eso se va 😐",
- "¡Toby!🐕‍🦺 ¡Ven! Que te juro que esta vez no te baño 🙄",
- "Si toby 🐕‍🦺 me ve desde lejos, seguro que dice: Míralo como corre el tonto este otra vez....",
- "Seguro que está por la radio o por el taller... Ese perro tiene el olfato activado apra el barullo 🐕‍🦺",
- 
-
-];
-
-
-// PEDRO
-export const PEDRO_PHRASES = [
-  //REFRANES 
-  "Más sabe el diablo por viejo que por diablo 👴",
-  "No por mucho madrugar amanece más temprano 🌅",
-  "Camarón que se duerme se lo lleva la corriente 🌊",
-  "Al mal tiempo, buena cara ☔",
-  "No hay mal que por bien no venga 🌈",
-  "A palabras necias, oídos sordos 🙉",
-  "Más vale tarde que nunca ⏰",
-  "El hábito no hace al monje 👘",
-  "A río revuelto, ganancia de pescadores 🎣",
-  "No dejes para mañana lo que puedas hacer hoy 📅",
-  "Zapatero a tus zapatos 👞",
-  "No hay tonto mas tonto que el que se cree listo 🤡",
-
-
-  // Museo / Proyectos
-  "Quién al museo va sin prisa, aprende más que el que corre a misa 🎨",
-  "El que entra en el museo, o se inspira o se siente pequeño ✨",
-  "Ahí dentro no hay solo arte, hay horas sin dormir 🎭",
-  "No todo lo que brilla es oro, pero en ese museo... Algo reluce de verdad 💡",
-
-  // Cosas propias / Reflexiones
-  "Antes se saludaba por la calle, ahora te miran como si les debieras dinero 🤝",
-  "Recuerdo cuando todo esto era campo 🏙️",
-  "Los jóvenes de hoy en día... siempre pegados a sus pantallas 📱",
-  "En mis tiempos, aprender a programar era cosa de valientes 💻",
-  "La experiencia es la madre de la ciencia, y yo he tenido muchos hijos 👴💡"
-=======
 // Obrero - Frases profesionales sobre trabajo
 export const OBRERO_PHRASES = [
   // Cafetería / Contacto con Andrea
@@ -642,10 +455,7 @@ export const PEDRO_PHRASES = [
   "Algunas cosas cambian, otras permanecen igual 👴",
   "Observa bien… hay detalles que pasan desapercibidos 👀",
   "Disfruta del museo, la ciudad y sus secretos 🎨"
->>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 ];
-
-
 
 
 // ============================================
