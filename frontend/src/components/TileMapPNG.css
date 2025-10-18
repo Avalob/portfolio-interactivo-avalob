@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+=======
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+/* Día/noche y tema neón */
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 
 /* Contenedor principal: asegura altura completa en móviles usando custom vh */
 .tilemap-root {
@@ -6,7 +12,11 @@
   width: 100%;
   min-height: 100vh;
   height: calc(var(--app-vh, 1vh) * 100);
+<<<<<<< HEAD
   overflow: visible; 
+=======
+  overflow: hidden;
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   margin: 0;
   padding: 0;
 }
@@ -20,8 +30,12 @@
   bottom: -36px; 
   background: rgba(6, 8, 15, 0.45); 
   pointer-events: none;
+<<<<<<< HEAD
   z-index: 5
 ;
+=======
+  z-index: 5;
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   transition: opacity 0.8s ease;
 }
 
@@ -468,7 +482,11 @@
 
 .tilemap-npc {
   position: absolute;
+<<<<<<< HEAD
   z-index: 100; /* Asegura que el NPC esté por encima de edificios y objetos */
+=======
+  z-index: 10;
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   pointer-events: none;
   transition: left 1.2s linear, top 1.2s linear;
 }

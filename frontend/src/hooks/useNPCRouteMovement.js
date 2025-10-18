@@ -110,24 +110,49 @@ export function useNPCRouteMovement(npc, setNpc, route, avatar, config = {}) {
     executeWalk = (action) => {
       const { direction, steps } = action;
       let stepsCompleted = 0;
+<<<<<<< HEAD
       const doStep = () => {
         if (stepsCompleted >= steps) {
+=======
+      console.log(`[NPC Walk] Starting walk: ${direction}, ${steps} steps`);
+
+      const doStep = () => {
+        console.log(`[NPC Walk] Step ${stepsCompleted + 1}/${steps}`);
+        
+        if (stepsCompleted >= steps) {
+          console.log('[NPC Walk] Walk completed');
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
           setNpc(prev => ({ ...prev, moving: false, step: 0 }));
           finishAction();
           return;
         }
 
         const currentNpc = npcStateRef.current;
+<<<<<<< HEAD
         const nextPos = getNextPosition(currentNpc.x, currentNpc.y, direction);
+=======
+        console.log(`[NPC Walk] Current position: (${currentNpc.x}, ${currentNpc.y})`);
+        const nextPos = getNextPosition(currentNpc.x, currentNpc.y, direction);
+        console.log(`[NPC Walk] Next position: (${nextPos.x}, ${nextPos.y})`);
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
         
         // Verificar si la siguiente posición es válida
         const isNextWalkable = isWalkable(nextPos.x, nextPos.y);
         const isAvatarBlocking = (nextPos.x === avatarRef.current.x && nextPos.y === avatarRef.current.y);
         const isInZone = nextPos.x >= currentNpc.zone.minX && nextPos.x <= currentNpc.zone.maxX &&
                          nextPos.y >= currentNpc.zone.minY && nextPos.y <= currentNpc.zone.maxY;
+<<<<<<< HEAD
                 
         // Si el avatar está bloqueando, esperar y reintentar
         if (isAvatarBlocking) {
+=======
+        
+        console.log(`[NPC Walk] Walkable: ${isNextWalkable}, Avatar blocking: ${isAvatarBlocking}, In zone: ${isInZone}`);
+        
+        // Si el avatar está bloqueando, esperar y reintentar
+        if (isAvatarBlocking) {
+          console.log('[NPC Walk] Avatar blocking, waiting...');
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
           setNpc(prev => ({ ...prev, moving: false, step: 0 }));
           // Reintentar después de un tiempo
           timeoutRef.current = setTimeout(doStep, 500);
@@ -136,12 +161,20 @@ export function useNPCRouteMovement(npc, setNpc, route, avatar, config = {}) {
         
         // Si no es walkable o no está en zona, terminar acción
         if (!isNextWalkable || !isInZone) {
+<<<<<<< HEAD
+=======
+          console.log('[NPC Walk] Cannot walk (not walkable or out of zone), finishing action');
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
           setNpc(prev => ({ ...prev, moving: false, step: 0 }));
           finishAction();
           return;
         }
 
         // Iniciar movimiento
+<<<<<<< HEAD
+=======
+        console.log('[NPC Walk] Moving...');
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
         setNpc(prev => ({ ...prev, dir: direction, moving: true, step: 0 }));
 
         // Animación de pasos
@@ -158,6 +191,10 @@ export function useNPCRouteMovement(npc, setNpc, route, avatar, config = {}) {
             intervalRef.current = null;
           }
 
+<<<<<<< HEAD
+=======
+          console.log(`[NPC Walk] Moving to (${nextPos.x}, ${nextPos.y})`);
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
           setNpc(prev => ({
             ...prev,
             x: nextPos.x,

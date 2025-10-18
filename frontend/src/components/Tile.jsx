@@ -1,29 +1,51 @@
 /**
  * Componente Tile - Renderiza un tile individual desde un spritesheet
+<<<<<<< HEAD
  * Ajustado para que ningún personaje sobresalga hacia arriba.
  */
 
+=======
+ * 
+ * @param {number} index - Índice del tile en el spritesheet
+ * @param {number} size - Tamaño del tile en píxeles (por defecto 16px)
+ * @param {boolean} flip - Si el tile debe voltearse horizontalmente
+ * @param {string} className - Clases CSS adicionales
+ * @param {object} style - Estilos CSS adicionales
+ * @param {string} spritesheet - Nombre del spritesheet a usar: 'main' (27x18) o 'secondary' (37x28)
+ */
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
 function Tile({ 
   index, 
   size = 16, 
   flip = false, 
   className = '', 
   style: customStyle = {},
+<<<<<<< HEAD
   spritesheet = 'main',
   offsetYExtra = 0,
   heightScale = 1.2
 }) {
+=======
+  spritesheet = 'main' 
+}) {
+  // Configuración de spritesheets
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   const SPRITESHEETS = {
     main: {
       cols: 27,
       rows: 18,
+<<<<<<< HEAD
       file: 'Tiles/spritesheet.png',
       frameWidth: size,
       frameHeight: size
+=======
+      file: 'spritesheet.png'
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
     },
     secondary: {
       cols: 37,
       rows: 28,
+<<<<<<< HEAD
       file: 'Tiles/spritesheet2.png',
       frameWidth: size,
       frameHeight: size
@@ -82,10 +104,14 @@ function Tile({
       frameHeight: 25.6,
       realFrameWidth: 32,
       realFrameHeight: 25.6
+=======
+      file: 'spritesheet2.png' // o el nombre que tenga tu segundo spritesheet
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
     }
   };
 
   const config = SPRITESHEETS[spritesheet] || SPRITESHEETS.main;
+<<<<<<< HEAD
   const frameWidth = config.frameWidth;
   const frameHeight = config.frameHeight;
   const realFrameWidth = config.realFrameWidth || frameWidth;
@@ -191,6 +217,31 @@ function Tile({
     };
   }
 
+=======
+  
+  // Calcular posición en el spritesheet
+  const col = index % config.cols;
+  const row = Math.floor(index / config.cols);
+  
+  const style = {
+    width: `${size}px`,
+    height: `${size}px`,
+    backgroundImage: `url(${import.meta.env.BASE_URL}Tiles/${config.file})`,
+    backgroundPosition: `-${col * size}px -${row * size}px`,
+    backgroundSize: `${config.cols * size}px auto`,
+    backgroundRepeat: 'no-repeat',
+    imageRendering: 'pixelated',
+    display: 'inline-block',
+    verticalAlign: 'top',
+    // Forzar flip booleano
+    transform: !!flip ? 'scaleX(-1)' : 'none',
+    pointerEvents: 'none',
+    fontSize: 0,
+    lineHeight: 0,
+    ...customStyle, // Permite sobrescribir estilos
+  };
+  
+>>>>>>> 561a103d3fcac76a64845d6c3da8abe0f37814e9
   return <div style={style} className={className} />;
 }
 
