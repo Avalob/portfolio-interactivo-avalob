@@ -19,7 +19,7 @@ export default defineConfig({
   // ============================================================
 
   // Define la ruta base para despliegue en GitHub Pages o desarrollo local
-  base: process.env.NODE_ENV === 'production' ? '/portfolio-interactivo-avalob/' : '/',
+  base: '/portfolio-interactivo-avalob/',
 
   // ============================================================
   // 4. CONFIGURACIÓN DEL SERVIDOR DE DESARROLLO
