@@ -63,7 +63,11 @@ export const usePlayerMovement = ({
 
   // Movimiento continuo
   useEffect(() => {
-    if (keysPressed.size === 0 || enEdificio) return;
+    if (keysPressed.size === 0 || enEdificio) {
+      // Resetear step a 0 cuando no hay movimiento (sprite parado)
+      setAvatar(prev => prev.step !== 0 ? { ...prev, step: 0 } : prev);
+      return;
+    }
 
     const moveInterval = setInterval(() => {
       let dx = 0, dy = 0, dir = avatar.dir;

@@ -22,20 +22,17 @@ export function useAutoPathMovement({
     if (!targetPosition || pathToTarget.length === 0) return;
     if (enEdificio) return; // No mover si está dentro de un edificio
     
-    console.log('🎯 Iniciando movimiento automático. Path length:', pathToTarget.length);
-    
-    const interval = setInterval(() => {
+      const interval = setInterval(() => {
       setPathToTarget(prevPath => {
         if (prevPath.length === 0) {
-          console.log('✅ Llegó al destino');
           setTargetPosition(null);
+          // Resetear step a 0 cuando termina el movimiento automático
+          setAvatar(prev => ({ ...prev, step: 0 }));
           return [];
         }
         
         const nextPos = prevPath[0];
         const remainingPath = prevPath.slice(1);
-        
-        console.log('➡️ Moviéndose a:', nextPos, 'Quedan', remainingPath.length, 'pasos');
         
         // Mover avatar usando el estado previo para calcular dirección
         setAvatar(prev => {
@@ -60,7 +57,6 @@ export function useAutoPathMovement({
     }, autoPathIntervalMs); // Ajuste para un desplazamiento más pausado en rutas automáticas, más lento en móvil
     
     return () => {
-      console.log('🛑 Limpiando intervalo de movimiento');
       clearInterval(interval);
     };
   }, [targetPosition, pathToTarget, enEdificio, autoPathIntervalMs, setPathToTarget, setTargetPosition, setAvatar]);

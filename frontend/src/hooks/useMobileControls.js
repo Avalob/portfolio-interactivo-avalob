@@ -67,7 +67,6 @@ export function useMobileControls({
       }, MOBILE_MOVE_INTERVAL_MS);
     }
   }, [enEdificio, performMobileStep]);
-
   const handleMobileDirectionRelease = useCallback((direction) => {
     if (direction) {
       mobileKeysPressed.current.delete(direction);
@@ -78,8 +77,11 @@ export function useMobileControls({
     if (mobileKeysPressed.current.size === 0 && mobileMoveInterval.current) {
       clearInterval(mobileMoveInterval.current);
       mobileMoveInterval.current = null;
+      
+      // Resetear step a 0 cuando se suelta el botón (sprite parado)
+      setAvatar(prev => ({ ...prev, step: 0 }));
     }
-  }, []);
+  }, [setAvatar]);
 
   const handleMobileMenuButton = useCallback((option) => {
     // Manejar las opciones del menú desplegable

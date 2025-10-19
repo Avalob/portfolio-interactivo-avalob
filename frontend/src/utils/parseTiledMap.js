@@ -33,7 +33,6 @@ function main() {
 	// Exporta como módulo JS
 	const out = `// Generado automáticamente desde sample-map.tmx\nexport const WIDTH = ${width};\nexport const HEIGHT = ${height};\nexport const MAP = ${JSON.stringify(terrainMatrix, null, 2)};\n`;
 	fs.writeFileSync(OUTPUT_PATH, out);
-	console.log('Matriz MAP generada en', OUTPUT_PATH);
 }
 
 if (require.main === module) main();

@@ -169,7 +169,6 @@ function TileMapPNG() {
   const setShowMinimapModal = (value) => setModals(prev => ({ ...prev, minimapModal: value }));
   const showWelcome = modals.welcome;
   const setShowWelcome = (value) => {
-    console.log('🎮 [TileMapPNG] Modal de bienvenida cambiado a:', value);
     setModals(prev => ({ ...prev, welcome: value }));
   };
 
@@ -1074,7 +1073,6 @@ function TileMapPNG() {
       <RecruiterPanel 
         isOpen={showRecruiterPanel} 
         onClose={() => {
-          console.log('RecruiterPanel onClose triggered');
           setShowRecruiterPanel(false);
           setRecruiterMode(false);
         }}

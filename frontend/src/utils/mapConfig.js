@@ -11,43 +11,45 @@ export const AVATAR_START = {
 // ============================================
 // === Sprites ===
 // ============================================
+// Cada spritesheet de personaje tiene 4 columnas y 3 filas
+// Índices: 0-3 (fila 0), 4-7 (fila 1), 8-11 (fila 2)
 export const AVATAR_SPRITES = {
-  down:  [105, 132, 159],
-  up:    [106, 133, 160],
-  right: [107, 134, 161],
-  left:  [104, 131, 158],
+  down:  [1, 5, 9],   // Fila 0: mirando abajo
+  left:  [0, 4, 8],   // Fila 1: mirando izquierda
+  right: [3, 7, 11],  // Fila 2: mirando derecha
+  up:    [2, 6, 10],   // Columna 1: mirando arriba
 };
 
-// Andrea
+// Andrea (NPC principal)
 export const NPC_SPRITES = {
-  right: [431, 458, 485],
-  left:  [428, 455, 482],
-  down:  [429, 456, 483],
-  up:    [430, 457, 484],
+  down:  [1, 5, 9],   // Fila 0: mirando abajo
+  left:  [0, 4, 8],   // Fila 1: mirando izquierda
+  right: [3, 7, 11],  // Fila 2: mirando derecha
+  up:    [2, 6, 10],   // Columna 1: mirando arriba
 };
 
-// NPC casco obra - chaleco naranja
+// NPC Obrero (casco obra - chaleco naranja)
 export const OBRERO_SPRITES = {
-  right: [269, 296, 323],
-  left:  [266, 320, 293],
-  down:  [267, 321, 294],
-  up:    [268, 322, 295],
+  down:  [1, 5, 9],
+  left:  [0, 4, 8],
+  right: [3, 7, 11],
+  up:    [2, 6, 10],
 };
 
 // NPC Fernando
 export const FERNANDO_SPRITES = {
-  right: [350, 377, 404],
-  left:  [347, 374, 401],
-  down:  [348, 375, 402],
-  up:    [349, 376, 403],
+  down:  [1, 5, 9],   // Fila 0: mirando abajo
+  left:  [0, 4, 8],   // Fila 1: mirando izquierda
+  right: [3, 7, 11],  // Fila 2: mirando derecha
+  up:    [2, 6, 10],   // Columna 1: mirando arriba
 };
 
-// NPC PEDRO
+// NPC Pedro
 export const PEDRO_SPRITES = {
-  down:  [186, 213, 240],
-  right: [188, 215, 242],
-  left:  [185, 212, 239],
-  up:    [187, 214, 241],
+  down:  [1, 5, 9],
+  left:  [0, 4, 8],
+  right: [3, 7, 11],
+  up:    [2, 6, 10],
 };
 
 // ============================================
@@ -167,7 +169,7 @@ export const CAR_PATHS = {
   // Coche 2: Empieza fuera del mapa (izquierda), entra y hace un recorrido con giros
   CAR2_PATH: [
     [-1, 22], [0, 22], [1, 22], [2, 22], [3, 22], [4, 22], [5, 22],
-    [6, 22], [7,2], [8, 22], [9, 22], [10, 22], [11, 22],
+    [6, 22], [7, 22], [8, 22], [9, 22], [10, 22], [11, 22],
     [12, 22], [13, 22], [14, 22], [15, 22], [16, 22], [17, 22],
     [17, 21], [17, 20], [17, 19], [17, 18], [17, 17], [17, 16],
     [17, 15], [17, 14], [17, 13], [17, 12], [17, 11], [17, 10],
@@ -283,22 +285,22 @@ export const NPC_PHRASES = [
 // ============================================
 export const NPC_BUILDING_PHRASES = {
   EDUCACION: [
-    "Descubrí mi camino profesional aquí y me enamoré de él 💡❤️"
+    "Aquí descubrí mi camino profesional 💡❤️"
   ],
   EXPERIENCIA: [
     "Cada proyecto me enseñó algo nuevo 💼❤️"
   ],
   SOBRE_MI: [
-    "Esta es mi base, donde todo comienza y donde te cuento sobre mí 🏠✨"
+    "Esta es mi casa, mi rincón personal 🏠✨"
   ],
   SKILLS: [
-    "Aquí practico y refuerzo mis skills constantemente 💡🛠️"
+    "Aquí practico y refuerzo mis habilidades constantemente 💡🛠️"
   ],
   HOBBIES: [
   "Aquí conoces un poco más sobre mí y mis hobbies 🎶😄"
 ],
   OTROS: [
-    "Aprender es un viaje sin fin… ¡y me encanta! 💡🌟"
+    "Aprender es un viaje sin fin… 💡🌟"
   ],
   RRSS: [
     "Si quieres seguirme, aquí está toda la información 📻🌟"
@@ -315,148 +317,68 @@ export const NPC_BUILDING_PHRASES = {
 // === Frases de NPCs Adicionales ===
 // ============================================
 
-// Obrero - Frases profesionales sobre trabajo
+// Obrero 
 export const OBRERO_PHRASES = [
-  // Cafetería / Contacto con Andrea
-  "He estado construyendo estos edificios… ¿ves la cafetería? ☕💌",
-  "Después de tanto trabajo, la cafetería me llama… y a ti también 😉",
-  "Construí gran parte de la ciudad, ahora entra y habla con Andrea ✨",
-  "Mis manos están cansadas… pero tú entra a la cafetería ☕",
-  "Entre ladrillos y planos, la cafetería guarda mensajes 💌",
-  "He levantado estos edificios… entra y deja tu mensaje 😉",
-  "Pausa tras construir la ciudad… ¡y tú aprovecha para hablar con Andrea! ☕",
-  "Después de tanta obra, la cafetería es un oasis ✨",
-  "Mis brazos descansan, pero tú entra a la cafetería 💌",
-  "Tras poner ladrillo tras ladrillo, la cafetería te espera 😉",
+  // Cafetería
+  "Un café rapidito y al tajo, que el trabajo no sale solo ☕💼",
+  "Yo no paro por cansancio, paro por respeto al café ☕😉",
+  "El café es pausa de manos, no de mente ☕🛠️",
+
+
+  // Contacto
+  "Si buscas al jefe de todo esto, entra en la cafetería. Allí te dirán como encontrarlo 😉",
+  "Si quieres hablar con el que hizo todo esto, entra en la cafetería, ami no me líes que tengo faena 🛠️",
+  "Si entras en la cafetería dí que vas de mi parte, igual te escucha 😉",
 
   // Club / Diversión
-  "Después de construir tanto, baja al club a relajarte 🎵",
-  "He levantado estos edificios… ahora tú baja y pásalo bien 😎",
-  "Tras mover muros y vigas, el club te espera 🎉",
-  "Mis manos descansan… pero el club sigue vivo 🔥",
-  "Después de tanta obra, el club es perfecto para divertirse 🎶",
-  "Construir cansa… el club no, ¡entra y disfruta! 😎",
-  "Tras levantar la ciudad, baja al club y relájate 🎵",
-  "Mi jornada terminó… tú aún puedes explorar el club 🎉",
-  "Después de mucho trabajo, el club tiene risas aseguradas 🔥",
-  "He puesto ladrillos todo el día… ¡pero el club está listo para ti! 🎶",
-
-  // Ciudad / Exploración ligera
-  "He estado construyendo cada esquina de esta ciudad 🏙️, ¡explórala!",
-  "Tras tanto trabajo, cada calle guarda su historia 👀",
-  "Mis manos descansan… pero la ciudad sigue viva 🌟",
-  "Construí cada edificio, ahora descubre sus secretos 🌃",
-  "Entre planos y ladrillos, la ciudad tiene rincones curiosos 😉",
-  "He levantado calles y edificios… explora y sorpréndete 🏙️",
-  "Después de tanto martillo y cemento, observa la ciudad 👀",
-  "Construí los cimientos… ahora tú explora y descubre ✨",
-  "Tras tanto trabajo, cada calle merece ser explorada 🌟",
-  "He acabado por hoy… pero la ciudad te espera 😉"
+  "Si bajas al club no esperes silencio, ahí suena la vida 🎶",
+  "El club es donde se suelta el estrés del día a día 🎉",
+  "Si buscas diversión, el club es tu sitio 🎶😄"
 ];
 
-// FERNANDO - Frases técnicas y de programación
+// FERNANDO
 export const FERNANDO_PHRASES = [
-  // Museo / Proyectos
-  "Wow, ¿has visto ese museo más abajo? 🎨 ¡entra y descubre los proyectos!",
-  "El museo guarda ideas increíbles 💡, baja y échales un vistazo",
-  "Si miras más abajo, el museo tiene sorpresas que te inspirarán ✨",
-  "Los proyectos del museo son dignos de explorar 👀",
-  "El museo está lleno de creatividad 🎭, baja y descúbrelo",
-  "Entre paredes y arte 🎨, el museo te espera",
-  "Si bajas al museo, encontrarás historias y proyectos únicos 💡",
-  "Mira el museo más abajo 🎨… hay mucho por ver",
-  "Proyectos y arte se unen en el museo ✨, baja a verlo",
-  "El museo tiene secretos que solo los curiosos descubrirán 👀",
+ //A perdido al perro
+ "Siempre que salgo a despejarme acabo perdiendo algo... hoy le ha tocado al perro 🐕‍🦺",
+ "A veces pienso que el perro me entiende mejor que la gente... por eso se va 😐",
+ "¡Toby!🐕‍🦺 ¡Ven! Que te juro que esta vez no te baño 🙄",
+ "Si toby 🐕‍🦺 me ve desde lejos, seguro que dice: Míralo como corre el tonto este otra vez....",
+ "Seguro que está por la radio o por el taller... Ese perro tiene el olfato activado apra el barullo 🐕‍🦺",
+ 
 
-  // Taller / Skills
-  "A la derecha está el taller 🛠️, perfecto para explorar habilidades",
-  "El taller guarda secretos de destreza y talento 💪",
-  "Si visitas el taller, verás cómo se construyen grandes cosas 🔧",
-  "El taller es un lugar de práctica y creatividad ✨",
-  "En el taller aprendes y exploras nuevas habilidades 🛠️",
-  "Si bajas al taller, tus skills se sentirán inspirados 💡",
-  "El taller está activo 🔧… ¿quieres descubrirlo?",
-  "Habilidades y herramientas te esperan en el taller 🛠️",
-  "En el taller se hacen grandes cosas 💪, entra y mira",
-  "El taller es tu punto de referencia para mejorar habilidades ✨",
-
-  // Radio / Redes sociales
-  "A la derecha, la radio 📻 te conecta con el mundo",
-  "La radio tiene mensajes interesantes 📡, échales un vistazo",
-  "Si pasas por la radio, encontrarás conexiones geniales ✨",
-  "La radio transmite noticias y sorpresas 🎙️",
-  "Explora la radio 📻, quizá encuentres algo útil",
-  "La radio está siempre encendida 🔊, entra y escucha",
-  "Con la radio conectas con todos 📡, ¡no te lo pierdas!",
-  "La radio transmite historias fascinantes 🎙️",
-  "Si bajas a la radio 📻, hay contenido que te gustará",
-  "La radio es un punto de encuentro 🔊, acércate y explora",
-
-  // Ciudad / Parque / Exploración
-  "Este parque es mi lugar favorito 🌳, mira los pajaritos 🐦",
-  "Me encanta pasear por la ciudad 🏙️ y descubrir rincones secretos",
-  "Nada como descansar aquí 🍃 y observar la naturaleza",
-  "Cada calle y árbol tiene su historia 👀, explora a tu alrededor",
-  "El parque está lleno de vida 🌸, disfruta mientras caminas",
-  "Si miras a tu alrededor, la ciudad tiene sorpresas 🌟",
-  "Entre naturaleza y ciudad 🍃🏙️, siempre hay algo que ver",
-  "Este lugar es perfecto para pensar y relajarte ✨",
-  "Observa los pajaritos 🐦 mientras exploras la ciudad",
-  "El parque y sus alrededores tienen secretos que descubrir 👀"
 ];
 
 
-// Senior - Frases de experiencia y sabiduría tech
+// PEDRO
 export const PEDRO_PHRASES = [
+  //REFRANES 
+  "Más sabe el diablo por viejo que por diablo 👴",
+  "No por mucho madrugar amanece más temprano 🌅",
+  "Camarón que se duerme se lo lleva la corriente 🌊",
+  "Al mal tiempo, buena cara ☔",
+  "No hay mal que por bien no venga 🌈",
+  "A palabras necias, oídos sordos 🙉",
+  "Más vale tarde que nunca ⏰",
+  "El hábito no hace al monje 👘",
+  "A río revuelto, ganancia de pescadores 🎣",
+  "No dejes para mañana lo que puedas hacer hoy 📅",
+  "Zapatero a tus zapatos 👞",
+  "No hay tonto mas tonto que el que se cree listo 🤡",
+
+
   // Museo / Proyectos
-  "Ah, ese museo… he visto tantas cosas allí 🎨",
-  "Los proyectos de hoy son impresionantes 💡",
-  "Recuerdo cuando construían cada rincón de la ciudad 👀",
-  "El museo guarda historias que te sorprenderán ✨",
-  "Baja al museo y verás cosas que yo vi hace años 🎭",
-  "Cada obra del museo tiene su encanto 🎨",
-  "He aprendido mucho solo observando los proyectos 💡",
-  "El museo es un lugar que siempre inspira ✨",
-  "Proyectos de ayer y hoy se encuentran en ese museo 👀",
-  "Mira el museo… hay historias que contar 🎨",
+  "Quién al museo va sin prisa, aprende más que el que corre a misa 🎨",
+  "El que entra en el museo, o se inspira o se siente pequeño ✨",
+  "Ahí dentro no hay solo arte, hay horas sin dormir 🎭",
+  "No todo lo que brilla es oro, pero en ese museo... Algo reluce de verdad 💡",
 
-  // Ciudad / Parque / Exploración
-  "La ciudad ha cambiado mucho desde que era joven 🏙️",
-  "Cada calle guarda recuerdos 🍃",
-  "Disfruta del paseo, ¡yo lo hago todos los días 🌸!",
-  "Observa los edificios, tienen muchas historias 👀",
-  "Mi barrio ha visto muchas generaciones pasar 🌟",
-  "La ciudad es viva, incluso a mi edad 🏙️",
-  "Me gusta sentarme y mirar a mi alrededor 🍃",
-  "Explora y aprende, cada rincón tiene su historia ✨",
-  "La ciudad es un museo vivo 👀",
-  "Pasear por aquí siempre me trae buenos recuerdos 🌸",
-
-  // Cosas de viejo / Reflexiones
-  "Con mis años he aprendido a apreciar los detalles 👴",
-  "Recuerdo cuando todo esto era diferente 🏙️",
-  "Hay que tomarse un descanso y disfrutar 🍵",
-  "La experiencia no se aprende en un día ✨",
-  "Con cada arruga vienen historias 📖",
-  "He visto cómo crece la ciudad paso a paso 👀",
-  "A veces la tranquilidad es lo más valioso 🌿",
-  "Los años enseñan a mirar con otros ojos 👴",
-  "La paciencia es la clave en cualquier proyecto 🛠️",
-  "Disfruta mientras puedas, joven explorador 🌟",
-
-  // Comentarios generales / Curiosidades
-  "Nunca subestimes la magia de esta ciudad ✨",
-  "Hay secretos que solo los curiosos descubren 👀",
-  "Me gusta ver cómo la gente explora los edificios 🏙️",
-  "Siempre hay algo nuevo que aprender 💡",
-  "El parque cercano es perfecto para reflexionar 🍃",
-  "Me gusta escuchar a los pájaros mientras paseo 🐦",
-  "Cada esquina tiene su historia escondida 🌟",
-  "Algunas cosas cambian, otras permanecen igual 👴",
-  "Observa bien… hay detalles que pasan desapercibidos 👀",
-  "Disfruta del museo, la ciudad y sus secretos 🎨"
+  // Cosas propias / Reflexiones
+  "Antes se saludaba por la calle, ahora te miran como si les debieras dinero 🤝",
+  "Recuerdo cuando todo esto era campo 🏙️",
+  "Los jóvenes de hoy en día... siempre pegados a sus pantallas 📱",
+  "En mis tiempos, aprender a programar era cosa de valientes 💻",
+  "La experiencia es la madre de la ciencia, y yo he tenido muchos hijos 👴💡"
 ];
-
 
 // ============================================
 // === Helper Functions ===

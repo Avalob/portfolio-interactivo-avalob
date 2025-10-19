@@ -89,13 +89,11 @@ export const usePathfinding = (WIDTH, HEIGHT, canWalk) => {
       
       // Límite de seguridad (evitar búsquedas infinitas)
       if (closedSet.size > 2000) {
-        // console.log("Pathfinding: búsqueda demasiado larga, abortando");
         return null;
       }
     }
     
     // No se encontró camino
-    // console.log("Pathfinding: no se encontró ruta al destino");
     return null;
   }, [WIDTH, HEIGHT, canWalk]);
 

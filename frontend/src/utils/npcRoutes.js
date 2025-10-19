@@ -1,6 +1,6 @@
 /**
  * Rutas predefinidas para NPCs
- * Cada acción puede ser: walk, wait, look
+ * Cada acciï¿½n puede ser: walk, wait, look
  */
 
 /**
@@ -11,13 +11,12 @@
  */
 
 export const NPC_ROUTES = {
-  // Andrea (NPC principal) - Ruta en el área de bienvenida
+  // Andrea (NPC principal) - Ruta en el ï¿½rea de bienvenida
   ANDREA: [
     { type: 'walk', direction: 'right', steps: 2 },
     { type: 'wait', duration: 1500 },
     { type: 'look', direction: 'down' },
     { type: 'wait', duration: 1000 },
-    { type: 'walk', direction: 'down', steps: 2 },
     { type: 'wait', duration: 1500 },
     { type: 'look', direction: 'left' },
     { type: 'wait', duration: 1000 },
@@ -25,23 +24,17 @@ export const NPC_ROUTES = {
     { type: 'wait', duration: 1500 },
     { type: 'look', direction: 'up' },
     { type: 'wait', duration: 1000 },
-    { type: 'walk', direction: 'up', steps: 2 },
-    { type: 'wait', duration: 1500 },
-    { type: 'look', direction: 'right' },
-    { type: 'wait', duration: 1000 }
   ],
 
-  // Obrero - Patrullando la zona de construcción
+  // Obrero - Patrullando la zona de construcciï¿½n
   OBRERO: [
     { type: 'wait', duration: 3000 },
-    { type: 'walk', direction: 'up', steps: 1 },
     { type: 'walk', direction: 'right', steps: 2 }, 
     { type: 'wait', duration: 2500 },
     { type: 'look', direction: 'left' },
     { type: 'wait', duration: 1000 },
     { type: 'look', direction: 'down' },
     { type: 'wait', duration: 1000 },
-    { type: 'walk', direction: 'down', steps: 1 },
     { type: 'walk', direction: 'left', steps: 2 },
     { type: 'wait', duration: 3000 },
     { type: 'reset' }
@@ -51,13 +44,11 @@ export const NPC_ROUTES = {
   FERNANDO: [
     { type: 'wait', duration: 1000 },
     { type: 'walk', direction: 'right', steps: 2 },
-    { type: 'walk', direction: 'down', steps: 1 }, 
     { type: 'wait', duration: 2500 },
     { type: 'look', direction: 'left' },
     { type: 'wait', duration: 3000 },
     { type: 'look', direction: 'down' },
     { type: 'wait', duration: 2000 },
-    { type: 'walk', direction: 'up', steps: 1 },
     { type: 'walk', direction: 'left', steps: 2 },
     { type: 'wait', duration: 3000 },
     { type: 'reset' }
@@ -66,25 +57,23 @@ export const NPC_ROUTES = {
   // Pedro - Ruta en su zona
   PEDRO: [
     { type: 'wait', duration: 1000 },
-    { type: 'walk', direction: 'up', steps: 2 },
-    { type: 'walk', direction: 'right', steps: 1 }, 
+    { type: 'walk', direction: 'left', steps: 2 }, 
     { type: 'wait', duration: 3000 },
     { type: 'look', direction: 'left' },
     { type: 'wait', duration: 2500 },
     { type: 'look', direction: 'down' },
     { type: 'wait', duration: 3500 },
-    { type: 'walk', direction: 'left', steps: 1 },
-    { type: 'walk', direction: 'down', steps: 2 },
+    { type: 'walk', direction: 'right', steps: 2 },
     { type: 'wait', duration: 3000 },
     { type: 'reset' }
   ]
 };
 
 /**
- * Configuración de velocidad para las acciones
+ * Configuraciï¿½n de velocidad para las acciones
  */
 export const NPC_ROUTE_CONFIG = {
-  STEP_DURATION: 500,        // Duración de cada paso en ms
-  ANIMATION_INTERVAL: 100,   // Intervalo de animación de caminar
+  STEP_DURATION: 500,        // Duraciï¿½n de cada paso en ms
+  ANIMATION_INTERVAL: 100,   // Intervalo de animaciï¿½n de caminar
   DEFAULT_WAIT: 1000         // Tiempo de espera por defecto
 };

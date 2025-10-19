@@ -41,7 +41,7 @@ export const DEVELOPER_INITIAL_STATE = {
   y: 18,
   dir: "down",
   step: 0,
-  phrase: "console.log('¡Hola, Developer!');",
+  phrase: "¡Hola, Developer!",
   showPhrase: false,
   moving: false,
   waiting: false,
