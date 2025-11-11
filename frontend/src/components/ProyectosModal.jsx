@@ -171,7 +171,7 @@ function ProyectosModal({ isOpen, onClose }) {
         periodo: "2025",
         descripcion: "Portfolio interactivo desarrollado en React, con diseño tipo videojuego y navegación gamificada. Presenta proyectos, habilidades y experiencia de forma visual y dinámica, integrando modales, minimapa y animaciones.",
         tecnologias: ["React", "Vite", "CSS"],
-    imagen: `${ASSET_BASE_URL}portfolio-interactivo-avalob.png`,
+  imagen: `${ASSET_BASE_URL}portfolio-interactivo.png`,
         vimeo: "https://vimeo.com/1135562894?share=copy&fl=sv&fe=ci",
         enlaces: {
           web: "https://avalob.github.io/portfolio-interactivo-avalob/",
@@ -305,6 +305,14 @@ function ProyectosModal({ isOpen, onClose }) {
                   frameBorder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   className="project-card-iframe"
+                  style={{
+                    width: '100%',
+                    height: '220px',
+                    margin: 0,
+                    display: 'block',
+                    borderRadius: '8px',
+                    background: '#0f172a'
+                  }}
                 />
               )}
             </div>
