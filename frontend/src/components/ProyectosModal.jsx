@@ -134,36 +134,20 @@ function ProyectosModal({ isOpen, onClose }) {
       },
       color: "#60a5fa"
     },
-    {
-      id: 9,
-      nombre: "React Calculadora Meta",
-      categoria: "React",
-      periodo: "2024",
-      descripcion: "Primer proyecto desarrollado durante el curso Meta Front-End Developer, una calculadora funcional que aplica los conceptos fundamentales de React.",
-      tecnologias: ["React"],
-  imagen: `${ASSET_BASE_URL}calculadora.png`,
-      vimeo: "https://vimeo.com/1119046183?share=copy#t=0",
-      enlaces: {
-        demo: "https://avalob.github.io/react-calculadora-meta/",
-        codigo: "https://github.com/Avalob/react-calculadora-meta"
+      {
+        id: 9,
+        nombre: "App Tresele React",
+        categoria: "React",
+        periodo: "2025",
+          descripcion: "Plataforma web en uso real para academias y ateliers creativos. Permite gestionar clases, alumnos, pagos y recursos fácilmente, con integración a Google Calendar y MySQL en Hostinger.",
+    tecnologias: ["React", "PHP", "Google Calendar API", "MySQL"],
+  imagen: `${ASSET_BASE_URL}tresele-app-react.png`,
+        vimeo: "https://vimeo.com/1135557037?share=copy&fl=sv&fe=ci",
+        enlaces: {
+          web: "https://treseleapp.es/"
+        },
+        color: "#60a5fa"
       },
-      color: "#60a5fa"
-    },
-    {
-      id: 10,
-      nombre: "React Mouse Tracker",
-      categoria: "React",
-      periodo: "2024",
-      descripcion: "Proyecto desarrollado durante el curso avanzado de React ofrecido por Meta, una aplicación interactiva que rastrea la posición del mouse y la muestra en tiempo real en diferentes formatos. El diseño es visual y dinámico.",
-      tecnologias: ["React"],
-  imagen: `${ASSET_BASE_URL}mouse.png`,
-      vimeo: "https://vimeo.com/1119060764?share=copy#t=0",
-      enlaces: {
-        demo: "https://avalob.github.io/react-mouse-tracker/",
-        codigo: "https://github.com/Avalob/react-mouse-tracker"
-      },
-      color: "#60a5fa"
-    },
     {
       id: 11,
       nombre: "Lucky Shrub Website",
@@ -310,36 +294,77 @@ function ProyectosModal({ isOpen, onClose }) {
             </div>
             {/* Botones de acción: web, demo, código */}
             <div className="project-card-actions">
-              {proyecto.enlaces.web && (
-                <a 
-                  href={proyecto.enlaces.web}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-card-btn project-card-btn-web"
-                >
-                  🌐 Web
-                </a>
-              )}
-              {proyecto.enlaces.demo && (
-                <a 
-                  href={proyecto.enlaces.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-card-btn project-card-btn-demo"
-                >
-                  🎮 Demo
-                </a>
-              )}
-              {proyecto.enlaces.codigo && (
-                <a 
-                  href={proyecto.enlaces.codigo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-card-btn project-card-btn-code"
-                >
-                  💻 Code
-                </a>
-              )}
+                {/* Botones para App Tresele React: Próximamente */}
+                {proyecto.nombre === "App Tresele React" ? (
+                  <>
+                    <a
+                      href={proyecto.enlaces.web}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-card-btn"
+                      style={{
+                        background: '#ef4444',
+                        color: '#fff',
+                        border: 'none',
+                        marginRight: '0.5rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        opacity: 0.85,
+                        pointerEvents: 'auto'
+                      }}
+                    >
+                      🌐 Web
+                    </a>
+                    <button
+                      className="project-card-btn"
+                      style={{
+                        background: '#ef4444',
+                        color: '#fff',
+                        border: 'none',
+                        fontWeight: 600,
+                        opacity: 0.85,
+                        cursor: 'default',
+                        pointerEvents: 'none'
+                      }}
+                      disabled
+                    >
+                      💻 Code (Próximamente)
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {proyecto.enlaces.web && (
+                      <a 
+                        href={proyecto.enlaces.web}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-card-btn project-card-btn-web"
+                      >
+                        🌐 Web
+                      </a>
+                    )}
+                    {proyecto.enlaces.demo && (
+                      <a 
+                        href={proyecto.enlaces.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-card-btn project-card-btn-demo"
+                      >
+                        🎮 Demo
+                      </a>
+                    )}
+                    {proyecto.enlaces.codigo && (
+                      <a 
+                        href={proyecto.enlaces.codigo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-card-btn project-card-btn-code"
+                      >
+                        💻 Code
+                      </a>
+                    )}
+                  </>
+                )}
             </div>
           </div>
         ))}
