@@ -1,0 +1,1 @@
+import{j as e}from"./framer-motion-C07CzjY3.js";import{B as o}from"./index-CAxxlmj3.js";import{H as t}from"./HelpGuideContent-By0vTcF0.js";import"./react-vendor-BG0u1ZPm.js";function i({isOpen:i,onClose:r}){return e.jsx(o,{isOpen:i,onClose:r,title:"Guía de Ayuda",icon:"🎮",maxWidth:"90%",maxHeight:"90%",children:e.jsx(t,{})})}export{i as default};
