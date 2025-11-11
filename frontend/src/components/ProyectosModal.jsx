@@ -301,17 +301,7 @@ function ProyectosModal({ isOpen, onClose }) {
                       href={proyecto.enlaces.web}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="project-card-btn"
-                      style={{
-                        background: '#ef4444',
-                        color: '#fff',
-                        border: 'none',
-                        marginRight: '0.5rem',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        opacity: 0.85,
-                        pointerEvents: 'auto'
-                      }}
+                      className="project-card-btn project-card-btn-web"
                     >
                       🌐 Web
                     </a>
