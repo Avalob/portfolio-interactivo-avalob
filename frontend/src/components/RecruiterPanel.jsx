@@ -93,10 +93,10 @@ function RecruiterPanel({ isOpen, onClose, onOpenProjects }) {
   // ------------------------------------------------------------
   const handleDownloadCV = () => {
     // Si la ruta del CV cambia, actualízala aquí
-    const cvUrl = '/frontend/public/Curriculum Andrea Valbuena.pdf';
+    const cvUrl = `${import.meta.env.BASE_URL}Curriculum Andrea Valbuena.pdf`;
     const link = document.createElement('a');
     link.href = cvUrl;
-    link.download = 'CV-Andres-Developer.pdf';
+    link.download = 'Curriculum Andrea Valbuena.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
