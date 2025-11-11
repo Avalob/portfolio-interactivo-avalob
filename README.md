@@ -12,8 +12,6 @@
 
 **Portfolio web interactivo con estética pixel art retro donde la navegación se convierte en una experiencia de juego 2D.**
 
-[📖 Documentación](#-características-principales) • [🚀 Instalación](#-instalación) • [🎮 Controles](#-controles) • [🐛 Reportar Bug](../../issues)
-
 </div>
 
 ---
