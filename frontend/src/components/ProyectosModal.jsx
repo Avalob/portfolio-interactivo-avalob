@@ -162,7 +162,23 @@ function ProyectosModal({ isOpen, onClose }) {
         codigo: "https://github.com/Avalob/lucky-shrub-website"
       },
       color: "#10b981"
-    }
+    },
+    
+      {
+        id: 12,
+        nombre: "Portfolio Interactivo Avalob",
+        categoria: "React",
+        periodo: "2025",
+        descripcion: "Portfolio interactivo desarrollado en React, con diseño tipo videojuego y navegación gamificada. Presenta proyectos, habilidades y experiencia de forma visual y dinámica, integrando modales, minimapa y animaciones.",
+        tecnologias: ["React", "Vite", "CSS"],
+    imagen: `${ASSET_BASE_URL}portfolio-interactivo-avalob.png`,
+        vimeo: "https://vimeo.com/1135562894?share=copy&fl=sv&fe=ci",
+        enlaces: {
+          web: "https://avalob.github.io/portfolio-interactivo-avalob/",
+          codigo: "https://github.com/Avalob/portfolio-interactivo-avalob"
+        },
+        color: "#60a5fa"
+      },
   ];
 
   // =============================
