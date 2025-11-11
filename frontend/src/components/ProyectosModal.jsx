@@ -21,6 +21,20 @@ function ProyectosModal({ isOpen, onClose }) {
   // =============================
   const proyectos = [
     {
+      id: 9,
+      nombre: "App Tresele React",
+      categoria: "React",
+      periodo: "2025",
+      descripcion: "Plataforma web en uso real para academias y ateliers creativos. Permite gestionar clases, alumnos, pagos y recursos fácilmente, con integración a Google Calendar y MySQL en Hostinger.",
+      tecnologias: ["React", "PHP", "Google Calendar API", "MySQL"],
+      imagen: `${ASSET_BASE_URL}tresele-app-react.png`,
+      vimeo: "https://vimeo.com/1135557037?share=copy&fl=sv&fe=ci",
+      enlaces: {
+        web: "https://treseleapp.es/"
+      },
+      color: "#60a5fa"
+    },
+    {
       id: 1,
       nombre: "Tresele",
       categoria: "WordPress",
@@ -307,7 +321,7 @@ function ProyectosModal({ isOpen, onClose }) {
                   className="project-card-iframe"
                   style={{
                     width: '100%',
-                    height: '220px',
+                    height: '320px',
                     margin: 0,
                     display: 'block',
                     borderRadius: '8px',
