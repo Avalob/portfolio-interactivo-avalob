@@ -305,14 +305,6 @@ function ProyectosModal({ isOpen, onClose }) {
                   frameBorder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   className="project-card-iframe"
-                  style={{
-                    width: '100%',
-                    height: '320px',
-                    margin: 0,
-                    display: 'block',
-                    borderRadius: '8px',
-                    background: '#0f172a'
-                  }}
                 />
               )}
             </div>
