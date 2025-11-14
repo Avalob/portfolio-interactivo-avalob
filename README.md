@@ -9,11 +9,8 @@
 [![React](https://img.shields.io/badge/React-18.2-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-FF0080?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 **Portfolio web interactivo con estética pixel art retro donde la navegación se convierte en una experiencia de juego 2D.**
-
-[📖 Documentación](#-características-principales) • [🚀 Instalación](#-instalación) • [🎮 Controles](#-controles) • [🐛 Reportar Bug](../../issues)
 
 </div>
 
@@ -31,7 +28,7 @@
 ### 🎮 Gameplay - Interacción con NPCs
 
 ![NPCs](./docs/screenshots/npc-interaction.png)
-*NPCs autónomos con IA y diálogos contextuales*
+*NPCs autónomos y diálogos contextuales*
 
 ### � Responsive - Controles Móviles
 
@@ -40,13 +37,18 @@
 
 ### 🏢 Modales Informativos
 
-![Modales](./docs/screenshots/modal-experience.png)
+![Modales](./docs/screenshots/modal-education.png)
 *Información profesional con diseño glassmorphism*
 
 ### 👔 Modo Reclutador
 
 ![Modo Recruiter](./docs/screenshots/recruiter-panel.png)
 *Panel ejecutivo con acceso directo a información clave*
+
+### 👔 Modo Noche
+
+![Modo Recruiter](./docs/screenshots/dark-mode.png)
+*Con los coches y la ciudad iluminada.*
 
 </div>
 
@@ -62,16 +64,14 @@
 - 🚪 **Sistema de Colisiones**: Detección pixel-perfect para navegación realista
 - 🗺️ **Minimapa Inteligente**: Navegación rápida con teletransporte y seguimiento de progreso visitado
 
-### 🤖 **NPCs con Inteligencia Artificial**
-- 👨‍💼 **4 NPCs Únicos**: Recruiter, Developer Junior, Developer Senior y un guía principal
-- 🚶 **Movimiento Autónomo**: Pathfinding A* para navegación natural por la ciudad
+### 🤖 **NPCs**
+- 🚶 **Movimiento**: Pathfinding A* para navegación natural por la ciudad
 - 💬 **Diálogos Contextuales**: Frases dinámicas basadas en tu progreso y ubicación
-- 🎪 **Estados Animados**: Comportamientos y sprites únicos para cada personaje
+- 🎪 **Estados**: Comportamientos y sprites únicos para cada personaje
 
 ### 🚗 **Sistema de Tráfico Animado**
-- � **4 Coches Autónomos**: Sistema de vehículos con rutas aleatorias y pathfinding
-- � **Z-index Dinámico**: Vehículos pasan debajo de farolas, semáforos y puentes
-- 🔄 **Rutas Inteligentes**: Movimiento fluido evitando obstáculos
+- � **4 Coches Autónomos**: Sistema de vehículos con rutas en momentos aleatorios.
+- 🔄 **Rutas Inteligentes**: Movimiento fluido evitando obstáculos. Se paran si pasas por delante.
 
 ### 🎨 **Diseño y Estética**
 - 🌃 **Estilo Pixel Art Moderno**: Inspirado en juegos retro con paleta de colores neon vibrantes
@@ -96,7 +96,7 @@
 
 ### 📱 **100% Responsive**
 - 📱 **Mobile-First**: Adaptado para desktop, tablet y móvil
-- �️ **Controles Táctiles**: Joystick virtual (nipplejs) para dispositivos móviles
+- �️ **Controles Táctiles**: Joystick virtual para dispositivos móviles
 - � **Múltiples Inputs**: Soporte para teclado, mouse, touch y gamepad
 - 🖥️ **Breakpoints Inteligentes**: Layout adaptativo según dispositivo
 
@@ -146,7 +146,7 @@ npm >= 9.0.0 (o yarn/pnpm)
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/avalob/portfolio.git
+git clone https://github.com/avalob/portfolio-interactivo-avalob.git
 cd portfolio/frontend
 
 # 2. Instalar dependencias
@@ -172,80 +172,6 @@ npm run preview
 
 ---
 
-## 📦 Deploy en GitHub Pages
-
-### ⚙️ Configuración (Ya configurado en este proyecto)
-
-1. **`package.json`** ya tiene:
-```json
-🚀 Demo online: [https://andre.github.io/portfolio-interactivo-avalob/](https://andre.github.io/portfolio-interactivo-avalob/)
-{
-  "homepage": ".",
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  }
-}
-```
-
-2. **`vite.config.mjs`** ya tiene:
-```javascript
-export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? './' : '/',
-  // ...
-});
-```
-
-### 🚀 Desplegar
-
-```bash
-cd frontend
-npm run deploy
-```
-
-**Resultado**: Tu portfolio estará en `https://avalob.github.io/portfolio/` en ~2 minutos ✨
-
-### ✅ Verificar Deploy
-
-1. Ve a tu repositorio en GitHub
-2. **Settings** → **Pages**
-3. Confirma que la rama `gh-pages` está seleccionada
-4. Espera el deploy automático (badge verde)
-
----
-
-
-
-## 🎮 Controles
-
-<div align="center">
-
-### 🖥️ Desktop
-
-| Acción | Control |
-|--------|---------|
-| **Mover avatar** | ⬆️⬇️⬅️➡️ Flechas o **WASD** |
-| **Click-to-move** | 🖱️ Click en cualquier parte del mapa |
-| **Entrar a edificio** | 🚪 Caminar hasta las puertas marcadas |
-| **Cerrar modal** | ❌ **ESC** o botón X |
-| **Modo día/noche** | 🌙 Toggle en barra superior |
-| **Modo recruiter** | 👔 Toggle en barra superior |
-| **Minimapa** | 🗺️ Click en botón minimapa |
-| **Resetear progreso** | 🔄 Botón reset en barra superior |
-| **Abrir ayuda** | ❓ Botón de ayuda en barra superior |
-
-### 📱 Móvil / Táctil
-
-| Acción | Control |
-|--------|---------|
-| **Mover avatar** | 🕹️ Joystick virtual (nipplejs) en pantalla |
-| **Menú de opciones** | ☰ Botón hamburguesa (minimapa, modo noche, ayuda) |
-| **Modo recruiter** | 👔 Opción en menú joystick |
-| **Cerrar modal** | ❌ Botón X en modal |
-
-</div>
-
----
 
 ## 📁 Estructura del Proyecto
 
@@ -283,7 +209,7 @@ portfolio/
 │   ├── vite.config.mjs                # ⚙️ Config de Vite
 │   └── package.json                   # 📦 Dependencias
 ├── docs/                              # 📚 Documentación
-│   └── ARCHITECTURE.md                # Arquitectura técnica
+│   └── screenshots                    # Pantallazos
 └── README.md                          # 📖 Este archivo
 ```
 
@@ -329,62 +255,7 @@ portfolio/
 
 ## 🤝 Contribuir
 
-Las contribuciones son bienvenidas. Si quieres mejorar el proyecto:
-
-1. **Fork** el repositorio
-2. Crea una **rama** (`git checkout -b feature/AmazingFeature`)
-3. **Commit** tus cambios (`git commit -m 'Add: AmazingFeature'`)
-4. **Push** a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un **Pull Request**
-
-### Convenciones de Commits
-
-Usamos [Conventional Commits](https://www.conventionalcommits.org/):
-
-```bash
-feat: añadir sistema de logros
-fix: corregir colisión con NPCs
-docs: actualizar README
-style: formatear código
-refactor: simplificar pathfinding
-perf: optimizar renders
-```
-
----
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
-
----
-
-## 🎨 Créditos y Agradecimientos
-
-### 🖼️ Assets Pixel Art
-- **[Kenney](https://kenney.nl/)**: Tiles y sprites pixel art (CC0 License)
-  - Tileset: `Pixel Platformer` 
-  - Licencia: Public Domain / CC0
-
-### 📚 Inspiración y Referencias
-- **Pokémon Game Boy**: Sistema de movimiento 2D y interacción
-- **GameBoy Aesthetics**: Paleta de colores y estilo retro
-- **Framer Motion**: Documentación oficial para animaciones
-
-### 🛠️ Herramientas
-- **[Tiled Map Editor](https://www.mapeditor.org/)**: Editor de mapas 2D
-- **[Vite](https://vitejs.dev/)**: Build tool increíblemente rápido
-- **[nipplejs](https://yoannmoi.net/nipplejs/)**: Joystick virtual para móviles
-
----
-
-## 📧 Contacto
-
-¿Tienes preguntas, sugerencias o quieres colaborar?
-
-📧 **Email**: andreavallob22@gmail.com  
-💼 **LinkedIn**: [Andrea Valbuena](https://linkedin.com/in/andreavalbuenalobaton/)  
-🐙 **GitHub**: [@avalob](https://github.com/avalob)  
-🌐 **Portfolio**: [avalob.github.io/portfolio](https://avalob.github.io/portfolio)
+Las contribuciones son bienvenidas.
 
 ---
 
